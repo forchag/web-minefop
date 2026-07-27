@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ article.title }} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ article.excerpt }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">{% trans "Accueil" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'news:list' %}">{% trans "Actualités" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ article.title }}</li>
+      </ol>
+    </nav>
+    <h1 class="h2 mb-0">{{ article.title }}</h1>
+    <p class="mb-0 mt-2 opacity-75"><i class="bi bi-calendar3 me-1"></i>{{ article.published_at|date:"d F Y" }}{% if article.category %} · {{ article.category.name }}{% endif %}</p>
+  </div>
+</div>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-8">
+        {% if article.cover_image %}
+        <img src="{{ article.cover_image.url }}" class="img-fluid rounded-3 mb-4" alt="{{ article.title }}">
+        {% endif %}
+        <div class="fs-5 lh-lg">{{ article.body|linebreaks }}</div>
+        <a href="{% url 'news:list' %}" class="btn btn-outline-minefop mt-4"><i class="bi bi-arrow-left me-1"></i>{% trans "Retour aux actualités" %}</a>
+      </div>
+      <div class="col-lg-4">
+        {% if related %}
+        <h2 class="h6 fw-bold text-uppercase text-muted mb-3">{% trans "À lire aussi" %}</h2>
+        <div class="d-flex flex-column gap-3">
+          {% for item in related %}
+          <a href="{{ item.get_absolute_url }}" class="text-decoration-none text-dark">
+            <div class="d-flex gap-3 align-items-center border rounded-3 p-2">
+              <div class="doc-icon"><i class="bi bi-newspaper"></i></div>
+              <div>
+                <div class="fw-semibold small">{{ item.title|truncatechars:60 }}</div>
+                <small class="text-muted">{{ item.published_at|date:"d/m/Y" }}</small>
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

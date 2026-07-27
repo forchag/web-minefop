@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Organigramme" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+{% trans "Organigramme" as page_title %}
+{% trans "Organisation du Ministère selon le décret n° 2012/644 du 28 décembre 2012." as page_subtitle %}
+{% include "partials/page_header.html" %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-lg-8">
+        <p class="text-muted">{% blocktrans %}Le Ministère de l'Emploi et de la Formation Professionnelle dispose d'un Secrétariat Particulier, de Conseillers Techniques, d'une Inspection Générale des Services, d'une Inspection Générale des Formations, d'une Administration Centrale, de Services Déconcentrés et d'Organismes Rattachés.{% endblocktrans %}</p>
+      </div>
+    </div>
+    <div class="org-tree">
+      {% for node in top_level %}
+        {% include "structures/_org_node.html" with node=node %}
+      {% empty %}
+      <p class="text-muted text-center py-5">{% trans "L'organigramme sera bientôt disponible." %}</p>
+      {% endfor %}
+    </div>
+
+    <div class="row g-4 mt-4">
+      <div class="col-md-6">
+        <div class="mission-card">
+          <div class="icon-wrap"><i class="bi bi-diagram-3-fill"></i></div>
+          <h2 class="h6 fw-bold">{% trans "Services déconcentrés" %}</h2>
+          <p class="text-muted small mb-2">{% trans "Délégations Régionales, Délégations Départementales et structures publiques de formation professionnelle." %}</p>
+          <a href="{% url 'structures:delegations' %}" class="btn btn-outline-minefop btn-sm">{% trans "Voir les délégations" %}</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mission-card">
+          <div class="icon-wrap"><i class="bi bi-building-fill-check"></i></div>
+          <h2 class="h6 fw-bold">{% trans "Organismes rattachés" %}</h2>
+          <p class="text-muted small mb-2">{% trans "ONEFOP, PIAASI, COSUP et autres structures rattachées au Ministère." %}</p>
+          <a href="{% url 'structures:attached_bodies' %}" class="btn btn-outline-minefop btn-sm">{% trans "Voir les organismes" %}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

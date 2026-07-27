@@ -1,0 +1,50 @@
+{% load i18n %}
+<nav class="navbar navbar-expand-lg navbar-light bg-white main-navbar py-2 sticky-top">
+  <div class="container">
+    <a class="navbar-brand navbar-brand-minefop" href="{% url 'core:home' %}">
+      <span class="brand-emblem">MF</span>
+      <span class="brand-title">
+        <strong>MINEFOP</strong>
+        <small>{% trans "Emploi & Formation Professionnelle" %}</small>
+      </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.view_name == 'core:home' %}active{% endif %}" href="{% url 'core:home' %}">{% trans "Accueil" %}</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% trans "Le Ministère" %}</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'core:minister' %}">{% trans "Mot du Ministre" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'core:mission' %}">{% trans "Missions" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'core:history' %}">{% trans "Historique" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'structures:org_chart' %}">{% trans "Organigramme" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'structures:attached_bodies' %}">{% trans "Organismes rattachés" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'structures:delegations' %}">{% trans "Délégations régionales" %}</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% trans "Formation Professionnelle" %}</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'core:vocational_training' %}">{% trans "Cadre légal & dispositif national" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'structures:training_center_list' %}">{% trans "Centres de formation" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'documents:list' %}">{% trans "Textes légaux & réglementaires" %}</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if 'actualites' in request.path %}active{% endif %}" href="{% url 'news:list' %}">{% trans "Actualités" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if 'documents' in request.path %}active{% endif %}" href="{% url 'documents:list' %}">{% trans "Documents" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-minefop ms-lg-2 mt-2 mt-lg-0" href="{% url 'contact:contact' %}">{% trans "Nous contacter" %}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

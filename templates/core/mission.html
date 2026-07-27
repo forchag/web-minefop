@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Nos missions" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+{% trans "Nos missions" as page_title %}
+{% include "partials/page_header.html" %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <p class="lead">
+          {% blocktrans %}Conformément au décret n° 2012/644 du 28 décembre 2012 portant organisation du Ministère de l'Emploi et de la Formation Professionnelle, le Ministre est responsable de l'élaboration et de la mise en œuvre de la politique du Gouvernement en matière d'emploi, de formation et d'insertion professionnelles.{% endblocktrans %}
+        </p>
+        <p>{% trans "À ce titre, le Ministère est chargé :" %}</p>
+        <ul class="list-group list-group-flush mb-4">
+          <li class="list-group-item bg-transparent px-0">{% trans "De l'élaboration de la politique de l'emploi et de la formation professionnelle ;" %}</li>
+          <li class="list-group-item bg-transparent px-0">{% trans "Des études sur l'évolution de l'emploi et du marché du travail ;" %}</li>
+          <li class="list-group-item bg-transparent px-0">{% trans "Des études sur l'évolution des qualifications des emplois ;" %}</li>
+          <li class="list-group-item bg-transparent px-0">{% trans "De la promotion de l'emploi ;" %}</li>
+          <li class="list-group-item bg-transparent px-0">{% trans "De la définition des programmes de formation et d'insertion professionnelle, en liaison avec les administrations et organismes concernés ;" %}</li>
+          <li class="list-group-item bg-transparent px-0">{% trans "De la définition des normes d'organisation des systèmes d'apprentissage et de qualification professionnelle, et du contrôle de leur application ;" %}</li>
+          <li class="list-group-item bg-transparent px-0">{% trans "De la conception et de l'organisation des activités de formation à cycles courts ;" %}</li>
+          <li class="list-group-item bg-transparent px-0">{% trans "De l'orientation et du placement de la main-d'œuvre ;" %}</li>
+          <li class="list-group-item bg-transparent px-0">{% trans "De l'organisation et du suivi de l'insertion professionnelle des jeunes formés ;" %}</li>
+          <li class="list-group-item bg-transparent px-0">{% trans "De l'organisation des activités de recyclage ou de requalification pour les travailleurs en activité et ceux ayant perdu leur emploi ;" %}</li>
+          <li class="list-group-item bg-transparent px-0">{% trans "Du suivi de l'adéquation formation-emploi ;" %}</li>
+          <li class="list-group-item bg-transparent px-0">{% trans "Des relations avec les entreprises et les organisations professionnelles, en liaison avec les départements ministériels sectoriels concernés ;" %}</li>
+          <li class="list-group-item bg-transparent px-0">{% trans "Du suivi et du contrôle des structures de formation professionnelle, en liaison avec les départements ministériels concernés." %}</li>
+        </ul>
+        <p>{% blocktrans %}Le Ministère suit également les activités des organismes d'intervention en matière de prospection d'emploi et exerce la tutelle sur le Fonds National de l'Emploi (FNE).{% endblocktrans %}</p>
+
+        <div class="alert alert-minefop mt-4">
+          <i class="bi bi-info-circle-fill me-2"></i>
+          {% blocktrans %}Référence légale : Décret n° 2012/644 du 28 décembre 2012 portant organisation du Ministère de l'Emploi et de la Formation Professionnelle, Article 1er.{% endblocktrans %}
+          <a href="{% url 'documents:list' %}">{% trans "Consulter le texte intégral" %}</a>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card card-minefop p-4">
+          <h2 class="h5 fw-bold mb-3">{% trans "Nos valeurs" %}</h2>
+          <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
+            <li><i class="bi bi-check-circle-fill text-success me-2"></i>{% trans "Équité et égalité des chances" %}</li>
+            <li><i class="bi bi-check-circle-fill text-success me-2"></i>{% trans "Qualité et excellence de la formation" %}</li>
+            <li><i class="bi bi-check-circle-fill text-success me-2"></i>{% trans "Transparence et redevabilité" %}</li>
+            <li><i class="bi bi-check-circle-fill text-success me-2"></i>{% trans "Partenariat public-privé" %}</li>
+            <li><i class="bi bi-check-circle-fill text-success me-2"></i>{% trans "Adéquation formation-emploi" %}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Délégations régionales" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+{% trans "Délégations régionales & départementales" as page_title %}
+{% trans "Les services déconcentrés du Ministère présents dans les 10 régions du Cameroun." as page_subtitle %}
+{% include "partials/page_header.html" %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex flex-wrap gap-2 mb-4">
+      <a href="{% url 'structures:delegations' %}" class="btn btn-sm {% if not active_region_id %}btn-minefop{% else %}btn-outline-minefop{% endif %}">{% trans "Toutes les régions" %}</a>
+      {% for region in regions %}
+      <a href="?region={{ region.id }}" class="btn btn-sm {% if active_region_id == region.id %}btn-minefop{% else %}btn-outline-minefop{% endif %}">{{ region.name }}</a>
+      {% endfor %}
+    </div>
+
+    <div class="row g-4">
+      {% for delegation in delegations %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card card-minefop p-4">
+          <span class="badge badge-category align-self-start mb-2">{{ delegation.get_level_display }}</span>
+          <h2 class="h6 fw-bold">{{ delegation.region.name }}{% if delegation.department_name %} — {{ delegation.department_name }}{% endif %}</h2>
+          <ul class="list-unstyled small text-muted d-flex flex-column gap-1 mb-0">
+            <li><i class="bi bi-geo-alt-fill me-1"></i>{{ delegation.town }}{% if delegation.address %}, {{ delegation.address }}{% endif %}</li>
+            {% if delegation.phone %}<li><i class="bi bi-telephone-fill me-1"></i>{{ delegation.phone }}</li>{% endif %}
+            {% if delegation.email %}<li><i class="bi bi-envelope-fill me-1"></i>{{ delegation.email }}</li>{% endif %}
+            <li><i class="bi bi-person-fill me-1"></i>{{ delegation.delegate_name|default:_("À renseigner") }}</li>
+          </ul>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-muted text-center py-5">{% trans "Aucune délégation renseignée pour cette région." %}</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

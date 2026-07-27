@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Mot du Ministre" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+{% trans "Mot du Ministre" as page_title %}
+{% include "partials/page_header.html" %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-4 text-center">
+        {% if minister.photo %}
+        <img src="{{ minister.photo.url }}" class="rounded-4 img-fluid mb-3" alt="{{ minister.full_name }}">
+        {% else %}
+        <div class="rounded-4 mx-auto d-flex align-items-center justify-content-center mb-3" style="width:100%;max-width:280px;height:280px;background:linear-gradient(135deg,var(--cm-green),var(--cm-green-dark));">
+          <i class="bi bi-person-fill text-white" style="font-size:7rem;"></i>
+        </div>
+        {% endif %}
+        <h2 class="h5 fw-bold mb-0">{{ minister.full_name|default:_("Le Ministre") }}</h2>
+        <p class="text-muted">{{ minister.title|default:_("Ministre de l'Emploi et de la Formation Professionnelle") }}</p>
+      </div>
+      <div class="col-lg-8">
+        <blockquote class="font-serif-brand fs-4 fst-italic border-start border-4 ps-4" style="border-color:var(--cm-green) !important;">
+          {% if minister.message %}
+            {{ minister.message|linebreaks }}
+          {% else %}
+            <p>{% blocktrans %}Chères concitoyennes, chers concitoyens,{% endblocktrans %}</p>
+            <p>{% blocktrans %}Le Ministère de l'Emploi et de la Formation Professionnelle porte l'ambition du Gouvernement de doter chaque Camerounaise et chaque Camerounais des compétences nécessaires pour accéder à un emploi décent ou entreprendre avec succès.{% endblocktrans %}</p>
+            <p>{% blocktrans %}Notre feuille de route s'articule autour de trois priorités : moderniser l'offre de formation professionnelle publique et privée, renforcer l'adéquation entre les compétences formées et les besoins du marché du travail, et accompagner l'insertion socio-professionnelle de la jeunesse sur l'ensemble du territoire national.{% endblocktrans %}</p>
+            <p>{% blocktrans %}Ce site internet se veut un espace d'information transparent sur nos missions, notre organisation, nos centres de formation et les textes qui encadrent notre action. Je vous souhaite une excellente navigation.{% endblocktrans %}</p>
+          {% endif %}
+        </blockquote>
+        <div class="alert alert-minefop mt-4">
+          <i class="bi bi-info-circle-fill me-2"></i>
+          {% trans "Contenu à personnaliser par le Ministère avec le nom, la photo officielle et le message du Ministre en exercice via l'espace agent." %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

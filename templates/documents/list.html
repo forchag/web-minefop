@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Textes légaux & documents" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+{% trans "Textes légaux & documents" as page_title %}
+{% trans "Lois, décrets et documents officiels régissant l'emploi et la formation professionnelle au Cameroun." as page_subtitle %}
+{% include "partials/page_header.html" %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 mb-4">
+        <div class="card card-minefop p-3">
+          <h2 class="h6 fw-bold text-uppercase text-muted mb-3">{% trans "Catégories" %}</h2>
+          <div class="d-flex flex-column gap-1">
+            <a href="{% url 'documents:list' %}" class="btn btn-sm text-start {% if not active_category %}btn-minefop{% else %}btn-light{% endif %}">{% trans "Tous les documents" %}</a>
+            {% for cat in categories %}
+            <a href="?categorie={{ cat.slug }}" class="btn btn-sm text-start {% if active_category.slug == cat.slug %}btn-minefop{% else %}btn-light{% endif %}">{{ cat.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="d-flex flex-column gap-3">
+          {% for doc in page_obj %}
+          <div class="doc-row p-3 d-flex align-items-center gap-3 flex-wrap">
+            <div class="doc-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="flex-grow-1">
+              <h2 class="h6 fw-bold mb-1">{{ doc.title }}</h2>
+              {% if doc.reference_number %}<div class="text-muted small">{{ doc.reference_number }}</div>{% endif %}
+              {% if doc.description %}<p class="text-muted small mb-0 mt-1">{{ doc.description|truncatechars:160 }}</p>{% endif %}
+            </div>
+            <div class="text-end">
+              {% if doc.published_date %}<div class="text-muted small mb-2"><i class="bi bi-calendar3 me-1"></i>{{ doc.published_date|date:"d/m/Y" }}</div>{% endif %}
+              <a href="{{ doc.file.url }}" class="btn btn-minefop btn-sm" target="_blank" rel="noopener"><i class="bi bi-download me-1"></i>{% trans "Télécharger" %}</a>
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-muted text-center py-5">{% trans "Aucun document disponible pour cette catégorie." %}</p>
+          {% endfor %}
+        </div>
+        {% include "partials/pagination.html" %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

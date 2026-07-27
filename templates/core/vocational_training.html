@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Formation Professionnelle" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+{% trans "Cadre légal & dispositif national de la formation professionnelle" as page_title %}
+{% include "partials/page_header.html" %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-8">
+        <h2 class="section-title">{% trans "La loi n° 2018/010 du 11 juillet 2018" %}</h2>
+        <p>{% blocktrans %}La loi régissant la formation professionnelle au Cameroun fixe le cadre juridique général ainsi que les orientations fondamentales de la formation professionnelle. Le champ de la formation professionnelle couvre l'ensemble des formations post-éducation de base, assurées par des structures publiques ou par des structures privées agréées par l'État.{% endblocktrans %}</p>
+        <p>{% blocktrans %}L'État accorde à la formation professionnelle un caractère de priorité nationale : il l'organise, la contrôle, et garantit l'égal accès à la formation dans les deux langues officielles à toute personne remplissant les conditions requises.{% endblocktrans %}</p>
+
+        <h3 class="h5 fw-bold mt-4">{% trans "Les trois piliers de la formation professionnelle" %}</h3>
+        <div class="row g-3 mt-1">
+          <div class="col-md-4">
+            <div class="mission-card">
+              <div class="icon-wrap"><i class="bi bi-book-half"></i></div>
+              <h4 class="h6 fw-bold">{% trans "Formation initiale" %}</h4>
+              <p class="text-muted small mb-0">{% trans "Transmet les compétences, connaissances et savoir-faire indispensables à l'exercice d'une activité professionnelle." %}</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mission-card">
+              <div class="icon-wrap"><i class="bi bi-arrow-repeat"></i></div>
+              <h4 class="h6 fw-bold">{% trans "Formation continue" %}</h4>
+              <p class="text-muted small mb-0">{% trans "Assure le recyclage ou le perfectionnement des professionnels, en structure ou en entreprise." %}</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mission-card">
+              <div class="icon-wrap"><i class="bi bi-tools"></i></div>
+              <h4 class="h6 fw-bold">{% trans "Apprentissage" %}</h4>
+              <p class="text-muted small mb-0">{% trans "Formation alternée de longue durée entre entreprise et centre, sanctionnée par une qualification reconnue." %}</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="h5 fw-bold mt-5">{% trans "Les structures publiques de formation professionnelle" %}</h3>
+        <p>{% blocktrans %}Le décret n° 2020/2592/PM du 9 juin 2020 fixe les modalités de création, d'organisation et de fonctionnement des centres de formation professionnelle et d'apprentissage. Six catégories de structures publiques composent le réseau national :{% endblocktrans %}</p>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="d-flex gap-3 p-3 border rounded-3">
+              <span class="doc-icon"><i class="bi bi-award"></i></span>
+              <div><strong>CFPE</strong><div class="text-muted small">{% trans "Centres de Formation Professionnelle d'Excellence" %}</div></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex gap-3 p-3 border rounded-3">
+              <span class="doc-icon"><i class="bi bi-diagram-3"></i></span>
+              <div><strong>CSFP</strong><div class="text-muted small">{% trans "Centres Sectoriels de Formation Professionnelle" %}</div></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex gap-3 p-3 border rounded-3">
+              <span class="doc-icon"><i class="bi bi-hammer"></i></span>
+              <div><strong>CFM</strong><div class="text-muted small">{% trans "Centres de Formation aux Métiers" %}</div></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex gap-3 p-3 border rounded-3">
+              <span class="doc-icon"><i class="bi bi-person-workspace"></i></span>
+              <div><strong>CAP</strong><div class="text-muted small">{% trans "Centres d'Apprentissage Professionnel" %}</div></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex gap-3 p-3 border rounded-3">
+              <span class="doc-icon"><i class="bi bi-lightning-charge"></i></span>
+              <div><strong>CPFPR</strong><div class="text-muted small">{% trans "Centres Publics de Formation Professionnelle Rapide" %}</div></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex gap-3 p-3 border rounded-3">
+              <span class="doc-icon"><i class="bi bi-house-gear"></i></span>
+              <div><strong>SAR/SM</strong><div class="text-muted small">{% trans "Sections Artisanales Rurales et Sections Ménagères" %}</div></div>
+            </div>
+          </div>
+        </div>
+        <a href="{% url 'structures:training_center_list' %}" class="btn btn-minefop mt-4">{% trans "Consulter l'annuaire des centres de formation" %}</a>
+
+        <h3 class="h5 fw-bold mt-5">{% trans "Ouvrir un centre privé de formation professionnelle" %}</h3>
+        <p>{% blocktrans %}Toute personne physique ou morale peut créer un centre privé de formation professionnelle ou d'apprentissage, sous réserve de l'agrément préalable du Ministre chargé de la formation professionnelle. La dénomination du centre doit être précédée de « Centre de formation professionnelle », « Institut de formation professionnelle » ou « Centre d'apprentissage ». L'agrément est valable trois (3) ans, renouvelable.{% endblocktrans %}</p>
+
+        <h3 class="h5 fw-bold mt-5">{% trans "Formation des formateurs" %}</h3>
+        <p>{% blocktrans %}Le Centre National de Formation des Formateurs et de Développement des Programmes (CNFFDP), créé par décret présidentiel en 2023, a pour mission de former les formateurs et de promouvoir l'ingénierie de la formation professionnelle, en liaison avec la Direction de la Formation et de l'Orientation Professionnelles du Ministère.{% endblocktrans %}</p>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card card-minefop p-4 mb-4">
+          <h2 class="h5 fw-bold mb-3"><i class="bi bi-file-earmark-pdf text-danger me-2"></i>{% trans "Textes de référence" %}</h2>
+          <ul class="list-unstyled d-flex flex-column gap-2 small">
+            <li><i class="bi bi-dot"></i>{% trans "Loi n° 2018/010 du 11 juillet 2018 régissant la formation professionnelle" %}</li>
+            <li><i class="bi bi-dot"></i>{% trans "Décret n° 2020/2592/PM du 9 juin 2020 relatif aux centres de formation" %}</li>
+            <li><i class="bi bi-dot"></i>{% trans "Décret n° 2012/644 du 28 décembre 2012 portant organisation du Ministère" %}</li>
+          </ul>
+          <a href="{% url 'documents:list' %}" class="btn btn-outline-minefop btn-sm mt-2">{% trans "Télécharger les textes" %}</a>
+        </div>
+        <div class="card card-minefop p-4">
+          <h2 class="h5 fw-bold mb-3"><i class="bi bi-patch-check-fill text-success me-2"></i>{% trans "Validation des Acquis de l'Expérience" %}</h2>
+          <p class="text-muted small mb-0">{% blocktrans %}La VAE est un droit reconnu à toute personne disposant d'aptitudes professionnelles acquises dans la vie active, lui permettant d'obtenir une certification correspondant à son expérience.{% endblocktrans %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
