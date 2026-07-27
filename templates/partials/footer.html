@@ -1,0 +1,56 @@
+{% load i18n %}
+<footer class="site-footer pt-5 pb-4 mt-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <span class="brand-emblem">MF</span>
+          <div>
+            <strong class="d-block text-white">MINEFOP</strong>
+            <small class="text-white-50">{% trans "République du Cameroun" %}</small>
+          </div>
+        </div>
+        <p class="text-white-50">{% trans "Ministère de l'Emploi et de la Formation Professionnelle — au service de l'employabilité et de la qualification professionnelle des Camerounais." %}</p>
+        <div class="d-flex gap-2 mt-3">
+          <a href="#" class="social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="social-icon" aria-label="X (Twitter)"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="social-icon" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          <a href="#" class="social-icon" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-6">
+        <h6>{% trans "Le Ministère" %}</h6>
+        <ul class="list-unstyled d-flex flex-column gap-2">
+          <li><a href="{% url 'core:minister' %}">{% trans "Mot du Ministre" %}</a></li>
+          <li><a href="{% url 'core:mission' %}">{% trans "Missions" %}</a></li>
+          <li><a href="{% url 'structures:org_chart' %}">{% trans "Organigramme" %}</a></li>
+          <li><a href="{% url 'core:history' %}">{% trans "Historique" %}</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <h6>{% trans "Ressources" %}</h6>
+        <ul class="list-unstyled d-flex flex-column gap-2">
+          <li><a href="{% url 'structures:training_center_list' %}">{% trans "Centres de formation" %}</a></li>
+          <li><a href="{% url 'structures:delegations' %}">{% trans "Délégations régionales" %}</a></li>
+          <li><a href="{% url 'documents:list' %}">{% trans "Textes légaux" %}</a></li>
+          <li><a href="{% url 'news:list' %}">{% trans "Actualités" %}</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <h6>{% trans "Contact" %}</h6>
+        <ul class="list-unstyled d-flex flex-column gap-2 text-white-50">
+          <li><i class="bi bi-geo-alt-fill me-2"></i>{% trans "Avenue Winston Churchill, Yaoundé" %}</li>
+          <li><i class="bi bi-envelope-fill me-2"></i>contact@minefop.gov.cm</li>
+          <li><i class="bi bi-telephone-fill me-2"></i>+237 2XX XX XX XX</li>
+        </ul>
+        <a href="{% url 'contact:contact' %}" class="btn btn-outline-light btn-sm mt-2">{% trans "Formulaire de contact" %}</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom mt-4 pt-3">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+      <span class="text-white-50">&copy; {% now "Y" %} MINEFOP — {% trans "Tous droits réservés" %}</span>
+      <span class="text-white-50">{% trans "Paix – Travail – Patrie" %}</span>
+    </div>
+  </div>
+</footer>

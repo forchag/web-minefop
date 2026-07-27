@@ -1,0 +1,47 @@
+{% load i18n static %}<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE_CODE }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ SITE_NAME }} — {% trans "Ministère de l'Emploi et de la Formation Professionnelle" %}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{% trans "Site officiel du Ministère de l'Emploi et de la Formation Professionnelle (MINEFOP) du Cameroun." %}{% endblock %}">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='8' y='0' fill='%2304502C'/%3E%3Crect width='24' height='8' y='8' fill='%23CE1126'/%3E%3Crect width='24' height='8' y='16' fill='%23FCD116'/%3E%3C/svg%3E">
+
+  <!-- Bootstrap (components, grid, reset) -->
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap-icons/bootstrap-icons.min.css' %}">
+  <!-- Tailwind (utility classes, preflight disabled) -->
+  <link rel="stylesheet" href="{% static 'css/tailwind-built.css' %}">
+  <!-- MINEFOP brand styles -->
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  <a class="visually-hidden-focusable btn btn-minefop position-absolute top-0 start-0 m-2" href="#main-content" style="z-index:2000;">{% trans "Aller au contenu" %}</a>
+
+  {% include "partials/topbar.html" %}
+  {% include "partials/navbar.html" %}
+
+  <main id="main-content">
+    {% if messages %}
+      <div class="container mt-3">
+        {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  {% include "partials/footer.html" %}
+
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

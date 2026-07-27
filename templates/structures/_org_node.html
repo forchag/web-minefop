@@ -1,0 +1,16 @@
+{% load i18n %}
+<div class="org-node">
+  <div class="unit-type">{{ node.get_unit_type_display }}</div>
+  <div class="fw-semibold">{{ node.name }}</div>
+  {% if node.head_title %}<div class="head-title">{{ node.head_title }}</div>{% endif %}
+  {% if node.mission %}<p class="small text-muted mb-0 mt-1">{{ node.mission|truncatechars:180 }}</p>{% endif %}
+</div>
+{% with children=node.children.all %}
+{% if children %}
+<div class="org-children">
+  {% for child in children %}
+    {% include "structures/_org_node.html" with node=child %}
+  {% endfor %}
+</div>
+{% endif %}
+{% endwith %}

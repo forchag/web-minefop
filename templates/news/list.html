@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Actualités" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+{% trans "Actualités" as page_title %}
+{% include "partials/page_header.html" %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex flex-wrap gap-2 mb-4">
+      <a href="{% url 'news:list' %}" class="btn btn-sm {% if not active_category %}btn-minefop{% else %}btn-outline-minefop{% endif %}">{% trans "Toutes" %}</a>
+      {% for cat in categories %}
+      <a href="?categorie={{ cat.slug }}" class="btn btn-sm {% if active_category.slug == cat.slug %}btn-minefop{% else %}btn-outline-minefop{% endif %}">{{ cat.name }}</a>
+      {% endfor %}
+    </div>
+
+    <div class="row g-4">
+      {% for article in page_obj %}
+      <div class="col-md-4">
+        <div class="card card-minefop">
+          {% if article.cover_image %}
+          <img src="{{ article.cover_image.url }}" class="card-img-top" alt="{{ article.title }}">
+          {% else %}
+          <div class="card-img-top d-flex align-items-center justify-content-center"><i class="bi bi-newspaper text-success" style="font-size:2.5rem;"></i></div>
+          {% endif %}
+          <div class="card-body">
+            {% if article.category %}<span class="badge badge-category mb-2">{{ article.category.name }}</span>{% endif %}
+            <h2 class="h6 fw-bold"><a href="{{ article.get_absolute_url }}" class="text-decoration-none text-dark stretched-link">{{ article.title }}</a></h2>
+            <p class="text-muted small">{{ article.excerpt|truncatechars:110 }}</p>
+            <small class="text-muted"><i class="bi bi-calendar3 me-1"></i>{{ article.published_at|date:"d/m/Y" }}</small>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12"><p class="text-muted text-center py-5">{% trans "Aucune actualité pour le moment." %}</p></div>
+      {% endfor %}
+    </div>
+
+    {% include "partials/pagination.html" %}
+  </div>
+</section>
+{% endblock %}

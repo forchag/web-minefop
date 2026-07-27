@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Contact" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+{% trans "Nous contacter" as page_title %}
+{% include "partials/page_header.html" %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-5">
+        <h2 class="section-title">{% trans "Informations" %}</h2>
+        <ul class="list-unstyled d-flex flex-column gap-3">
+          <li class="d-flex gap-3"><span class="doc-icon"><i class="bi bi-geo-alt-fill"></i></span><div><strong>{% trans "Adresse" %}</strong><div class="text-muted">{{ info.address }}{% if info.po_box %}<br>{{ info.po_box }}{% endif %}</div></div></li>
+          <li class="d-flex gap-3"><span class="doc-icon"><i class="bi bi-envelope-fill"></i></span><div><strong>{% trans "Courriel" %}</strong><div class="text-muted">{{ info.email }}</div></div></li>
+          {% if info.phone %}<li class="d-flex gap-3"><span class="doc-icon"><i class="bi bi-telephone-fill"></i></span><div><strong>{% trans "Téléphone" %}</strong><div class="text-muted">{{ info.phone }}</div></div></li>{% endif %}
+          <li class="d-flex gap-3"><span class="doc-icon"><i class="bi bi-clock-fill"></i></span><div><strong>{% trans "Horaires" %}</strong><div class="text-muted">{{ info.opening_hours }}</div></div></li>
+        </ul>
+
+        <div class="ratio ratio-4x3 rounded-3 overflow-hidden mt-4 border">
+          <iframe src="{{ info.map_embed_url|default:'https://www.openstreetmap.org/export/embed.html?bbox=11.48%2C3.83%2C11.55%2C3.90&layer=mapnik' }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="{% trans 'Carte' %}"></iframe>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <h2 class="section-title">{% trans "Formulaire de contact" %}</h2>
+        <form method="post" class="row g-3">
+          {% csrf_token %}
+          <div class="col-md-6">
+            <label class="form-label">{{ form.name.label }}</label>
+            {{ form.name }}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">{{ form.email.label }}</label>
+            {{ form.email }}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">{{ form.phone.label }}</label>
+            {{ form.phone }}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">{{ form.subject.label }}</label>
+            {{ form.subject }}
+          </div>
+          <div class="col-12">
+            <label class="form-label">{{ form.message.label }}</label>
+            {{ form.message }}
+          </div>
+          {% if form.errors %}
+          <div class="col-12">
+            <div class="alert alert-danger">{% trans "Merci de corriger les erreurs ci-dessous." %}</div>
+          </div>
+          {% endif %}
+          <div class="col-12">
+            <button type="submit" class="btn btn-minefop btn-lg"><i class="bi bi-send-fill me-1"></i>{% trans "Envoyer le message" %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

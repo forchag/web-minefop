@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Historique" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+{% trans "Historique" as page_title %}
+{% include "partials/page_header.html" %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="timeline">
+          {% for item in timeline %}
+          <div class="timeline-item">
+            <div class="timeline-year">{{ item.year }}</div>
+            <h3 class="h6 fw-bold mt-1">{{ item.title }}</h3>
+            <p class="text-muted mb-0">{{ item.description }}</p>
+          </div>
+          {% empty %}
+          <div class="timeline-item">
+            <div class="timeline-year">1959</div>
+            <h3 class="h6 fw-bold mt-1">{% trans "Loi n° 76/12 du 8 juillet 1976" %}</h3>
+            <p class="text-muted mb-0">{% trans "Première organisation de la formation professionnelle rapide au Cameroun." %}</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2011</div>
+            <h3 class="h6 fw-bold mt-1">{% trans "Décret n° 2011/126 du 23 mai 2011" %}</h3>
+            <p class="text-muted mb-0">{% trans "Organisation antérieure du Ministère de l'Emploi et de la Formation Professionnelle." %}</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2012</div>
+            <h3 class="h6 fw-bold mt-1">{% trans "Décret n° 2012/644 du 28 décembre 2012" %}</h3>
+            <p class="text-muted mb-0">{% trans "Réorganisation du Ministère de l'Emploi et de la Formation Professionnelle, actuellement en vigueur." %}</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2018</div>
+            <h3 class="h6 fw-bold mt-1">{% trans "Loi n° 2018/010 du 11 juillet 2018" %}</h3>
+            <p class="text-muted mb-0">{% trans "Loi régissant la formation professionnelle au Cameroun : cadre juridique général et orientations fondamentales." %}</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2020</div>
+            <h3 class="h6 fw-bold mt-1">{% trans "Décret n° 2020/2592/PM du 9 juin 2020" %}</h3>
+            <p class="text-muted mb-0">{% trans "Modalités de création, d'organisation et de fonctionnement des centres de formation professionnelle et d'apprentissage, publics et privés." %}</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2023</div>
+            <h3 class="h6 fw-bold mt-1">{% trans "Création du CNFFDP" %}</h3>
+            <p class="text-muted mb-0">{% trans "Décret portant création et organisation du Centre National de Formation des Formateurs et de Développement des Programmes." %}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card card-minefop p-4">
+          <h2 class="h5 fw-bold mb-3"><i class="bi bi-journal-text text-success me-2"></i>{% trans "Cadre juridique" %}</h2>
+          <p class="text-muted small">{% trans "L'action du Ministère s'appuie sur un socle législatif et réglementaire consolidé, régulièrement actualisé." %}</p>
+          <a href="{% url 'documents:list' %}" class="btn btn-outline-minefop btn-sm">{% trans "Consulter les textes" %}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

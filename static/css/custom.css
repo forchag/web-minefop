@@ -1,0 +1,455 @@
+/* ==========================================================================
+   MINEFOP — Custom brand styles
+   Layered on top of Bootstrap (components/reset) and Tailwind (utilities).
+   ========================================================================== */
+
+:root {
+  --cm-green: #04502c;
+  --cm-green-dark: #023018;
+  --cm-red: #ce1126;
+  --cm-yellow: #fcd116;
+  --minefop-ink: #1c2b28;
+  --minefop-bg: #f6f8f7;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Merriweather", Georgia, serif;
+
+  /* Re-point Bootstrap's own "success" utilities (text-success, bg-success,
+     btn-success, border-success…) at the MINEFOP dark green so both
+     frameworks agree on a single base color. */
+  --bs-success: var(--cm-green);
+  --bs-success-rgb: 4, 80, 44;
+}
+
+.text-success {
+  color: var(--cm-green) !important;
+}
+.bg-success {
+  background-color: var(--cm-green) !important;
+}
+.border-success {
+  border-color: var(--cm-green) !important;
+}
+.btn-success {
+  background-color: var(--cm-green);
+  border-color: var(--cm-green);
+}
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
+  background-color: var(--cm-green-dark) !important;
+  border-color: var(--cm-green-dark) !important;
+}
+.text-success-emphasis {
+  color: var(--cm-green-dark) !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--minefop-ink);
+  background-color: #ffffff;
+}
+
+.font-serif-brand {
+  font-family: var(--font-serif);
+}
+
+/* --- Tricolor accent bar, echoed on flag & headers -------------------- */
+.tricolor-bar {
+  display: flex;
+  height: 5px;
+  width: 100%;
+}
+.tricolor-bar span {
+  flex: 1 1 0;
+}
+.tricolor-bar .bar-green { background-color: var(--cm-green); }
+.tricolor-bar .bar-red { background-color: var(--cm-red); }
+.tricolor-bar .bar-yellow { background-color: var(--cm-yellow); }
+
+/* --- Top utility bar --------------------------------------------------- */
+.topbar {
+  background-color: var(--minefop-ink);
+  color: #dfe7e4;
+  font-size: 0.85rem;
+}
+.topbar a {
+  color: #dfe7e4;
+  text-decoration: none;
+}
+.topbar a:hover {
+  color: var(--cm-yellow);
+}
+.lang-switch a {
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+}
+.lang-switch a.active {
+  background-color: var(--cm-green);
+  color: #fff;
+}
+
+/* --- Brand / navbar ------------------------------------------------------ */
+.navbar-brand-minefop {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+.brand-emblem {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cm-green) 0 33%, var(--cm-red) 33% 66%, var(--cm-yellow) 66% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+.brand-title {
+  line-height: 1.1;
+}
+.brand-title strong {
+  display: block;
+  font-size: 1.05rem;
+  color: var(--minefop-ink);
+}
+.brand-title small {
+  display: block;
+  font-size: 0.7rem;
+  color: #55665f;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.main-navbar {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+.main-navbar .nav-link {
+  font-weight: 600;
+  color: var(--minefop-ink);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.main-navbar .nav-link:hover,
+.main-navbar .nav-link.active {
+  color: var(--cm-green);
+}
+.main-navbar .dropdown-menu {
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+}
+
+/* --- Buttons -------------------------------------------------------------- */
+.btn-minefop {
+  background-color: var(--cm-green);
+  border-color: var(--cm-green);
+  color: #fff;
+  font-weight: 600;
+}
+.btn-minefop:hover {
+  background-color: var(--cm-green-dark);
+  border-color: var(--cm-green-dark);
+  color: #fff;
+}
+.btn-outline-minefop {
+  border-color: var(--cm-green);
+  color: var(--cm-green);
+  font-weight: 600;
+}
+.btn-outline-minefop:hover {
+  background-color: var(--cm-green);
+  color: #fff;
+}
+
+/* --- Hero / carousel -------------------------------------------------------- */
+.hero-carousel .carousel-item {
+  min-height: 460px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  background-color: var(--cm-green-dark);
+}
+.hero-slide-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 30, 15, 0.88) 0%, rgba(0, 30, 15, 0.55) 55%, rgba(0, 30, 15, 0.15) 100%);
+}
+.hero-carousel .carousel-caption-custom {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  text-align: left;
+  padding: 2rem 1rem;
+}
+.hero-carousel h1 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.2;
+}
+.hero-fallback {
+  background: radial-gradient(circle at 20% 20%, var(--cm-green) 0%, var(--cm-green-dark) 55%, #012a13 100%);
+}
+
+/* --- Section headings -------------------------------------------------------- */
+.section-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  width: 64px;
+  background: linear-gradient(90deg, var(--cm-green), var(--cm-yellow));
+  border-radius: 2px;
+}
+.section-title.text-center::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* --- Key figures ------------------------------------------------------------- */
+.key-figure {
+  border-radius: 0.75rem;
+  background: #fff;
+  border: 1px solid #e7ece9;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.key-figure:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 122, 51, 0.12);
+}
+.key-figure .value {
+  font-family: var(--font-serif);
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--cm-green);
+}
+.key-figure .icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(0, 122, 51, 0.1);
+  color: var(--cm-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+/* --- Cards ------------------------------------------------------------------- */
+.card-minefop {
+  border: 1px solid #e7ece9;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+}
+.card-minefop:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+.card-minefop .card-img-top {
+  height: 180px;
+  object-fit: cover;
+  background-color: #eef2f0;
+}
+.card-minefop .badge-category {
+  background-color: var(--cm-green);
+}
+
+.mission-card {
+  border-radius: 0.75rem;
+  border: 1px solid #e7ece9;
+  height: 100%;
+  padding: 1.75rem;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.mission-card:hover {
+  border-color: var(--cm-green);
+  box-shadow: 0 10px 25px rgba(0, 122, 51, 0.1);
+}
+.mission-card .icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 0.65rem;
+  background: rgba(0, 122, 51, 0.12);
+  color: var(--cm-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+/* --- Org chart --------------------------------------------------------------- */
+.org-tree ul {
+  list-style: none;
+}
+.org-node {
+  border: 1px solid #e7ece9;
+  border-left: 4px solid var(--cm-green);
+  border-radius: 0.5rem;
+  padding: 0.6rem 1rem;
+  margin-bottom: 0.6rem;
+  background: #fff;
+}
+.org-node .unit-type {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cm-red);
+  font-weight: 700;
+}
+.org-node .head-title {
+  font-size: 0.82rem;
+  color: #55665f;
+}
+.org-children {
+  margin-left: 1.5rem;
+  padding-left: 1rem;
+  border-left: 2px dashed #d7e0dc;
+}
+
+/* --- Timeline ------------------------------------------------------------------ */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+  border-left: 3px solid var(--cm-green);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -2.4rem;
+  top: 0.2rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--cm-yellow);
+  border: 3px solid var(--cm-green);
+}
+.timeline-year {
+  font-family: var(--font-serif);
+  font-weight: 800;
+  color: var(--cm-green);
+}
+
+/* --- Footer -------------------------------------------------------------------- */
+.site-footer {
+  background-color: var(--minefop-ink);
+  color: #cddad4;
+}
+.site-footer a {
+  color: #cddad4;
+  text-decoration: none;
+}
+.site-footer a:hover {
+  color: var(--cm-yellow);
+}
+.site-footer h6 {
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 1rem;
+}
+.footer-bottom {
+  background-color: #12211d;
+  font-size: 0.85rem;
+}
+.social-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+.social-icon:hover {
+  background-color: var(--cm-green);
+}
+
+/* --- Breadcrumb / page header ---------------------------------------------------- */
+.page-header {
+  background: linear-gradient(120deg, var(--cm-green-dark), var(--cm-green));
+  color: #fff;
+  padding: 3rem 0 2.5rem;
+}
+.page-header h1 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+}
+.page-header .breadcrumb a {
+  color: #d9f2e4;
+}
+.page-header .breadcrumb-item.active {
+  color: #fff;
+}
+
+/* --- Utility banner (bilingual notice, alerts) ---------------------------------- */
+.alert-minefop {
+  border-left: 4px solid var(--cm-green);
+  background-color: #f1f8f4;
+}
+
+/* --- Documents list --------------------------------------------------------------- */
+.doc-row {
+  border: 1px solid #e7ece9;
+  border-radius: 0.6rem;
+  transition: box-shadow 0.2s ease;
+}
+.doc-row:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+}
+.doc-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 0.5rem;
+  background: rgba(206, 17, 38, 0.1);
+  color: var(--cm-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+/* --- Pagination -------------------------------------------------------------------- */
+.pagination .page-link {
+  color: var(--cm-green);
+}
+.pagination .page-item.active .page-link {
+  background-color: var(--cm-green);
+  border-color: var(--cm-green);
+}
+
+@media (max-width: 767.98px) {
+  .hero-carousel .carousel-item {
+    min-height: 380px;
+  }
+  .hero-carousel h1 {
+    font-size: 1.7rem;
+  }
+}

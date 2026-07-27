@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ center.name }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">{% trans "Accueil" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'structures:training_center_list' %}">{% trans "Centres de formation" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ center.name }}</li>
+      </ol>
+    </nav>
+    <h1 class="h2 mb-0">{{ center.name }}</h1>
+    <p class="mb-0 mt-2 opacity-75">{{ center.get_center_type_display }}</p>
+  </div>
+</div>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-8">
+        {% if center.description %}<p class="fs-5">{{ center.description }}</p>{% endif %}
+        {% if center.specialty_list %}
+        <h2 class="h6 fw-bold text-uppercase text-muted mt-4">{% trans "Filières de formation" %}</h2>
+        <div class="d-flex flex-wrap gap-2">
+          {% for s in center.specialty_list %}<span class="badge bg-light text-dark border py-2 px-3">{{ s }}</span>{% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      <div class="col-lg-4">
+        <div class="card card-minefop p-4">
+          <h2 class="h6 fw-bold text-uppercase text-muted mb-3">{% trans "Coordonnées" %}</h2>
+          <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+            <li><i class="bi bi-geo-alt-fill me-2 text-success"></i>{{ center.town }}{% if center.address %}, {{ center.address }}{% endif %}{% if center.region %} — {{ center.region.name }}{% endif %}</li>
+            {% if center.phone %}<li><i class="bi bi-telephone-fill me-2 text-success"></i>{{ center.phone }}</li>{% endif %}
+            {% if center.email %}<li><i class="bi bi-envelope-fill me-2 text-success"></i>{{ center.email }}</li>{% endif %}
+            <li><i class="bi bi-bookmark-check-fill me-2 text-success"></i>{% if center.is_public %}{% trans "Structure publique" %}{% else %}{% trans "Structure privée agréée" %}{% endif %}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,1458 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-27 09:28+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apps/contact/forms.py:12
+msgid "Votre nom"
+msgstr "Your name"
+
+#: apps/contact/forms.py:14
+msgid "Votre courriel"
+msgstr "Your email"
+
+#: apps/contact/forms.py:17
+msgid "Votre téléphone (optionnel)"
+msgstr "Your phone number (optional)"
+
+#: apps/contact/forms.py:19
+msgid "Objet"
+msgstr "Subject"
+
+#: apps/contact/forms.py:21
+msgid "Votre message"
+msgstr "Your message"
+
+#: apps/contact/models.py:9 apps/structures/models.py:74
+#: apps/structures/models.py:115
+msgid "adresse"
+msgstr "address"
+
+#: apps/contact/models.py:9
+msgid "Avenue Winston Churchill, Yaoundé, Cameroun"
+msgstr "Avenue Winston Churchill, Yaoundé, Cameroon"
+
+#: apps/contact/models.py:11
+msgid "boîte postale"
+msgstr "P.O. box"
+
+#: apps/contact/models.py:12 apps/contact/models.py:45
+#: apps/structures/models.py:75 apps/structures/models.py:116
+msgid "téléphone"
+msgstr "phone number"
+
+#: apps/contact/models.py:13 apps/contact/models.py:44
+#: apps/structures/models.py:76 apps/structures/models.py:117
+msgid "courriel"
+msgstr "email"
+
+#: apps/contact/models.py:15
+msgid "horaires d'ouverture"
+msgstr "opening hours"
+
+#: apps/contact/models.py:17
+msgid "Lundi – Vendredi : 7h30 – 15h30"
+msgstr "Monday – Friday: 7:30am – 3:30pm"
+
+#: apps/contact/models.py:19
+msgid "URL de la carte (iframe)"
+msgstr "Map URL (iframe)"
+
+#: apps/contact/models.py:20
+msgid "Facebook"
+msgstr "Facebook"
+
+#: apps/contact/models.py:21
+msgid "X (Twitter)"
+msgstr "X (Twitter)"
+
+#: apps/contact/models.py:22
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: apps/contact/models.py:23
+msgid "YouTube"
+msgstr "YouTube"
+
+#: apps/contact/models.py:26 apps/contact/models.py:27
+msgid "informations de contact"
+msgstr "contact information"
+
+#: apps/contact/models.py:30
+msgid "Informations de contact"
+msgstr "Contact information"
+
+#: apps/contact/models.py:43 apps/core/models.py:48
+msgid "nom complet"
+msgstr "full name"
+
+#: apps/contact/models.py:46
+msgid "objet"
+msgstr "subject"
+
+#: apps/contact/models.py:47
+msgid "message"
+msgstr "message"
+
+#: apps/contact/models.py:48
+msgid "date d'envoi"
+msgstr "sent on"
+
+#: apps/contact/models.py:49
+msgid "lu"
+msgstr "read"
+
+#: apps/contact/models.py:52
+msgid "message de contact"
+msgstr "contact message"
+
+#: apps/contact/models.py:53
+msgid "messages de contact"
+msgstr "contact messages"
+
+#: apps/contact/views.py:33
+msgid ""
+"Votre message a bien été envoyé. Nous vous répondrons dans les meilleurs "
+"délais."
+msgstr ""
+"Your message has been sent. We will get back to you as soon as possible."
+
+#: apps/core/models.py:8 apps/core/models.py:85 apps/documents/models.py:20
+#: apps/news/models.py:21
+msgid "titre"
+msgstr "title"
+
+#: apps/core/models.py:9
+msgid "sous-titre"
+msgstr "subtitle"
+
+#: apps/core/models.py:10
+msgid "image"
+msgstr "image"
+
+#: apps/core/models.py:11
+msgid "libellé du lien"
+msgstr "link label"
+
+#: apps/core/models.py:12
+msgid "URL du lien"
+msgstr "link URL"
+
+#: apps/core/models.py:13 apps/core/models.py:33 apps/core/models.py:87
+#: apps/documents/models.py:8 apps/structures/models.py:35
+#: apps/structures/models.py:143
+msgid "ordre"
+msgstr "order"
+
+#: apps/core/models.py:14
+msgid "actif"
+msgstr "active"
+
+#: apps/core/models.py:17
+msgid "diapositive d'accueil"
+msgstr "homepage slide"
+
+#: apps/core/models.py:18
+msgid "diapositives d'accueil"
+msgstr "homepage slides"
+
+#: apps/core/models.py:28
+msgid "libellé"
+msgstr "label"
+
+#: apps/core/models.py:29
+msgid "valeur"
+msgstr "value"
+
+#: apps/core/models.py:31
+msgid "icône (bootstrap-icons)"
+msgstr "icon (bootstrap-icons)"
+
+#: apps/core/models.py:36
+msgid "chiffre clé"
+msgstr "key figure"
+
+#: apps/core/models.py:37
+msgid "chiffres clés"
+msgstr "key figures"
+
+#: apps/core/models.py:52
+msgid ""
+"À renseigner par le Ministère avec le nom officiel du Ministre en exercice."
+msgstr ""
+"To be filled in by the Ministry with the incumbent Minister's official name."
+
+#: apps/core/models.py:56
+msgid "titre / fonction"
+msgstr "title / role"
+
+#: apps/core/models.py:58 templates/core/home.html:148
+#: templates/core/minister.html:20
+msgid "Ministre de l'Emploi et de la Formation Professionnelle"
+msgstr "Minister of Employment and Vocational Training"
+
+#: apps/core/models.py:60
+msgid "photo"
+msgstr "photo"
+
+#: apps/core/models.py:61 apps/core/models.py:65 apps/core/models.py:66
+msgid "mot du ministre"
+msgstr "Minister's message"
+
+#: apps/core/models.py:62
+msgid "dernière mise à jour"
+msgstr "last updated"
+
+#: apps/core/models.py:84
+msgid "année"
+msgstr "year"
+
+#: apps/core/models.py:86 apps/documents/models.py:35
+#: apps/structures/models.py:121 apps/structures/models.py:141
+msgid "description"
+msgstr "description"
+
+#: apps/core/models.py:90
+msgid "étape historique"
+msgstr "historical milestone"
+
+#: apps/core/models.py:91
+msgid "historique"
+msgstr "history"
+
+#: apps/documents/models.py:6 apps/news/models.py:8
+#: apps/structures/models.py:18 apps/structures/models.py:49
+#: apps/structures/models.py:108 apps/structures/models.py:139
+msgid "nom"
+msgstr "name"
+
+#: apps/documents/models.py:7 apps/news/models.py:9 apps/news/models.py:22
+msgid "slug"
+msgstr "slug"
+
+#: apps/documents/models.py:11
+msgid "catégorie de document"
+msgstr "document category"
+
+#: apps/documents/models.py:12
+msgid "catégories de documents"
+msgstr "document categories"
+
+#: apps/documents/models.py:23 apps/news/models.py:25
+msgid "catégorie"
+msgstr "category"
+
+#: apps/documents/models.py:30
+msgid "référence"
+msgstr "reference"
+
+#: apps/documents/models.py:33
+msgid "Ex : Loi n° 2018/010 du 11 juillet 2018"
+msgstr "E.g.: Law n° 2018/010 of 11 July 2018"
+
+#: apps/documents/models.py:36
+msgid "fichier PDF"
+msgstr "PDF file"
+
+#: apps/documents/models.py:37
+msgid "date de signature/publication"
+msgstr "signature/publication date"
+
+#: apps/documents/models.py:40
+msgid "document"
+msgstr "document"
+
+#: apps/documents/models.py:41
+msgid "documents"
+msgstr "documents"
+
+#: apps/news/models.py:12
+msgid "catégorie d'actualité"
+msgstr "news category"
+
+#: apps/news/models.py:13
+msgid "catégories d'actualités"
+msgstr "news categories"
+
+#: apps/news/models.py:31
+msgid "chapô"
+msgstr "summary"
+
+#: apps/news/models.py:32
+msgid "contenu"
+msgstr "content"
+
+#: apps/news/models.py:33
+msgid "image de couverture"
+msgstr "cover image"
+
+#: apps/news/models.py:34
+msgid "date de publication"
+msgstr "publication date"
+
+#: apps/news/models.py:35
+msgid "publié"
+msgstr "published"
+
+#: apps/news/models.py:38
+msgid "article"
+msgstr "article"
+
+#: apps/news/models.py:39
+msgid "actualités"
+msgstr "news"
+
+#: apps/structures/models.py:9
+msgid "Cabinet du Ministre"
+msgstr "Minister's Office"
+
+#: apps/structures/models.py:10
+msgid "Inspection Générale"
+msgstr "Inspectorate General"
+
+#: apps/structures/models.py:11
+msgid "Division"
+msgstr "Division"
+
+#: apps/structures/models.py:12
+msgid "Direction"
+msgstr "Directorate"
+
+#: apps/structures/models.py:13
+msgid "Sous-direction"
+msgstr "Sub-directorate"
+
+#: apps/structures/models.py:14
+msgid "Cellule"
+msgstr "Unit"
+
+#: apps/structures/models.py:15
+msgid "Service"
+msgstr "Department"
+
+#: apps/structures/models.py:16
+msgid "Bureau"
+msgstr "Office"
+
+#: apps/structures/models.py:19
+msgid "type"
+msgstr "type"
+
+#: apps/structures/models.py:22
+msgid "unité parente"
+msgstr "parent unit"
+
+#: apps/structures/models.py:29
+msgid "responsable"
+msgstr "head"
+
+#: apps/structures/models.py:29
+msgid "Ex : Chef de Division"
+msgstr "E.g.: Head of Division"
+
+#: apps/structures/models.py:31
+msgid "attributions"
+msgstr "responsibilities"
+
+#: apps/structures/models.py:33
+msgid "référence légale"
+msgstr "legal reference"
+
+#: apps/structures/models.py:33
+msgid "Ex : Article 25"
+msgstr "E.g.: Article 25"
+
+#: apps/structures/models.py:38
+msgid "unité organisationnelle"
+msgstr "organisational unit"
+
+#: apps/structures/models.py:39
+msgid "organigramme"
+msgstr "organisation chart"
+
+#: apps/structures/models.py:50
+msgid "chef-lieu"
+msgstr "regional capital"
+
+#: apps/structures/models.py:53 apps/structures/models.py:70
+#: apps/structures/models.py:112
+msgid "région"
+msgstr "region"
+
+#: apps/structures/models.py:54
+msgid "régions"
+msgstr "regions"
+
+#: apps/structures/models.py:65
+msgid "Délégation Régionale"
+msgstr "Regional Delegation"
+
+#: apps/structures/models.py:66
+msgid "Délégation Départementale"
+msgstr "Divisional Delegation"
+
+#: apps/structures/models.py:68
+msgid "niveau"
+msgstr "level"
+
+#: apps/structures/models.py:72
+msgid "département"
+msgstr "division"
+
+#: apps/structures/models.py:73 apps/structures/models.py:114
+msgid "ville"
+msgstr "town"
+
+#: apps/structures/models.py:78
+msgid "délégué(e)"
+msgstr "delegate"
+
+#: apps/structures/models.py:81
+msgid "À renseigner par le Ministère."
+msgstr "To be filled in by the Ministry."
+
+#: apps/structures/models.py:85
+msgid "délégation"
+msgstr "delegation"
+
+#: apps/structures/models.py:86
+msgid "délégations"
+msgstr "delegations"
+
+#: apps/structures/models.py:99
+msgid "Centre de Formation Professionnelle d'Excellence (CFPE)"
+msgstr "Centre of Excellence for Vocational Training (CFPE)"
+
+#: apps/structures/models.py:100
+msgid "Centre Sectoriel de Formation Professionnelle (CSFP)"
+msgstr "Sectoral Vocational Training Centre (CSFP)"
+
+#: apps/structures/models.py:101
+msgid "Centre de Formation aux Métiers (CFM)"
+msgstr "Trade Training Centre (CFM)"
+
+#: apps/structures/models.py:102
+msgid "Centre d'Apprentissage Professionnel (CAP)"
+msgstr "Vocational Apprenticeship Centre (CAP)"
+
+#: apps/structures/models.py:103
+msgid "Centre Public de Formation Professionnelle Rapide (CPFPR)"
+msgstr "Public Centre for Rapid Vocational Training (CPFPR)"
+
+#: apps/structures/models.py:104
+msgid "Section Artisanale Rurale / Section Ménagère (SAR/SM)"
+msgstr "Rural Craft Section / Home Economics Section (SAR/SM)"
+
+#: apps/structures/models.py:105
+msgid ""
+"Centre National de Formation des Formateurs et de Développement des "
+"Programmes"
+msgstr "National Centre for Trainer Training and Curriculum Development"
+
+#: apps/structures/models.py:106
+msgid "Centre privé agréé"
+msgstr "Approved private centre"
+
+#: apps/structures/models.py:109
+msgid "type de centre"
+msgstr "centre type"
+
+#: apps/structures/models.py:110
+msgid "structure publique"
+msgstr "public institution"
+
+#: apps/structures/models.py:119
+msgid "filières de formation"
+msgstr "training programmes"
+
+#: apps/structures/models.py:119
+msgid "Liste séparée par des virgules"
+msgstr "Comma-separated list"
+
+#: apps/structures/models.py:124
+msgid "centre de formation"
+msgstr "training centre"
+
+#: apps/structures/models.py:125
+msgid "centres de formation"
+msgstr "training centres"
+
+#: apps/structures/models.py:140
+msgid "sigle"
+msgstr "acronym"
+
+#: apps/structures/models.py:142
+msgid "site web"
+msgstr "website"
+
+#: apps/structures/models.py:146
+msgid "organisme rattaché"
+msgstr "affiliated body"
+
+#: apps/structures/models.py:147
+msgid "organismes rattachés"
+msgstr "affiliated bodies"
+
+#: templates/base.html:6 templates/core/home.html:39
+msgid "Ministère de l'Emploi et de la Formation Professionnelle"
+msgstr "Ministry of Employment and Vocational Training"
+
+#: templates/base.html:7
+msgid ""
+"Site officiel du Ministère de l'Emploi et de la Formation Professionnelle "
+"(MINEFOP) du Cameroun."
+msgstr ""
+"Official website of Cameroon's Ministry of Employment and Vocational "
+"Training (MINEFOP)."
+
+#: templates/base.html:22
+msgid "Aller au contenu"
+msgstr "Skip to content"
+
+#: templates/contact/contact.html:3 templates/partials/footer.html:40
+#: templates/partials/topbar.html:9
+msgid "Contact"
+msgstr "Contact"
+
+#: templates/contact/contact.html:5 templates/core/home.html:229
+#: templates/partials/navbar.html:45
+msgid "Nous contacter"
+msgstr "Contact us"
+
+#: templates/contact/contact.html:12
+msgid "Informations"
+msgstr "Information"
+
+#: templates/contact/contact.html:14
+msgid "Adresse"
+msgstr "Address"
+
+#: templates/contact/contact.html:15
+msgid "Courriel"
+msgstr "Email"
+
+#: templates/contact/contact.html:16
+msgid "Téléphone"
+msgstr "Phone"
+
+#: templates/contact/contact.html:17
+msgid "Horaires"
+msgstr "Opening hours"
+
+#: templates/contact/contact.html:21
+msgid "Carte"
+msgstr "Map"
+
+#: templates/contact/contact.html:25 templates/partials/footer.html:46
+msgid "Formulaire de contact"
+msgstr "Contact form"
+
+#: templates/contact/contact.html:50
+msgid "Merci de corriger les erreurs ci-dessous."
+msgstr "Please correct the errors below."
+
+#: templates/contact/contact.html:54
+msgid "Envoyer le message"
+msgstr "Send message"
+
+#: templates/core/history.html:3 templates/core/history.html:5
+#: templates/partials/footer.html:27 templates/partials/navbar.html:24
+msgid "Historique"
+msgstr "History"
+
+#: templates/core/history.html:22
+msgid "Loi n° 76/12 du 8 juillet 1976"
+msgstr "Law n° 76/12 of 8 July 1976"
+
+#: templates/core/history.html:23
+msgid ""
+"Première organisation de la formation professionnelle rapide au Cameroun."
+msgstr "First organisation of rapid vocational training in Cameroon."
+
+#: templates/core/history.html:27
+msgid "Décret n° 2011/126 du 23 mai 2011"
+msgstr "Decree n° 2011/126 of 23 May 2011"
+
+#: templates/core/history.html:28
+msgid ""
+"Organisation antérieure du Ministère de l'Emploi et de la Formation "
+"Professionnelle."
+msgstr ""
+"Previous organisation of the Ministry of Employment and Vocational Training."
+
+#: templates/core/history.html:32
+msgid "Décret n° 2012/644 du 28 décembre 2012"
+msgstr "Decree n° 2012/644 of 28 December 2012"
+
+#: templates/core/history.html:33
+msgid ""
+"Réorganisation du Ministère de l'Emploi et de la Formation Professionnelle, "
+"actuellement en vigueur."
+msgstr ""
+"Reorganisation of the Ministry of Employment and Vocational Training, "
+"currently in force."
+
+#: templates/core/history.html:37
+msgid "Loi n° 2018/010 du 11 juillet 2018"
+msgstr "Law n° 2018/010 of 11 July 2018"
+
+#: templates/core/history.html:38
+msgid ""
+"Loi régissant la formation professionnelle au Cameroun : cadre juridique "
+"général et orientations fondamentales."
+msgstr ""
+"Law governing vocational training in Cameroon: general legal framework and "
+"fundamental guidelines."
+
+#: templates/core/history.html:42
+msgid "Décret n° 2020/2592/PM du 9 juin 2020"
+msgstr "Decree n° 2020/2592/PM of 9 June 2020"
+
+#: templates/core/history.html:43
+msgid ""
+"Modalités de création, d'organisation et de fonctionnement des centres de "
+"formation professionnelle et d'apprentissage, publics et privés."
+msgstr ""
+"Rules for the creation, organisation and operation of public and private "
+"vocational training and apprenticeship centres."
+
+#: templates/core/history.html:47
+msgid "Création du CNFFDP"
+msgstr "Creation of the CNFFDP"
+
+#: templates/core/history.html:48
+msgid ""
+"Décret portant création et organisation du Centre National de Formation des "
+"Formateurs et de Développement des Programmes."
+msgstr ""
+"Decree establishing and organising the National Centre for Trainer Training "
+"and Curriculum Development."
+
+#: templates/core/history.html:55
+msgid "Cadre juridique"
+msgstr "Legal framework"
+
+#: templates/core/history.html:56
+msgid ""
+"L'action du Ministère s'appuie sur un socle législatif et réglementaire "
+"consolidé, régulièrement actualisé."
+msgstr ""
+"The Ministry's action rests on a consolidated legislative and regulatory "
+"foundation, regularly updated."
+
+#: templates/core/history.html:57
+msgid "Consulter les textes"
+msgstr "View the legal texts"
+
+#: templates/core/home.html:16
+msgid "MINEFOP"
+msgstr "MINEFOP"
+
+#: templates/core/home.html:19
+msgid "En savoir plus"
+msgstr "Learn more"
+
+#: templates/core/home.html:38 templates/partials/footer.html:10
+#: templates/partials/topbar.html:6
+msgid "République du Cameroun"
+msgstr "Republic of Cameroon"
+
+#: templates/core/home.html:40
+msgid ""
+"Construire une main-d'œuvre camerounaise qualifiée, compétitive et "
+"pleinement insérée dans l'emploi."
+msgstr ""
+"Building a skilled, competitive Cameroonian workforce fully integrated into "
+"employment."
+
+#: templates/core/home.html:42
+msgid "Trouver un centre de formation"
+msgstr "Find a training centre"
+
+#: templates/core/home.html:43
+msgid "Découvrir nos missions"
+msgstr "Discover our missions"
+
+#: templates/core/home.html:70
+msgid "Régions couvertes"
+msgstr "Regions covered"
+
+#: templates/core/home.html:77
+msgid "Types de centres publics"
+msgstr "Types of public centres"
+
+#: templates/core/home.html:84
+msgid "Langues officielles"
+msgstr "Official languages"
+
+#: templates/core/home.html:91
+msgid "Loi n° 2018/010 encadrant la FP"
+msgstr "Law n° 2018/010 governing vocational training"
+
+#: templates/core/home.html:103 templates/core/mission.html:3
+#: templates/core/mission.html:5
+msgid "Nos missions"
+msgstr "Our missions"
+
+#: templates/core/home.html:104
+msgid "Toutes les missions"
+msgstr "All missions"
+
+#: templates/core/home.html:110
+msgid "Promotion de l'emploi"
+msgstr "Employment promotion"
+
+#: templates/core/home.html:111
+msgid ""
+"Élaboration et mise en œuvre de la politique nationale de l'emploi, lutte "
+"contre le chômage et le sous-emploi."
+msgstr ""
+"Development and implementation of the national employment policy, fighting "
+"unemployment and underemployment."
+
+#: templates/core/home.html:117
+msgid "Formation professionnelle"
+msgstr "Vocational training"
+
+#: templates/core/home.html:118
+msgid ""
+"Définition des programmes, normes et référentiels de formation, agrément et "
+"suivi des structures publiques et privées."
+msgstr ""
+"Defining training programmes, standards and curricula, approving and "
+"monitoring public and private institutions."
+
+#: templates/core/home.html:124
+msgid "Orientation professionnelle"
+msgstr "Career guidance"
+
+#: templates/core/home.html:125
+msgid ""
+"Information, conseil et orientation des chercheurs d'emploi et des "
+"apprenants vers les filières porteuses."
+msgstr ""
+"Information, advice and guidance for jobseekers and learners toward "
+"promising fields of training."
+
+#: templates/core/home.html:131
+msgid "Régulation de la main-d'œuvre"
+msgstr "Labour market regulation"
+
+#: templates/core/home.html:132
+msgid ""
+"Placement, visa des contrats de travail, agrément des agences d'emploi et "
+"suivi de la main-d'œuvre nationale et expatriée."
+msgstr ""
+"Job placement, endorsement of employment contracts, approval of employment "
+"agencies, and monitoring of national and expatriate labour."
+
+#: templates/core/home.html:147 templates/core/minister.html:19
+msgid "Le Ministre"
+msgstr "The Minister"
+
+#: templates/core/home.html:151 templates/core/minister.html:3
+#: templates/core/minister.html:5 templates/partials/footer.html:24
+#: templates/partials/navbar.html:22
+msgid "Mot du Ministre"
+msgstr "Minister's Message"
+
+#: templates/core/home.html:154
+msgid ""
+"Le Ministère de l'Emploi et de la Formation Professionnelle œuvre chaque "
+"jour pour offrir à la jeunesse camerounaise les compétences et les "
+"opportunités nécessaires à une insertion professionnelle réussie, au service"
+" de l'émergence économique du Cameroun."
+msgstr ""
+"The Ministry of Employment and Vocational Training works every day to give "
+"Cameroonian youth the skills and opportunities needed for successful "
+"professional integration, in service of Cameroon's economic emergence."
+
+#: templates/core/home.html:157
+msgid "Lire le message complet"
+msgstr "Read the full message"
+
+#: templates/core/home.html:167 templates/news/detail.html:11
+#: templates/news/list.html:3 templates/news/list.html:5
+#: templates/partials/footer.html:36 templates/partials/navbar.html:39
+msgid "Actualités"
+msgstr "News"
+
+#: templates/core/home.html:168
+msgid "Toutes les actualités"
+msgstr "All news"
+
+#: templates/core/home.html:189
+msgid "Aucune actualité publiée pour le moment."
+msgstr "No news published at the moment."
+
+#: templates/core/home.html:199
+msgid "Accès rapides"
+msgstr "Quick links"
+
+#: templates/core/home.html:205 templates/partials/footer.html:33
+#: templates/partials/navbar.html:34
+#: templates/structures/training_center_detail.html:10
+#: templates/structures/training_centers.html:3
+msgid "Centres de formation"
+msgstr "Training centres"
+
+#: templates/core/home.html:213 templates/partials/footer.html:35
+msgid "Textes légaux"
+msgstr "Legal texts"
+
+#: templates/core/home.html:221 templates/partials/footer.html:34
+#: templates/partials/navbar.html:27 templates/structures/delegations.html:3
+msgid "Délégations régionales"
+msgstr "Regional delegations"
+
+#: templates/core/minister.html:27
+msgid "Chères concitoyennes, chers concitoyens,"
+msgstr "Dear fellow citizens,"
+
+#: templates/core/minister.html:28
+msgid ""
+"Le Ministère de l'Emploi et de la Formation Professionnelle porte l'ambition"
+" du Gouvernement de doter chaque Camerounaise et chaque Camerounais des "
+"compétences nécessaires pour accéder à un emploi décent ou entreprendre avec"
+" succès."
+msgstr ""
+"The Ministry of Employment and Vocational Training carries the Government's "
+"ambition to equip every Cameroonian with the skills needed to access decent "
+"employment or succeed in entrepreneurship."
+
+#: templates/core/minister.html:29
+msgid ""
+"Notre feuille de route s'articule autour de trois priorités : moderniser "
+"l'offre de formation professionnelle publique et privée, renforcer "
+"l'adéquation entre les compétences formées et les besoins du marché du "
+"travail, et accompagner l'insertion socio-professionnelle de la jeunesse sur"
+" l'ensemble du territoire national."
+msgstr ""
+"Our roadmap is built around three priorities: modernising the public and "
+"private vocational training offer, strengthening the match between trained "
+"skills and labour market needs, and supporting the socio-professional "
+"integration of young people across the whole country."
+
+#: templates/core/minister.html:30
+msgid ""
+"Ce site internet se veut un espace d'information transparent sur nos "
+"missions, notre organisation, nos centres de formation et les textes qui "
+"encadrent notre action. Je vous souhaite une excellente navigation."
+msgstr ""
+"This website aims to be a transparent source of information about our "
+"missions, our organisation, our training centres and the texts that govern "
+"our action. I wish you a pleasant visit."
+
+#: templates/core/minister.html:35
+msgid ""
+"Contenu à personnaliser par le Ministère avec le nom, la photo officielle et"
+" le message du Ministre en exercice via l'espace agent."
+msgstr ""
+"Content to be customised by the Ministry with the incumbent Minister's name,"
+" official photo and message via the staff area."
+
+#: templates/core/mission.html:13
+msgid ""
+"Conformément au décret n° 2012/644 du 28 décembre 2012 portant organisation "
+"du Ministère de l'Emploi et de la Formation Professionnelle, le Ministre est"
+" responsable de l'élaboration et de la mise en œuvre de la politique du "
+"Gouvernement en matière d'emploi, de formation et d'insertion "
+"professionnelles."
+msgstr ""
+"Pursuant to Decree n° 2012/644 of 28 December 2012 on the organisation of "
+"the Ministry of Employment and Vocational Training, the Minister is "
+"responsible for developing and implementing Government policy on employment,"
+" training and professional integration."
+
+#: templates/core/mission.html:15
+msgid "À ce titre, le Ministère est chargé :"
+msgstr "In this capacity, the Ministry is responsible for:"
+
+#: templates/core/mission.html:17
+msgid ""
+"De l'élaboration de la politique de l'emploi et de la formation "
+"professionnelle ;"
+msgstr "Developing employment and vocational training policy;"
+
+#: templates/core/mission.html:18
+msgid "Des études sur l'évolution de l'emploi et du marché du travail ;"
+msgstr "Studies on employment trends and the labour market;"
+
+#: templates/core/mission.html:19
+msgid "Des études sur l'évolution des qualifications des emplois ;"
+msgstr "Studies on the evolution of job qualifications;"
+
+#: templates/core/mission.html:20
+msgid "De la promotion de l'emploi ;"
+msgstr "Promoting employment;"
+
+#: templates/core/mission.html:21
+msgid ""
+"De la définition des programmes de formation et d'insertion professionnelle,"
+" en liaison avec les administrations et organismes concernés ;"
+msgstr ""
+"Defining training and professional integration programmes, in liaison with "
+"the relevant administrations and bodies;"
+
+#: templates/core/mission.html:22
+msgid ""
+"De la définition des normes d'organisation des systèmes d'apprentissage et "
+"de qualification professionnelle, et du contrôle de leur application ;"
+msgstr ""
+"Defining organisational standards for apprenticeship and vocational "
+"qualification systems, and monitoring their application;"
+
+#: templates/core/mission.html:23
+msgid ""
+"De la conception et de l'organisation des activités de formation à cycles "
+"courts ;"
+msgstr "Designing and organising short-cycle training activities;"
+
+#: templates/core/mission.html:24
+msgid "De l'orientation et du placement de la main-d'œuvre ;"
+msgstr "Career guidance and placement of the workforce;"
+
+#: templates/core/mission.html:25
+msgid ""
+"De l'organisation et du suivi de l'insertion professionnelle des jeunes "
+"formés ;"
+msgstr ""
+"Organising and monitoring the professional integration of trained youth;"
+
+#: templates/core/mission.html:26
+msgid ""
+"De l'organisation des activités de recyclage ou de requalification pour les "
+"travailleurs en activité et ceux ayant perdu leur emploi ;"
+msgstr ""
+"Organising retraining or reskilling activities for workers in employment and"
+" those who have lost their jobs;"
+
+#: templates/core/mission.html:27
+msgid "Du suivi de l'adéquation formation-emploi ;"
+msgstr "Monitoring the match between training and employment;"
+
+#: templates/core/mission.html:28
+msgid ""
+"Des relations avec les entreprises et les organisations professionnelles, en"
+" liaison avec les départements ministériels sectoriels concernés ;"
+msgstr ""
+"Relations with companies and professional organisations, in liaison with the"
+" relevant sectoral ministries;"
+
+#: templates/core/mission.html:29
+msgid ""
+"Du suivi et du contrôle des structures de formation professionnelle, en "
+"liaison avec les départements ministériels concernés."
+msgstr ""
+"Monitoring and oversight of vocational training institutions, in liaison "
+"with the relevant ministries."
+
+#: templates/core/mission.html:31
+msgid ""
+"Le Ministère suit également les activités des organismes d'intervention en "
+"matière de prospection d'emploi et exerce la tutelle sur le Fonds National "
+"de l'Emploi (FNE)."
+msgstr ""
+"The Ministry also monitors the activities of bodies involved in job "
+"prospecting and exercises supervisory authority over the National Employment"
+" Fund (FNE)."
+
+#: templates/core/mission.html:35
+msgid ""
+"Référence légale : Décret n° 2012/644 du 28 décembre 2012 portant "
+"organisation du Ministère de l'Emploi et de la Formation Professionnelle, "
+"Article 1er."
+msgstr ""
+"Legal reference: Decree n° 2012/644 of 28 December 2012 on the organisation "
+"of the Ministry of Employment and Vocational Training, Article 1."
+
+#: templates/core/mission.html:36
+msgid "Consulter le texte intégral"
+msgstr "View the full text"
+
+#: templates/core/mission.html:41
+msgid "Nos valeurs"
+msgstr "Our values"
+
+#: templates/core/mission.html:43
+msgid "Équité et égalité des chances"
+msgstr "Fairness and equal opportunity"
+
+#: templates/core/mission.html:44
+msgid "Qualité et excellence de la formation"
+msgstr "Quality and excellence in training"
+
+#: templates/core/mission.html:45
+msgid "Transparence et redevabilité"
+msgstr "Transparency and accountability"
+
+#: templates/core/mission.html:46
+msgid "Partenariat public-privé"
+msgstr "Public-private partnership"
+
+#: templates/core/mission.html:47
+msgid "Adéquation formation-emploi"
+msgstr "Training-employment alignment"
+
+#: templates/core/vocational_training.html:3 templates/partials/navbar.html:31
+msgid "Formation Professionnelle"
+msgstr "Vocational Training"
+
+#: templates/core/vocational_training.html:5
+msgid "Cadre légal & dispositif national de la formation professionnelle"
+msgstr "Legal framework & national vocational training system"
+
+#: templates/core/vocational_training.html:12
+msgid "La loi n° 2018/010 du 11 juillet 2018"
+msgstr "Law n° 2018/010 of 11 July 2018"
+
+#: templates/core/vocational_training.html:13
+msgid ""
+"La loi régissant la formation professionnelle au Cameroun fixe le cadre "
+"juridique général ainsi que les orientations fondamentales de la formation "
+"professionnelle. Le champ de la formation professionnelle couvre l'ensemble "
+"des formations post-éducation de base, assurées par des structures publiques"
+" ou par des structures privées agréées par l'État."
+msgstr ""
+"The law governing vocational training in Cameroon sets the general legal "
+"framework and the fundamental guidelines for vocational training. The scope "
+"of vocational training covers all post-basic-education training, provided by"
+" public institutions or by private institutions approved by the State."
+
+#: templates/core/vocational_training.html:14
+msgid ""
+"L'État accorde à la formation professionnelle un caractère de priorité "
+"nationale : il l'organise, la contrôle, et garantit l'égal accès à la "
+"formation dans les deux langues officielles à toute personne remplissant les"
+" conditions requises."
+msgstr ""
+"The State treats vocational training as a national priority: it organises "
+"it, controls it, and guarantees equal access to training in both official "
+"languages to anyone meeting the required conditions."
+
+#: templates/core/vocational_training.html:16
+msgid "Les trois piliers de la formation professionnelle"
+msgstr "The three pillars of vocational training"
+
+#: templates/core/vocational_training.html:21
+msgid "Formation initiale"
+msgstr "Initial training"
+
+#: templates/core/vocational_training.html:22
+msgid ""
+"Transmet les compétences, connaissances et savoir-faire indispensables à "
+"l'exercice d'une activité professionnelle."
+msgstr ""
+"Provides the skills, knowledge and know-how essential to carrying out a "
+"professional activity."
+
+#: templates/core/vocational_training.html:28
+msgid "Formation continue"
+msgstr "Continuing training"
+
+#: templates/core/vocational_training.html:29
+msgid ""
+"Assure le recyclage ou le perfectionnement des professionnels, en structure "
+"ou en entreprise."
+msgstr ""
+"Provides retraining or upskilling for professionals, either in an "
+"institution or in a company."
+
+#: templates/core/vocational_training.html:35
+msgid "Apprentissage"
+msgstr "Apprenticeship"
+
+#: templates/core/vocational_training.html:36
+msgid ""
+"Formation alternée de longue durée entre entreprise et centre, sanctionnée "
+"par une qualification reconnue."
+msgstr ""
+"Long-term alternating training between a company and a centre, leading to a "
+"recognised qualification."
+
+#: templates/core/vocational_training.html:41
+msgid "Les structures publiques de formation professionnelle"
+msgstr "Public vocational training institutions"
+
+#: templates/core/vocational_training.html:42
+msgid ""
+"Le décret n° 2020/2592/PM du 9 juin 2020 fixe les modalités de création, "
+"d'organisation et de fonctionnement des centres de formation professionnelle"
+" et d'apprentissage. Six catégories de structures publiques composent le "
+"réseau national :"
+msgstr ""
+"Decree n° 2020/2592/PM of 9 June 2020 sets the rules for the creation, "
+"organisation and operation of vocational training and apprenticeship "
+"centres. Six categories of public institutions make up the national network:"
+
+#: templates/core/vocational_training.html:47
+msgid "Centres de Formation Professionnelle d'Excellence"
+msgstr "Centres of Excellence for Vocational Training"
+
+#: templates/core/vocational_training.html:53
+msgid "Centres Sectoriels de Formation Professionnelle"
+msgstr "Sectoral Vocational Training Centres"
+
+#: templates/core/vocational_training.html:59
+msgid "Centres de Formation aux Métiers"
+msgstr "Trade Training Centres"
+
+#: templates/core/vocational_training.html:65
+msgid "Centres d'Apprentissage Professionnel"
+msgstr "Vocational Apprenticeship Centres"
+
+#: templates/core/vocational_training.html:71
+msgid "Centres Publics de Formation Professionnelle Rapide"
+msgstr "Public Centres for Rapid Vocational Training"
+
+#: templates/core/vocational_training.html:77
+msgid "Sections Artisanales Rurales et Sections Ménagères"
+msgstr "Rural Craft Sections and Home Economics Sections"
+
+#: templates/core/vocational_training.html:81
+msgid "Consulter l'annuaire des centres de formation"
+msgstr "Browse the training centre directory"
+
+#: templates/core/vocational_training.html:83
+msgid "Ouvrir un centre privé de formation professionnelle"
+msgstr "Opening a private vocational training centre"
+
+#: templates/core/vocational_training.html:84
+msgid ""
+"Toute personne physique ou morale peut créer un centre privé de formation "
+"professionnelle ou d'apprentissage, sous réserve de l'agrément préalable du "
+"Ministre chargé de la formation professionnelle. La dénomination du centre "
+"doit être précédée de « Centre de formation professionnelle », « Institut de"
+" formation professionnelle » ou « Centre d'apprentissage ». L'agrément est "
+"valable trois (3) ans, renouvelable."
+msgstr ""
+"Any individual or legal entity may create a private vocational training or "
+"apprenticeship centre, subject to prior approval from the Minister in charge"
+" of vocational training. The centre's name must be preceded by “Vocational "
+"training centre”, “Vocational training institute” or “Apprenticeship "
+"centre”. The approval is valid for three (3) years, renewable."
+
+#: templates/core/vocational_training.html:86
+msgid "Formation des formateurs"
+msgstr "Training the trainers"
+
+#: templates/core/vocational_training.html:87
+msgid ""
+"Le Centre National de Formation des Formateurs et de Développement des "
+"Programmes (CNFFDP), créé par décret présidentiel en 2023, a pour mission de"
+" former les formateurs et de promouvoir l'ingénierie de la formation "
+"professionnelle, en liaison avec la Direction de la Formation et de "
+"l'Orientation Professionnelles du Ministère."
+msgstr ""
+"The National Centre for Trainer Training and Curriculum Development "
+"(CNFFDP), established by presidential decree in 2023, is tasked with "
+"training trainers and promoting vocational training engineering, in liaison "
+"with the Ministry's Directorate of Training and Career Guidance."
+
+#: templates/core/vocational_training.html:92
+msgid "Textes de référence"
+msgstr "Reference texts"
+
+#: templates/core/vocational_training.html:94
+msgid ""
+"Loi n° 2018/010 du 11 juillet 2018 régissant la formation professionnelle"
+msgstr "Law n° 2018/010 of 11 July 2018 governing vocational training"
+
+#: templates/core/vocational_training.html:95
+msgid "Décret n° 2020/2592/PM du 9 juin 2020 relatif aux centres de formation"
+msgstr "Decree n° 2020/2592/PM of 9 June 2020 on training centres"
+
+#: templates/core/vocational_training.html:96
+msgid ""
+"Décret n° 2012/644 du 28 décembre 2012 portant organisation du Ministère"
+msgstr ""
+"Decree n° 2012/644 of 28 December 2012 on the organisation of the Ministry"
+
+#: templates/core/vocational_training.html:98
+msgid "Télécharger les textes"
+msgstr "Download the texts"
+
+#: templates/core/vocational_training.html:101
+msgid "Validation des Acquis de l'Expérience"
+msgstr "Validation of Prior Experience (VAE)"
+
+#: templates/core/vocational_training.html:102
+msgid ""
+"La VAE est un droit reconnu à toute personne disposant d'aptitudes "
+"professionnelles acquises dans la vie active, lui permettant d'obtenir une "
+"certification correspondant à son expérience."
+msgstr ""
+"VAE is a right recognised for anyone with professional skills acquired "
+"through work experience, allowing them to obtain a certification matching "
+"their experience."
+
+#: templates/documents/list.html:3 templates/documents/list.html:5
+msgid "Textes légaux & documents"
+msgstr "Legal texts & documents"
+
+#: templates/documents/list.html:6
+msgid ""
+"Lois, décrets et documents officiels régissant l'emploi et la formation "
+"professionnelle au Cameroun."
+msgstr ""
+"Laws, decrees and official documents governing employment and vocational "
+"training in Cameroon."
+
+#: templates/documents/list.html:14
+msgid "Catégories"
+msgstr "Categories"
+
+#: templates/documents/list.html:16
+msgid "Tous les documents"
+msgstr "All documents"
+
+#: templates/documents/list.html:35
+msgid "Télécharger"
+msgstr "Download"
+
+#: templates/documents/list.html:39
+msgid "Aucun document disponible pour cette catégorie."
+msgstr "No document available for this category."
+
+#: templates/errors/404.html:7
+msgid "Page introuvable"
+msgstr "Page not found"
+
+#: templates/errors/404.html:8
+msgid "La page que vous recherchez n'existe pas ou a été déplacée."
+msgstr "The page you are looking for does not exist or has been moved."
+
+#: templates/errors/404.html:9 templates/errors/500.html:9
+msgid "Retour à l'accueil"
+msgstr "Back to homepage"
+
+#: templates/errors/500.html:7
+msgid "Une erreur est survenue"
+msgstr "An error occurred"
+
+#: templates/errors/500.html:8
+msgid "Veuillez réessayer ultérieurement."
+msgstr "Please try again later."
+
+#: templates/news/detail.html:10 templates/partials/navbar.html:17
+#: templates/partials/page_header.html:6
+#: templates/structures/training_center_detail.html:9
+msgid "Accueil"
+msgstr "Home"
+
+#: templates/news/detail.html:28
+msgid "Retour aux actualités"
+msgstr "Back to news"
+
+#: templates/news/detail.html:32
+msgid "À lire aussi"
+msgstr "Also read"
+
+#: templates/news/list.html:11
+msgid "Toutes"
+msgstr "All"
+
+#: templates/news/list.html:35
+msgid "Aucune actualité pour le moment."
+msgstr "No news at the moment."
+
+#: templates/partials/footer.html:13
+msgid ""
+"Ministère de l'Emploi et de la Formation Professionnelle — au service de "
+"l'employabilité et de la qualification professionnelle des Camerounais."
+msgstr ""
+"Ministry of Employment and Vocational Training — serving the employability "
+"and professional qualification of Cameroonians."
+
+#: templates/partials/footer.html:22 templates/partials/navbar.html:20
+msgid "Le Ministère"
+msgstr "The Ministry"
+
+#: templates/partials/footer.html:25 templates/partials/navbar.html:23
+msgid "Missions"
+msgstr "Missions"
+
+#: templates/partials/footer.html:26 templates/partials/navbar.html:25
+#: templates/structures/org_chart.html:3 templates/structures/org_chart.html:5
+msgid "Organigramme"
+msgstr "Organisation chart"
+
+#: templates/partials/footer.html:31
+msgid "Ressources"
+msgstr "Resources"
+
+#: templates/partials/footer.html:42
+msgid "Avenue Winston Churchill, Yaoundé"
+msgstr "Avenue Winston Churchill, Yaoundé"
+
+#: templates/partials/footer.html:52
+msgid "Tous droits réservés"
+msgstr "All rights reserved"
+
+#: templates/partials/footer.html:53 templates/partials/topbar.html:6
+msgid "Paix – Travail – Patrie"
+msgstr "Peace – Work – Fatherland"
+
+#: templates/partials/navbar.html:8
+msgid "Emploi & Formation Professionnelle"
+msgstr "Employment & Vocational Training"
+
+#: templates/partials/navbar.html:26
+#: templates/structures/attached_bodies.html:3
+#: templates/structures/attached_bodies.html:5
+#: templates/structures/org_chart.html:36
+msgid "Organismes rattachés"
+msgstr "Affiliated bodies"
+
+#: templates/partials/navbar.html:33
+msgid "Cadre légal & dispositif national"
+msgstr "Legal framework & national system"
+
+#: templates/partials/navbar.html:35
+msgid "Textes légaux & réglementaires"
+msgstr "Legal & regulatory texts"
+
+#: templates/partials/navbar.html:42
+msgid "Documents"
+msgstr "Documents"
+
+#: templates/partials/pagination.html:3
+msgid "Pagination"
+msgstr "Pagination"
+
+#: templates/partials/topbar.html:10
+msgid "Espace agent"
+msgstr "Staff area"
+
+#: templates/structures/attached_bodies.html:17
+msgid "Site web"
+msgstr "Website"
+
+#: templates/structures/attached_bodies.html:21
+msgid "Aucun organisme rattaché renseigné."
+msgstr "No affiliated body listed."
+
+#: templates/structures/delegations.html:5
+msgid "Délégations régionales & départementales"
+msgstr "Regional & divisional delegations"
+
+#: templates/structures/delegations.html:6
+msgid ""
+"Les services déconcentrés du Ministère présents dans les 10 régions du "
+"Cameroun."
+msgstr ""
+"The Ministry's decentralised services present in Cameroon's 10 regions."
+
+#: templates/structures/delegations.html:12
+#: templates/structures/training_centers.html:22
+msgid "Toutes les régions"
+msgstr "All regions"
+
+#: templates/structures/delegations.html:28
+msgid "À renseigner"
+msgstr "To be filled in"
+
+#: templates/structures/delegations.html:33
+msgid "Aucune délégation renseignée pour cette région."
+msgstr "No delegation listed for this region."
+
+#: templates/structures/org_chart.html:6
+msgid ""
+"Organisation du Ministère selon le décret n° 2012/644 du 28 décembre 2012."
+msgstr ""
+"Organisation of the Ministry under Decree n° 2012/644 of 28 December 2012."
+
+#: templates/structures/org_chart.html:13
+msgid ""
+"Le Ministère de l'Emploi et de la Formation Professionnelle dispose d'un "
+"Secrétariat Particulier, de Conseillers Techniques, d'une Inspection "
+"Générale des Services, d'une Inspection Générale des Formations, d'une "
+"Administration Centrale, de Services Déconcentrés et d'Organismes Rattachés."
+msgstr ""
+"The Ministry of Employment and Vocational Training has a Private "
+"Secretariat, Technical Advisers, an Inspectorate General of Services, an "
+"Inspectorate General of Training, a Central Administration, Decentralised "
+"Services and Affiliated Bodies."
+
+#: templates/structures/org_chart.html:20
+msgid "L'organigramme sera bientôt disponible."
+msgstr "The organisation chart will be available soon."
+
+#: templates/structures/org_chart.html:28
+msgid "Services déconcentrés"
+msgstr "Decentralised services"
+
+#: templates/structures/org_chart.html:29
+msgid ""
+"Délégations Régionales, Délégations Départementales et structures publiques "
+"de formation professionnelle."
+msgstr ""
+"Regional Delegations, Divisional Delegations and public vocational training "
+"institutions."
+
+#: templates/structures/org_chart.html:30
+msgid "Voir les délégations"
+msgstr "View the delegations"
+
+#: templates/structures/org_chart.html:37
+msgid "ONEFOP, PIAASI, COSUP et autres structures rattachées au Ministère."
+msgstr "ONEFOP, PIAASI, COSUP and other bodies affiliated with the Ministry."
+
+#: templates/structures/org_chart.html:38
+msgid "Voir les organismes"
+msgstr "View the bodies"
+
+#: templates/structures/training_center_detail.html:25
+msgid "Filières de formation"
+msgstr "Training programmes"
+
+#: templates/structures/training_center_detail.html:33
+msgid "Coordonnées"
+msgstr "Contact details"
+
+#: templates/structures/training_center_detail.html:38
+msgid "Structure publique"
+msgstr "Public institution"
+
+#: templates/structures/training_center_detail.html:38
+msgid "Structure privée agréée"
+msgstr "Approved private institution"
+
+#: templates/structures/training_centers.html:5
+msgid "Centres de formation professionnelle"
+msgstr "Vocational training centres"
+
+#: templates/structures/training_centers.html:6
+msgid ""
+"Annuaire des structures publiques et privées agréées réparties sur le "
+"territoire national."
+msgstr ""
+"Directory of public and approved private institutions across the national "
+"territory."
+
+#: templates/structures/training_centers.html:14
+msgid "Tous les types"
+msgstr "All types"
+
+#: templates/structures/training_centers.html:29
+msgid "Filtrer"
+msgstr "Filter"
+
+#: templates/structures/training_centers.html:48
+msgid "Aucun centre ne correspond à vos critères."
+msgstr "No centre matches your criteria."
