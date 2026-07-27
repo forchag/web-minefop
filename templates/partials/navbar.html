@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white main-navbar py-2 sticky-top">
   <div class="container">
     <a class="navbar-brand navbar-brand-minefop" href="{% url 'core:home' %}">
-      <span class="brand-emblem">MF</span>
+      <span class="brand-emblem">{% include "partials/emblem.html" with size="40" %}</span>
       <span class="brand-title">
         <strong>MINEFOP</strong>
         <small>{% trans "Emploi & Formation Professionnelle" %}</small>

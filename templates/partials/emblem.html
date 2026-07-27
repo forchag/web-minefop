@@ -1,0 +1,35 @@
+{% comment %}
+Stylised rendition of the Cameroonian coat of arms motif (shield, gold star,
+red triangle, blue map silhouette with the scales of justice, crossed
+fasces) — not a certified reproduction of the official seal, but an
+accurate evocation of its documented heraldry (source: "Armoiries du
+Cameroun"). Usage: {% include "partials/emblem.html" with size="48" %}
+{% endcomment %}
+<svg viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg" width="{{ size|default:'44' }}" height="{{ size|default:'44' }}" role="img" aria-label="MINEFOP">
+  <defs>
+    <linearGradient id="emblemShield" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a6b3c"/>
+      <stop offset="100%" stop-color="#023018"/>
+    </linearGradient>
+  </defs>
+  <!-- crossed fasces -->
+  <g stroke="#d9c26a" stroke-width="2.5" opacity="0.85">
+    <line x1="6" y1="14" x2="46" y2="70"/>
+    <line x1="94" y1="14" x2="54" y2="70"/>
+  </g>
+  <!-- shield -->
+  <path d="M50 6 L88 16 V54 C88 82 72 98 50 110 C28 98 12 82 12 54 V16 Z" fill="url(#emblemShield)" stroke="#d9c26a" stroke-width="2"/>
+  <!-- gold star -->
+  <polygon points="50,20 53.5,30.5 64.5,30.5 55.5,37 59,47.5 50,41 41,47.5 44.5,37 35.5,30.5 46.5,30.5" fill="#fcd116"/>
+  <!-- red triangle -->
+  <path d="M50 44 L68 92 H32 Z" fill="#ce1126"/>
+  <!-- blue map silhouette -->
+  <path d="M50 52 C55 58 54 66 58 70 C60 74 57 80 52 82 C48 84 46 78 47 72 C44 68 45 60 50 52 Z" fill="#1c4fa0"/>
+  <!-- scale of justice -->
+  <g stroke="#111" stroke-width="1.6" fill="none">
+    <line x1="50" y1="60" x2="50" y2="88"/>
+    <line x1="40" y1="66" x2="60" y2="66"/>
+    <circle cx="40" cy="70" r="3"/>
+    <circle cx="60" cy="70" r="3"/>
+  </g>
+</svg>

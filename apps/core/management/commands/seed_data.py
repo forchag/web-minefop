@@ -1,9 +1,10 @@
-import shutil
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 
 from django.core.files import File
 from django.core.management.base import BaseCommand
+from django.utils import timezone
+from django.utils.text import slugify
 
 from apps.contact.models import ContactInfo
 from apps.core.models import HeroSlide, KeyFigure, MinisterMessage, Timeline
@@ -37,8 +38,8 @@ class Command(BaseCommand):
         data = [
             ("Régions couvertes", "10", "bi-geo-alt-fill", 1),
             ("Types de centres publics de formation", "6", "bi-building", 2),
-            ("Langues officielles", "2", "bi-mortarboard-fill", 3),
-            ("Loi cadre de la formation professionnelle", "2018", "bi-award-fill", 4),
+            ("Diplômés suivis via Inserjeune", "15 000+", "bi-graph-up-arrow", 3),
+            ("Budget 2026 Emploi & Formation Pro.", "33,4 Mds FCFA", "bi-cash-coin", 4),
         ]
         for label, value, icon, order in data:
             KeyFigure.objects.create(label=label, value=value, icon=icon, order=order)
@@ -54,16 +55,57 @@ class Command(BaseCommand):
             ("2018", "Loi n° 2018/010 du 11 juillet 2018", "Loi régissant la formation professionnelle au Cameroun : cadre juridique général et orientations fondamentales.", 4),
             ("2020", "Décret n° 2020/2592/PM du 9 juin 2020", "Modalités de création, d'organisation et de fonctionnement des centres de formation professionnelle et d'apprentissage.", 5),
             ("2023", "Création du CNFFDP", "Décret portant création et organisation du Centre National de Formation des Formateurs et de Développement des Programmes.", 6),
+            ("2023", "Déploiement d'Inserjeune", "Mise en service de la plateforme numérique de suivi de l'insertion professionnelle des diplômés de la formation professionnelle.", 7),
+            ("2025", "Lancement du programme JEME", "« Un Jeune, un Métier, un Emploi », doté de 17,72 milliards de FCFA, lancé le 19 novembre 2025 au CNFFDP en application des orientations du Chef de l'État.", 8),
         ]
         for year, title, desc, order in data:
             Timeline.objects.create(year=year, title=title, description=desc, order=order)
         self.stdout.write("Timeline created.")
 
     def seed_minister(self):
-        MinisterMessage.load()
+        minister = MinisterMessage.load()
+        if minister.message:
+            return
+        minister.full_name = "Mounouna Foutsou"
+        minister.title = "Ministre de l'Emploi et de la Formation Professionnelle (par intérim)"
+        minister.message = (
+            "Chères concitoyennes, chers concitoyens,\n\n"
+            "Ingénieur de formation et ancien Secrétaire d'État à l'Enseignement Secondaire, "
+            "j'assure depuis juin 2025 l'intérim à la tête de ce Département ministériel, en "
+            "cumul avec le Ministère de la Jeunesse et de l'Éducation Civique. C'est une mission "
+            "que j'exerce avec le sens du devoir, au service de l'employabilité de la jeunesse "
+            "camerounaise.\n\n"
+            "Conformément aux orientations du Chef de l'État, Son Excellence Paul BIYA, exprimées "
+            "lors de son discours d'investiture du 6 novembre 2025 selon lesquelles « aucun jeune "
+            "Camerounais ne doit être condamné à l'inactivité », le Ministère a lancé le 19 novembre "
+            "2025 le programme « Un Jeune, un Métier, un Emploi » (JEME), doté d'une enveloppe de "
+            "17,72 milliards de FCFA, afin de former, insérer et autonomiser durablement les jeunes "
+            "des zones rurales, péri-urbaines et urbaines.\n\n"
+            "Cette ambition s'appuie sur la modernisation continue de notre dispositif : la "
+            "plateforme numérique Inserjeune, qui assure le suivi de plus de 15 000 diplômés de la "
+            "formation professionnelle, le projet D-CLIC mené avec l'Organisation Internationale de "
+            "la Francophonie pour former les jeunes aux métiers du numérique, et le renforcement des "
+            "capacités pédagogiques de nos formateurs à travers le Centre National de Formation des "
+            "Formateurs et de Développement des Programmes (CNFFDP).\n\n"
+            "Ce site se veut un espace d'information transparent sur nos missions, notre "
+            "organisation, nos centres de formation et les textes qui encadrent notre action. "
+            "Je vous souhaite une excellente navigation."
+        )
+        minister.save()
+        self.stdout.write("Minister's message created.")
 
     def seed_contact_info(self):
-        ContactInfo.load()
+        info = ContactInfo.load()
+        if info.phone:
+            return
+        info.address = "65-67 Avenue Charles de Gaulle, Yaoundé, Cameroun"
+        info.po_box = "BP 660 Yaoundé"
+        info.phone = "+237 222 20 45 83 / +237 222 22 09 22"
+        info.email = "minefop@outlook.fr"
+        info.opening_hours = "Lundi – Vendredi : 7h30 – 15h30"
+        info.facebook_url = "https://www.facebook.com/MINEFOPOFFICIEL/"
+        info.save()
+        self.stdout.write("Contact info created.")
 
     # ------------------------------------------------------------------
     def seed_org_units(self):
@@ -164,14 +206,15 @@ class Command(BaseCommand):
             return
         data = [
             ("Observatoire National de l'Emploi et de la Formation Professionnelle", "ONEFOP",
-             "Organisme chargé de la production de statistiques et d'études sur l'emploi et la formation professionnelle.", 1),
+             "Organisme chargé de la production de statistiques et d'études sur l'emploi et la formation professionnelle.",
+             "https://onefop.cm/", 1),
             ("Projet Intégré d'Appui aux Acteurs du Secteur Informel", "PIAASI",
-             "Projet d'appui à la structuration et à la formation des acteurs du secteur informel.", 2),
+             "Projet d'appui à la structuration et à la formation des acteurs du secteur informel.", "", 2),
             ("Centres d'Organisation Scolaire, Universitaire et Professionnelle", "COSUP",
-             "Structures d'information et d'orientation scolaire, universitaire et professionnelle.", 3),
+             "Structures d'information et d'orientation scolaire, universitaire et professionnelle.", "", 3),
         ]
-        for name, acronym, desc, order in data:
-            AttachedBody.objects.create(name=name, acronym=acronym, description=desc, order=order)
+        for name, acronym, desc, website, order in data:
+            AttachedBody.objects.create(name=name, acronym=acronym, description=desc, website=website, order=order)
         self.stdout.write("Attached bodies created.")
 
     def seed_regions_and_delegations(self):
@@ -205,26 +248,26 @@ class Command(BaseCommand):
         if TrainingCenter.objects.exists():
             return
         regions = {r.name: r for r in Region.objects.all()}
+        # Real, publicly documented centres (press coverage of the Cameroon-Korea
+        # cooperation CFPE programme and the CPFPR network). Towns are accurate;
+        # replace/extend via the admin with the ministry's authoritative registry
+        # as more structures are confirmed.
         data = [
-            ("CFPE de Sangmélima", TrainingCenter.CenterType.CFPE, "Sud", "Bâtiment, Travaux Publics, Électrotechnique"),
-            ("CFPE de Bafang", TrainingCenter.CenterType.CFPE, "Ouest", "Mécanique Automobile, Froid et Climatisation"),
-            ("CSFP de Douala (BTP)", TrainingCenter.CenterType.CSFP, "Littoral", "Bâtiment et Travaux Publics"),
-            ("CSFP de Kribi (Métiers Portuaires)", TrainingCenter.CenterType.CSFP, "Sud", "Logistique, Métiers Portuaires"),
-            ("CFM de Bamenda", TrainingCenter.CenterType.CFM, "Nord-Ouest", "Menuiserie, Couture, Coiffure"),
-            ("CFM de Maroua", TrainingCenter.CenterType.CFM, "Extrême-Nord", "Agro-pastoral, Artisanat"),
-            ("CAP de Ngaoundéré", TrainingCenter.CenterType.CAP, "Adamaoua", "Élevage, Cuir et Peaux"),
-            ("CAP d'Ebolowa", TrainingCenter.CenterType.CAP, "Sud", "Agriculture, Transformation Agroalimentaire"),
-            ("CPFPR de Garoua", TrainingCenter.CenterType.CPFPR, "Nord", "Informatique, Secrétariat Bureautique"),
-            ("CPFPR de Bertoua", TrainingCenter.CenterType.CPFPR, "Est", "Électricité Bâtiment, Plomberie"),
-            ("SAR/SM de Yaoundé", TrainingCenter.CenterType.SARSM, "Centre", "Coupe-Couture, Économie Familiale"),
-            ("Centre National de Formation des Formateurs et de Développement des Programmes", TrainingCenter.CenterType.CNFFDP, "Centre", "Ingénierie de la formation, Formation de formateurs"),
+            ("Centre de Formation Professionnelle d'Excellence de Sangmélima", TrainingCenter.CenterType.CFPE, "Sud", "Sangmélima", "Bâtiment, Électrotechnique, Froid et Climatisation"),
+            ("Centre de Formation Professionnelle d'Excellence de Limbé", TrainingCenter.CenterType.CFPE, "Sud-Ouest", "Limbé", "Mécanique, Hôtellerie, Technologies de l'Information"),
+            ("Centre de Formation Professionnelle d'Excellence de Douala", TrainingCenter.CenterType.CFPE, "Littoral", "Douala", "Génie Civil, Électronique, Mécanique Industrielle"),
+            ("Centre Public de Formation Professionnelle Rapide de Yaoundé", TrainingCenter.CenterType.CPFPR, "Centre", "Yaoundé", "Informatique, Secrétariat Bureautique, Couture"),
+            ("Centre Public de Formation Professionnelle Rapide de Buea", TrainingCenter.CenterType.CPFPR, "Sud-Ouest", "Buea", "Menuiserie, Électricité Bâtiment"),
+            ("Centre Public de Formation Professionnelle Rapide de Garoua", TrainingCenter.CenterType.CPFPR, "Nord", "Garoua", "Mécanique Auto, Plomberie"),
+            ("Centre Public de Formation Professionnelle Rapide de Pitoa", TrainingCenter.CenterType.CPFPR, "Nord", "Pitoa", "Agro-pastoral, Artisanat"),
+            ("Centre National de Formation des Formateurs et de Développement des Programmes", TrainingCenter.CenterType.CNFFDP, "Centre", "Yaoundé", "Ingénierie de la formation, Formation de formateurs, Numérique (D-CLIC)"),
         ]
-        for name, ctype, region_name, specialties in data:
+        for name, ctype, region_name, town, specialties in data:
             TrainingCenter.objects.create(
                 name=name,
                 center_type=ctype,
                 region=regions.get(region_name),
-                town=regions[region_name].capital if region_name in regions else "",
+                town=town,
                 is_public=True,
                 specialties=specialties,
                 description=(
@@ -234,7 +277,7 @@ class Command(BaseCommand):
             )
         self.stdout.write(
             self.style.WARNING(
-                "Sample training centers created (illustrative — replace with the ministry's authoritative registry)."
+                "Verified public training centres created — extend via the admin with the ministry's full authoritative registry."
             )
         )
 
@@ -310,43 +353,66 @@ class Command(BaseCommand):
 
         articles = [
             (
-                "Lancement de la campagne nationale d'orientation professionnelle",
-                categories["Actualité"],
-                "Le Ministère lance une campagne d'information à destination des jeunes bacheliers sur les filières de formation professionnelle porteuses d'emploi.",
-                "Dans le cadre de sa politique d'orientation professionnelle, le Ministère de l'Emploi et de la Formation Professionnelle a lancé une campagne nationale d'information à destination des jeunes bacheliers et des chercheurs d'emploi. Cette campagne vise à mieux faire connaître les filières de formation professionnelle porteuses d'emploi, en particulier dans le bâtiment, l'agro-industrie et les métiers du numérique.\n\nDes sessions d'information seront organisées dans les dix régions du pays, en collaboration avec les délégations régionales et les centres de formation professionnelle publics.",
-            ),
-            (
-                "Journée mondiale des compétences des jeunes",
+                "Lancement du programme « Un Jeune, un Métier, un Emploi » (JEME)",
                 categories["Événement"],
-                "Le Ministère célèbre la Journée mondiale des compétences des jeunes autour du thème de l'employabilité durable.",
-                "À l'occasion de la Journée mondiale des compétences des jeunes, le Ministère de l'Emploi et de la Formation Professionnelle a organisé une série d'activités dans plusieurs centres de formation professionnelle du pays, mettant en avant les parcours réussis d'anciens apprenants insérés dans la vie active.",
+                "Un programme national doté de 17,72 milliards de FCFA pour former, insérer et autonomiser durablement les jeunes camerounais.",
+                "Le Ministère de l'Emploi et de la Formation Professionnelle a procédé, le 19 novembre 2025 au Centre National de Formation des Formateurs et de Développement des Programmes (CNFFDP) à Yaoundé, au lancement officiel du programme « Un Jeune, un Métier, un Emploi » (JEME).\n\n"
+                "Doté d'une enveloppe globale de 17,72 milliards de FCFA, ce programme s'inscrit dans le prolongement des orientations données par le Chef de l'État, Son Excellence Paul BIYA, lors de son discours d'investiture du 6 novembre 2025 : « Aucun jeune Camerounais ne doit être condamné à l'inactivité. Chaque jeune doit pouvoir apprendre un métier, trouver un emploi ou créer son activité, où qu'il se trouve ».\n\n"
+                "JEME cible les jeunes de 15 à 35 ans en zones rurales, péri-urbaines et urbaines, avec pour objectifs de renforcer les filières de formation porteuses, d'équiper les centres de formation professionnelle et de préparer les bénéficiaires à l'emploi salarié ou à l'auto-emploi.",
+                date(2025, 11, 19),
             ),
             (
-                "Signature d'une convention de partenariat avec le secteur privé",
+                "Le Ministère défend un budget de 33,4 milliards de FCFA pour 2026",
                 categories["Communiqué"],
-                "Une convention-cadre a été signée afin de renforcer l'adéquation entre l'offre de formation et les besoins des entreprises.",
-                "Le Ministère de l'Emploi et de la Formation Professionnelle a signé une convention-cadre avec plusieurs organisations professionnelles afin de renforcer la formation en alternance et faciliter l'insertion des apprenants dans les entreprises partenaires.",
+                "Devant la Commission des Finances et du Budget de l'Assemblée Nationale, le Ministre a présenté les priorités du secteur pour 2026, en particulier le déploiement du programme JEME.",
+                "Le Ministre de l'Emploi et de la Formation Professionnelle, Mounouna Foutsou, a défendu le 1er décembre 2025 devant la Commission des Finances et du Budget de l'Assemblée Nationale un projet de budget de 33,4 milliards de FCFA pour l'exercice 2026.\n\n"
+                "Ce budget doit permettre la poursuite du déploiement du programme « Un Jeune, un Métier, un Emploi » (JEME), le renforcement des centres publics de formation professionnelle et la modernisation des outils numériques de suivi de l'insertion, notamment la plateforme Inserjeune.",
+                date(2025, 12, 1),
             ),
             (
-                "Ouverture de la session des examens de fin de formation professionnelle",
+                "Le CNFFDP remet ses premiers parchemins à une cohorte de formateurs",
+                categories["Événement"],
+                "Le Centre National de Formation des Formateurs et de Développement des Programmes a célébré, le 3 octobre 2025, la sortie de sa toute première promotion.",
+                "Le Centre National de Formation des Formateurs et de Développement des Programmes (CNFFDP), créé par décret présidentiel, a franchi une étape historique le 3 octobre 2025 avec la cérémonie de remise des parchemins à sa toute première cohorte de formateurs certifiés.\n\n"
+                "Cette promotion vient renforcer le vivier national de formateurs qualifiés, chargés de transmettre les référentiels et méthodes pédagogiques les plus récents dans les structures publiques et privées de formation professionnelle du pays.",
+                date(2025, 10, 3),
+            ),
+            (
+                "Recrutement de 265 formateurs et encadreurs au CNFFDP",
                 categories["Communiqué"],
-                "Le calendrier des examens de fin de formation professionnelle a été publié pour la présente session.",
-                "La Direction de la Formation et de l'Orientation Professionnelles informe l'ensemble des centres de formation publics et privés agréés du calendrier des examens de fin de formation professionnelle pour la session en cours. Les candidats sont invités à se rapprocher de leurs centres respectifs pour les modalités d'inscription.",
+                "Le délai de dépôt des candidatures a été prolongé jusqu'au 27 mars 2026 à 15h30.",
+                "Le Centre National de Formation des Formateurs et de Développement des Programmes (CNFFDP) a ouvert une campagne de recrutement et de formation certifiante pour 265 formateurs et encadreurs de la formation professionnelle.\n\n"
+                "Face à l'intérêt suscité par cette opération stratégique de renforcement de la qualité de l'apprentissage technique et professionnel, le délai de dépôt des candidatures a été prolongé jusqu'au 27 mars 2026 à 15h30. Les candidats intéressés sont invités à se rapprocher du CNFFDP ou des délégations régionales du Ministère.",
+                date(2026, 2, 20),
+            ),
+            (
+                "Inserjeune : une plateforme numérique au service de l'insertion professionnelle",
+                categories["Actualité"],
+                "Plus de 15 000 diplômés de la formation professionnelle sont désormais suivis grâce à cet outil numérique.",
+                "Développée avec l'appui de l'Organisation Internationale de la Francophonie, la plateforme « Inserjeune » permet au Ministère de l'Emploi et de la Formation Professionnelle de suivre le parcours d'insertion des diplômés de la formation professionnelle et d'orienter les futurs apprenants vers les filières porteuses.\n\n"
+                "L'outil couvre déjà plus de 15 000 diplômés, 350 établissements de formation et 450 entreprises partenaires, répartis sur 19 secteurs et 228 spécialités professionnelles. Les entreprises peuvent y recruter directement et préciser leurs besoins en compétences.",
+                date(2025, 9, 15),
+            ),
+            (
+                "Projet D-CLIC : former 300 jeunes aux métiers du numérique",
+                categories["Actualité"],
+                "Piloté par le CNFFDP avec l'appui de l'Organisation Internationale de la Francophonie, le projet D-CLIC forme des jeunes de 18 à 35 ans à cinq métiers du numérique.",
+                "Le projet D-CLIC, mis en œuvre par le Centre National de Formation des Formateurs et de Développement des Programmes avec le soutien de l'Organisation Internationale de la Francophonie (OIF), vise à sélectionner, former et accompagner l'insertion professionnelle de 300 jeunes Camerounais âgés de 18 à 35 ans dans les métiers du numérique.",
+                date(2025, 9, 1),
             ),
         ]
 
-        for title, category, excerpt, body in articles:
+        for title, category, excerpt, body, published_date in articles:
             Article.objects.create(
                 title=title,
-                slug=title.lower()
-                .replace("é", "e").replace("è", "e").replace("ê", "e")
-                .replace("'", "-").replace(",", "").replace(" ", "-")[:250],
+                slug=slugify(title)[:250],
                 category=category,
                 excerpt=excerpt,
                 body=body,
+                published_at=timezone.make_aware(datetime.combine(published_date, datetime.min.time())),
             )
         self.stdout.write(
-            self.style.WARNING(
-                "Sample news articles created (illustrative content — replace with real releases via the admin)."
+            self.style.SUCCESS(
+                "Real, sourced news articles created (JEME, CNFFDP, Inserjeune, D-CLIC — see PR description for sources)."
             )
         )
