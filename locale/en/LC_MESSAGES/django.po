@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-27 09:28+0100\n"
+"POT-Creation-Date: 2026-07-27 16:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -697,12 +697,12 @@ msgid "Types de centres publics"
 msgstr "Types of public centres"
 
 #: templates/core/home.html:84
-msgid "Langues officielles"
-msgstr "Official languages"
+msgid "Diplômés suivis via Inserjeune"
+msgstr "Graduates tracked via Inserjeune"
 
 #: templates/core/home.html:91
-msgid "Loi n° 2018/010 encadrant la FP"
-msgstr "Law n° 2018/010 governing vocational training"
+msgid "Budget 2026 Emploi & Formation Pro. (FCFA)"
+msgstr "2026 Employment & Vocational Training Budget (FCFA)"
 
 #: templates/core/home.html:103 templates/core/mission.html:3
 #: templates/core/mission.html:5
@@ -1164,34 +1164,64 @@ msgstr ""
 "training trainers and promoting vocational training engineering, in liaison "
 "with the Ministry's Directorate of Training and Career Guidance."
 
-#: templates/core/vocational_training.html:92
+#: templates/core/vocational_training.html:89
+msgid "Un dispositif en pleine modernisation"
+msgstr "A system undergoing rapid modernisation"
+
+#: templates/core/vocational_training.html:95
+msgid ""
+"« Un Jeune, un Métier, un Emploi » : programme national doté de 17,72 "
+"milliards de FCFA, lancé en novembre 2025 pour former et insérer durablement"
+" les jeunes de 15 à 35 ans."
+msgstr ""
+"\"One Youth, One Skill, One Job\": a national programme worth 17.72 billion "
+"FCFA, launched in November 2025 to durably train and integrate young people "
+"aged 15 to 35."
+
+#: templates/core/vocational_training.html:102
+msgid ""
+"Plateforme numérique de suivi de l'insertion professionnelle : plus de 15 "
+"000 diplômés, 350 établissements et 450 entreprises partenaires recensés."
+msgstr ""
+"Digital platform for tracking professional integration: over 15,000 "
+"graduates, 350 institutions and 450 partner companies registered."
+
+#: templates/core/vocational_training.html:109
+msgid ""
+"Projet mené avec l'Organisation Internationale de la Francophonie pour "
+"former 300 jeunes de 18 à 35 ans aux métiers du numérique."
+msgstr ""
+"Project run with the International Organisation of La Francophonie to train "
+"300 young people aged 18 to 35 in digital professions."
+
+#: templates/core/vocational_training.html:117
 msgid "Textes de référence"
 msgstr "Reference texts"
 
-#: templates/core/vocational_training.html:94
+#: templates/core/vocational_training.html:119
 msgid ""
 "Loi n° 2018/010 du 11 juillet 2018 régissant la formation professionnelle"
 msgstr "Law n° 2018/010 of 11 July 2018 governing vocational training"
 
-#: templates/core/vocational_training.html:95
+#: templates/core/vocational_training.html:120
 msgid "Décret n° 2020/2592/PM du 9 juin 2020 relatif aux centres de formation"
 msgstr "Decree n° 2020/2592/PM of 9 June 2020 on training centres"
 
-#: templates/core/vocational_training.html:96
+#: templates/core/vocational_training.html:121
 msgid ""
 "Décret n° 2012/644 du 28 décembre 2012 portant organisation du Ministère"
 msgstr ""
 "Decree n° 2012/644 of 28 December 2012 on the organisation of the Ministry"
 
-#: templates/core/vocational_training.html:98
+#: templates/core/vocational_training.html:123
 msgid "Télécharger les textes"
 msgstr "Download the texts"
 
-#: templates/core/vocational_training.html:101
+#: templates/core/vocational_training.html:126
 msgid "Validation des Acquis de l'Expérience"
 msgstr "Validation of Prior Experience (VAE)"
 
-#: templates/core/vocational_training.html:102
+#: templates/core/vocational_training.html:127
 msgid ""
 "La VAE est un droit reconnu à toute personne disposant d'aptitudes "
 "professionnelles acquises dans la vie active, lui permettant d'obtenir une "
@@ -1295,10 +1325,6 @@ msgstr "Organisation chart"
 #: templates/partials/footer.html:31
 msgid "Ressources"
 msgstr "Resources"
-
-#: templates/partials/footer.html:42
-msgid "Avenue Winston Churchill, Yaoundé"
-msgstr "Avenue Winston Churchill, Yaoundé"
 
 #: templates/partials/footer.html:52
 msgid "Tous droits réservés"
@@ -1456,3 +1482,12 @@ msgstr "Filter"
 #: templates/structures/training_centers.html:48
 msgid "Aucun centre ne correspond à vos critères."
 msgstr "No centre matches your criteria."
+
+#~ msgid "Langues officielles"
+#~ msgstr "Official languages"
+
+#~ msgid "Loi n° 2018/010 encadrant la FP"
+#~ msgstr "Law n° 2018/010 governing vocational training"
+
+#~ msgid "Avenue Winston Churchill, Yaoundé"
+#~ msgstr "Avenue Winston Churchill, Yaoundé"
