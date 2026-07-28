@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Jour" %} {{ day.day_number }} — {{ program.title }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="{% url 'training:dashboard' %}">{% trans "Mon tableau de bord" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'training:program_timetable' slug=program.slug %}">{{ program.title }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Jour" %} {{ day.day_number }}</li>
+      </ol>
+    </nav>
+    <h1 class="h2 mb-0">{% trans "Jour" %} {{ day.day_number }} — {{ day.title }}</h1>
+    <p class="mb-0 mt-2 opacity-75">{{ day.date|date:"d/m/Y" }}</p>
+  </div>
+</div>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-8">
+        {% if day.objectives %}
+        <h2 class="section-title">{% trans "Objectifs pédagogiques" %}</h2>
+        <p class="mb-4">{{ day.objectives }}</p>
+        {% endif %}
+
+        <h2 class="section-title">{% trans "Supports de cours" %}</h2>
+        <div class="d-flex flex-column gap-3 mb-4">
+          {% for material in materials %}
+          <div class="doc-row p-3 d-flex align-items-center gap-3 flex-wrap">
+            <div class="doc-icon">
+              {% if material.material_type == "video" %}<i class="bi bi-camera-video-fill"></i>
+              {% elif material.material_type == "link" %}<i class="bi bi-link-45deg"></i>
+              {% else %}<i class="bi bi-file-earmark-text-fill"></i>{% endif %}
+            </div>
+            <div class="flex-grow-1">
+              <h3 class="h6 fw-bold mb-1">{{ material.title }}</h3>
+              {% if material.description %}<p class="text-muted small mb-0">{{ material.description }}</p>{% endif %}
+            </div>
+            <a href="{% url 'training:material_download' slug=program.slug day_number=day.day_number material_id=material.id %}" class="btn btn-minefop btn-sm" target="_blank" rel="noopener">
+              {% if material.material_type == "link" %}<i class="bi bi-box-arrow-up-right me-1"></i>{% trans "Ouvrir" %}{% else %}<i class="bi bi-download me-1"></i>{% trans "Télécharger" %}{% endif %}
+            </a>
+          </div>
+          {% empty %}
+          <p class="text-muted">{% trans "Aucun support n'a encore été mis en ligne pour ce jour." %}</p>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        {% if quiz %}
+        <div class="card card-minefop p-4">
+          <h2 class="h5 fw-bold mb-2"><i class="bi bi-patch-question-fill text-success me-2"></i>{{ quiz.title }}</h2>
+          {% if quiz.instructions %}<p class="text-muted small">{{ quiz.instructions }}</p>{% endif %}
+          <ul class="list-unstyled small text-muted mb-3">
+            <li><i class="bi bi-bullseye me-1"></i>{% trans "Note de passage" %} : {{ quiz.pass_mark }}%</li>
+            {% if quiz.time_limit_minutes %}<li><i class="bi bi-stopwatch me-1"></i>{% trans "Durée" %} : {{ quiz.time_limit_minutes }} min</li>{% endif %}
+            <li><i class="bi bi-arrow-repeat me-1"></i>
+              {% if attempts_remaining is None %}{% trans "Tentatives illimitées" %}
+              {% else %}{% blocktrans count remaining=attempts_remaining %}{{ remaining }} tentative restante{% plural %}{{ remaining }} tentatives restantes{% endblocktrans %}{% endif %}
+            </li>
+          </ul>
+          {% if last_attempt %}
+          <div class="alert {% if last_attempt.passed %}alert-success{% else %}alert-danger{% endif %} small">
+            {% trans "Dernier résultat" %} : {{ last_attempt.score }}% — {% if last_attempt.passed %}{% trans "réussi" %}{% else %}{% trans "non réussi" %}{% endif %}
+          </div>
+          {% endif %}
+          {% if attempts_remaining is None or attempts_remaining > 0 %}
+          <a href="{% url 'training:quiz_take' slug=program.slug day_number=day.day_number %}" class="btn btn-minefop w-100">{% trans "Commencer le quiz" %}</a>
+          {% else %}
+          <button class="btn btn-light w-100" disabled>{% trans "Tentatives épuisées" %}</button>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

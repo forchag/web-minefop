@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Connexion candidat" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+{% trans "Connexion candidat" as page_title %}
+{% include "partials/page_header.html" %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-5">
+        {% if form.errors %}
+        <div class="alert alert-danger">{% trans "Identifiants incorrects. Merci de réessayer." %}</div>
+        {% endif %}
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ next }}">
+          <div class="mb-3">
+            <label class="form-label">{{ form.username.label }}</label>
+            {{ form.username }}
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ form.password.label }}</label>
+            {{ form.password }}
+          </div>
+          <button type="submit" class="btn btn-minefop btn-lg w-100">{% trans "Se connecter" %}</button>
+          <div class="text-center mt-3">
+            <span class="text-muted small">{% trans "Pas encore de compte ?" %}</span>
+            <a href="{% url 'training:signup' %}">{% trans "Créer un compte candidat" %}</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

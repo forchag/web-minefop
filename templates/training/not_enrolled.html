@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Inscription requise" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="container py-5 text-center">
+  <p class="display-4 fw-bold" style="color:var(--cm-green);"><i class="bi bi-lock-fill"></i></p>
+  <h1 class="h3 mb-3">{% trans "Inscription requise" %}</h1>
+  <p class="text-muted mb-4">{% blocktrans with title=program.title %}Vous devez rejoindre « {{ title }} » avec le code d'accès communiqué par votre formateur pour consulter son emploi du temps.{% endblocktrans %}</p>
+  <a href="{% url 'training:join' %}" class="btn btn-minefop"><i class="bi bi-key-fill me-1"></i>{% trans "Rejoindre avec un code" %}</a>
+</div>
+{% endblock %}

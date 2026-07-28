@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Mon tableau de bord" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+{% trans "Mon tableau de bord" as page_title %}
+{% include "partials/page_header.html" %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-end mb-4">
+      <a href="{% url 'training:join' %}" class="btn btn-minefop"><i class="bi bi-key-fill me-1"></i>{% trans "Rejoindre une nouvelle formation" %}</a>
+    </div>
+
+    <div class="row g-4">
+      {% for enrollment in enrollments %}
+      {% with program=enrollment.program %}
+      <div class="col-lg-6">
+        <div class="card card-minefop p-4">
+          <h2 class="h5 fw-bold mb-1">{{ program.title }}</h2>
+          {% if program.center %}<div class="text-muted small mb-2"><i class="bi bi-geo-alt-fill me-1"></i>{{ program.center.name }}</div>{% endif %}
+          <div class="text-muted small mb-3"><i class="bi bi-calendar-event me-1"></i>{% trans "Démarrage" %} : {{ program.start_date|date:"d/m/Y" }} — {{ program.total_days }} {% trans "jour(s)" %}</div>
+          <a href="{% url 'training:program_timetable' slug=program.slug %}" class="btn btn-outline-minefop btn-sm w-100"><i class="bi bi-calendar-week me-1"></i>{% trans "Voir l'emploi du temps" %}</a>
+        </div>
+      </div>
+      {% endwith %}
+      {% empty %}
+      <p class="text-muted text-center py-5">{% trans "Vous n'avez rejoint aucune formation. Utilisez un code d'accès pour vous inscrire." %}</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

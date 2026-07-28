@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ program.title }} — {% trans "Emploi du temps" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="{% url 'training:dashboard' %}">{% trans "Mon tableau de bord" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ program.title }}</li>
+      </ol>
+    </nav>
+    <h1 class="h2 mb-0">{{ program.title }}</h1>
+    <p class="mb-0 mt-2 opacity-75">{% trans "Démarrage" %} : {{ program.start_date|date:"d/m/Y" }} — {{ program.total_days }} {% trans "jour(s) de programme" %}</p>
+  </div>
+</div>
+
+<section class="py-5">
+  <div class="container">
+    {% if program.description %}<p class="fs-5 mb-4">{{ program.description }}</p>{% endif %}
+    {% if not enrollment %}
+    <div class="alert alert-minefop mb-4"><i class="bi bi-eye-fill me-1"></i>{% trans "Aperçu formateur : vous consultez cette formation sans y être inscrit comme candidat." %}</div>
+    {% endif %}
+
+    <h2 class="section-title">{% trans "Emploi du temps" %}</h2>
+    <div class="d-flex flex-column gap-3">
+      {% for entry in days_with_state %}
+      {% with day=entry.day %}
+      <div class="doc-row p-3 d-flex align-items-center gap-3 flex-wrap">
+        <div class="doc-icon">
+          {% if entry.unlocked %}<i class="bi bi-unlock-fill"></i>{% else %}<i class="bi bi-lock-fill"></i>{% endif %}
+        </div>
+        <div class="flex-grow-1">
+          <div class="d-flex align-items-center gap-2 flex-wrap">
+            <h3 class="h6 fw-bold mb-0">{% trans "Jour" %} {{ day.day_number }} — {{ day.title }}</h3>
+            {% if day.is_today %}<span class="badge" style="background-color:var(--cm-yellow); color:#1c2b28;">{% trans "Aujourd'hui" %}</span>{% endif %}
+            {% if entry.unlocked and not day.is_today %}<span class="badge bg-success">{% trans "Ouvert" %}</span>{% endif %}
+            {% if not entry.unlocked %}<span class="badge bg-secondary">{% trans "Verrouillé" %}</span>{% endif %}
+          </div>
+          <div class="text-muted small mt-1"><i class="bi bi-calendar3 me-1"></i>{{ day.date|date:"d/m/Y" }}</div>
+        </div>
+        <div class="text-end">
+          {% if entry.unlocked or user.is_staff %}
+          <a href="{% url 'training:day_detail' slug=program.slug day_number=day.day_number %}" class="btn btn-minefop btn-sm">{% trans "Accéder" %}</a>
+          {% else %}
+          <button class="btn btn-light btn-sm" disabled>{% trans "Ouvre le" %} {{ day.date|date:"d/m/Y" }}</button>
+          {% endif %}
+        </div>
+      </div>
+      {% endwith %}
+      {% empty %}
+      <p class="text-muted text-center py-5">{% trans "L'emploi du temps de cette formation n'a pas encore été publié." %}</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -41,6 +41,26 @@
         <li class="nav-item">
           <a class="nav-link {% if 'documents' in request.path %}active{% endif %}" href="{% url 'documents:list' %}">{% trans "Documents" %}</a>
         </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if 'espace-stagiaire' in request.path %}active{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle me-1"></i>{% trans "Espace stagiaire" %}</a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="{% url 'training:dashboard' %}">{% trans "Mon tableau de bord" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'training:join' %}">{% trans "Rejoindre une formation" %}</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <form method="post" action="{% url 'training:logout' %}" class="px-3">
+                {% csrf_token %}
+                <button type="submit" class="dropdown-item p-0 border-0 bg-transparent text-start">{% trans "Déconnexion" %}</button>
+              </form>
+            </li>
+          </ul>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link {% if 'espace-stagiaire' in request.path %}active{% endif %}" href="{% url 'training:catalog' %}"><i class="bi bi-person-circle me-1"></i>{% trans "Espace stagiaire" %}</a>
+        </li>
+        {% endif %}
         <li class="nav-item">
           <a class="btn btn-minefop ms-lg-2 mt-2 mt-lg-0" href="{% url 'contact:contact' %}">{% trans "Nous contacter" %}</a>
         </li>

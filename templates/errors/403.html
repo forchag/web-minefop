@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}403 — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="container py-5 text-center">
+  <p class="display-1 fw-bold" style="color:var(--cm-green);">403</p>
+  <h1 class="h3 mb-3">{% trans "Accès non autorisé" %}</h1>
+  <p class="text-muted mb-4">
+    {% if exception %}{{ exception }}{% else %}{% trans "Vous n'avez pas accès à cette page ou ce contenu n'est pas encore ouvert." %}{% endif %}
+  </p>
+  <a href="{% url 'training:dashboard' %}" class="btn btn-minefop">{% trans "Retour au tableau de bord" %}</a>
+</div>
+{% endblock %}

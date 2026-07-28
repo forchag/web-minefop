@@ -21,6 +21,7 @@ urlpatterns += i18n_patterns(
     path("documents/", include("apps.documents.urls")),
     path("organisation/", include("apps.structures.urls")),
     path("contact/", include("apps.contact.urls")),
+    path("espace-stagiaire/", include("apps.training.urls")),
     prefix_default_language=True,
 )
 
@@ -28,5 +29,6 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
 
+handler403 = "apps.core.views.error_403"
 handler404 = "apps.core.views.error_404"
 handler500 = "apps.core.views.error_500"

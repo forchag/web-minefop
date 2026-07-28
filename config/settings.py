@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "apps.documents",
     "apps.structures",
     "apps.contact",
+    "apps.training",
 ]
 
 MIDDLEWARE = [

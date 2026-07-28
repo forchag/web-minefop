@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Espace stagiaire" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+{% trans "Espace stagiaire" as page_title %}
+{% trans "Formations avec emploi du temps, supports de cours et quiz débloqués jour après jour." as page_subtitle %}
+{% include "partials/page_header.html" %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+      <p class="text-muted mb-0">{% trans "Consultez les formations en cours. Rejoignez une formation avec le code d'accès transmis par votre formateur." %}</p>
+      {% if user.is_authenticated %}
+      <div class="d-flex gap-2">
+        <a href="{% url 'training:dashboard' %}" class="btn btn-outline-minefop"><i class="bi bi-speedometer2 me-1"></i>{% trans "Mon tableau de bord" %}</a>
+        <a href="{% url 'training:join' %}" class="btn btn-minefop"><i class="bi bi-key-fill me-1"></i>{% trans "Rejoindre une formation" %}</a>
+      </div>
+      {% else %}
+      <div class="d-flex gap-2">
+        <a href="{% url 'training:login' %}" class="btn btn-outline-minefop">{% trans "Connexion" %}</a>
+        <a href="{% url 'training:signup' %}" class="btn btn-minefop">{% trans "Créer un compte candidat" %}</a>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="row g-4">
+      {% for program in programs %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card card-minefop p-4">
+          <h2 class="h5 fw-bold mb-1">{{ program.title }}</h2>
+          {% if program.center %}<div class="text-muted small mb-2"><i class="bi bi-geo-alt-fill me-1"></i>{{ program.center.name }}</div>{% endif %}
+          <p class="text-muted small mb-3">{{ program.description|truncatechars:140 }}</p>
+          <ul class="list-unstyled small text-muted mb-3">
+            <li><i class="bi bi-calendar-event me-1"></i>{% trans "Démarrage" %} : {{ program.start_date|date:"d/m/Y" }}</li>
+            <li><i class="bi bi-list-ol me-1"></i>{{ program.total_days }} {% trans "jour(s) de programme" %}</li>
+          </ul>
+          {% if user.is_authenticated %}
+          <a href="{% url 'training:join' %}" class="btn btn-outline-minefop btn-sm w-100">{% trans "Rejoindre avec un code" %}</a>
+          {% else %}
+          <a href="{% url 'training:login' %}" class="btn btn-outline-minefop btn-sm w-100">{% trans "Se connecter pour rejoindre" %}</a>
+          {% endif %}
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-muted text-center py-5">{% trans "Aucune formation publiée pour le moment." %}</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

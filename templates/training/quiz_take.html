@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ quiz.title }} — {{ program.title }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="{% url 'training:dashboard' %}">{% trans "Mon tableau de bord" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'training:program_timetable' slug=program.slug %}">{{ program.title }}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'training:day_detail' slug=program.slug day_number=day.day_number %}">{% trans "Jour" %} {{ day.day_number }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ quiz.title }}</li>
+      </ol>
+    </nav>
+    <h1 class="h2 mb-0">{{ quiz.title }}</h1>
+    {% if quiz.time_limit_minutes %}<p class="mb-0 mt-2 opacity-75" id="quiz-timer-label">{% trans "Temps restant" %} : <span id="quiz-timer">--:--</span></p>{% endif %}
+  </div>
+</div>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        {% if quiz.instructions %}<p class="text-muted mb-4">{{ quiz.instructions }}</p>{% endif %}
+        <form method="post" id="quiz-form">
+          {% csrf_token %}
+          {% for question in questions %}
+          <div class="card card-minefop p-4 mb-3">
+            <h2 class="h6 fw-bold mb-3">{{ forloop.counter }}. {{ question.text }}</h2>
+            <div class="d-flex flex-column gap-2">
+              {% for choice in question.choices.all %}
+              <label class="form-check d-flex align-items-center gap-2">
+                {% if question.allow_multiple %}
+                <input class="form-check-input" type="checkbox" name="question_{{ question.id }}" value="{{ choice.id }}">
+                {% else %}
+                <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="{{ choice.id }}" required>
+                {% endif %}
+                <span>{{ choice.text }}</span>
+              </label>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-minefop btn-lg w-100"><i class="bi bi-send-check-fill me-1"></i>{% trans "Soumettre mes réponses" %}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+{% if quiz.time_limit_minutes %}
+<script>
+  (function () {
+    var seconds = {{ quiz.time_limit_minutes }} * 60;
+    var display = document.getElementById("quiz-timer");
+    var form = document.getElementById("quiz-form");
+    var timer = setInterval(function () {
+      seconds -= 1;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        display.textContent = "00:00";
+        form.submit();
+        return;
+      }
+      var m = Math.floor(seconds / 60);
+      var s = seconds % 60;
+      display.textContent = (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
+    }, 1000);
+  })();
+</script>
+{% endif %}
+{% endblock %}
