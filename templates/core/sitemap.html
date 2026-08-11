@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Plan du site" %} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{% trans "Vue d'ensemble de toutes les rubriques du site officiel du MINEFOP." %}{% endblock %}
+{% block content %}
+{% trans "Plan du site" as page_title %}
+{% trans "Toutes les rubriques du site, réunies sur une seule page." as page_subtitle %}
+{% include "partials/page_header.html" %}
+
+<section class="section">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4">
+        <div class="card-minefop p-4 h-100">
+          <h2 class="h6 fw-bold mb-3"><i class="bi bi-bank2 me-2 text-success" aria-hidden="true"></i>{% trans "Le Ministère" %}</h2>
+          <ul class="footer-list list-unstyled d-flex flex-column gap-2">
+            <li><a href="{% url 'core:minister' %}" class="text-decoration-none">{% trans "Mot du Ministre" %}</a></li>
+            <li><a href="{% url 'core:mission' %}" class="text-decoration-none">{% trans "Missions & attributions" %}</a></li>
+            <li><a href="{% url 'core:history' %}" class="text-decoration-none">{% trans "Historique" %}</a></li>
+            <li><a href="{% url 'structures:org_chart' %}" class="text-decoration-none">{% trans "Organigramme" %}</a></li>
+            <li><a href="{% url 'structures:attached_bodies' %}" class="text-decoration-none">{% trans "Organismes rattachés" %}</a></li>
+            <li><a href="{% url 'structures:delegations' %}" class="text-decoration-none">{% trans "Délégations régionales" %}</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card-minefop p-4 h-100">
+          <h2 class="h6 fw-bold mb-3"><i class="bi bi-mortarboard me-2 text-success" aria-hidden="true"></i>{% trans "Formation & Emploi" %}</h2>
+          <ul class="footer-list list-unstyled d-flex flex-column gap-2">
+            <li><a href="{% url 'core:vocational_training' %}" class="text-decoration-none">{% trans "Le dispositif national de formation" %}</a></li>
+            <li><a href="{% url 'structures:training_center_list' %}" class="text-decoration-none">{% trans "Annuaire des centres de formation" %}</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card-minefop p-4 h-100">
+          <h2 class="h6 fw-bold mb-3"><i class="bi bi-newspaper me-2 text-success" aria-hidden="true"></i>{% trans "Actualités" %}</h2>
+          <ul class="footer-list list-unstyled d-flex flex-column gap-2">
+            <li><a href="{% url 'news:list' %}" class="text-decoration-none">{% trans "Toutes les actualités" %}</a></li>
+            {% for category in news_categories %}
+            <li><a href="{% url 'news:list' %}?categorie={{ category.slug }}" class="text-decoration-none">{{ category.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card-minefop p-4 h-100">
+          <h2 class="h6 fw-bold mb-3"><i class="bi bi-journal-text me-2 text-success" aria-hidden="true"></i>{% trans "Textes & documents" %}</h2>
+          <ul class="footer-list list-unstyled d-flex flex-column gap-2">
+            <li><a href="{% url 'documents:list' %}" class="text-decoration-none">{% trans "Tous les documents" %}</a></li>
+            {% for category in document_categories %}
+            <li><a href="{% url 'documents:list' %}?categorie={{ category.slug }}" class="text-decoration-none">{{ category.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card-minefop p-4 h-100">
+          <h2 class="h6 fw-bold mb-3"><i class="bi bi-headset me-2 text-success" aria-hidden="true"></i>{% trans "Services aux usagers" %}</h2>
+          <ul class="footer-list list-unstyled d-flex flex-column gap-2">
+            <li><a href="{% url 'contact:contact' %}" class="text-decoration-none">{% trans "Nous contacter" %}</a></li>
+            <li><a href="{% url 'core:search' %}" class="text-decoration-none">{% trans "Recherche sur le site" %}</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card-minefop p-4 h-100">
+          <h2 class="h6 fw-bold mb-3"><i class="bi bi-info-circle me-2 text-success" aria-hidden="true"></i>{% trans "Informations légales" %}</h2>
+          <ul class="footer-list list-unstyled d-flex flex-column gap-2">
+            <li><a href="{% url 'core:legal_notice' %}" class="text-decoration-none">{% trans "Mentions légales" %}</a></li>
+            <li><a href="{% url 'core:accessibility' %}" class="text-decoration-none">{% trans "Déclaration d'accessibilité" %}</a></li>
+            <li><a href="/sitemap.xml" class="text-decoration-none">{% trans "Plan du site au format XML" %}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -5,7 +5,7 @@
 {% trans "Historique" as page_title %}
 {% include "partials/page_header.html" %}
 
-<section class="py-5">
+<section class="section">
   <div class="container">
     <div class="row">
       <div class="col-lg-8">
@@ -51,7 +51,7 @@
         </div>
       </div>
       <div class="col-lg-4">
-        <div class="card card-minefop p-4">
+        <div class="card-minefop p-4">
           <h2 class="h5 fw-bold mb-3"><i class="bi bi-journal-text text-success me-2"></i>{% trans "Cadre juridique" %}</h2>
           <p class="text-muted small">{% trans "L'action du Ministère s'appuie sur un socle législatif et réglementaire consolidé, régulièrement actualisé." %}</p>
           <a href="{% url 'documents:list' %}" class="btn btn-outline-minefop btn-sm">{% trans "Consulter les textes" %}</a>

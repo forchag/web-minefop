@@ -1,23 +1,23 @@
 {% load i18n %}
-<div class="tricolor-bar"><span class="bar-green"></span><span class="bar-red"></span><span class="bar-yellow"></span></div>
 <div class="topbar py-2">
-  <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
-    <div class="d-none d-md-flex align-items-center gap-3">
-      <span><i class="bi bi-geo-alt-fill me-1"></i>{% trans "République du Cameroun" %} — {% trans "Paix – Travail – Patrie" %}</span>
-    </div>
-    <div class="d-flex align-items-center gap-3">
-      <a href="{% url 'contact:contact' %}"><i class="bi bi-envelope-fill me-1"></i>{% trans "Contact" %}</a>
-      <a href="{% url 'admin:index' %}"><i class="bi bi-shield-lock-fill me-1"></i>{% trans "Espace agent" %}</a>
-      <div class="lang-switch d-flex gap-1">
-        {% get_current_language as CURRENT_LANGUAGE %}
-        {% get_available_languages as AVAILABLE_LANGUAGES %}
+  <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <span class="topbar-motto d-none d-md-inline">{% trans "Paix – Travail – Patrie" %}</span>
+    <div class="d-flex flex-wrap align-items-center gap-3">
+      <a href="{% url 'core:sitemap_page' %}"><i class="bi bi-diagram-2 me-1" aria-hidden="true"></i>{% trans "Plan du site" %}</a>
+      <a href="{% url 'contact:contact' %}"><i class="bi bi-envelope me-1" aria-hidden="true"></i>{% trans "Contact" %}</a>
+      <a href="{% url 'admin:index' %}"><i class="bi bi-shield-lock me-1" aria-hidden="true"></i>{% trans "Espace agent" %}</a>
+      {% get_current_language as CURRENT_LANGUAGE %}
+      {% get_available_languages as AVAILABLE_LANGUAGES %}
+      <div class="lang-switch" role="group" aria-label="{% trans 'Choix de la langue' %}">
         {% for lang_code, lang_name in AVAILABLE_LANGUAGES %}
           <form action="{% url 'set_language' %}" method="post" class="d-inline">
             {% csrf_token %}
             <input name="next" type="hidden" value="{{ request.get_full_path }}">
             <input name="language" type="hidden" value="{{ lang_code }}">
-            <button type="submit" class="btn btn-link p-0 border-0 {% if lang_code == CURRENT_LANGUAGE %}active{% endif %}" style="text-decoration:none;">
-              <span class="{% if lang_code == CURRENT_LANGUAGE %}active{% endif %} d-inline-block px-2 py-0 rounded">{{ lang_code|upper }}</span>
+            <button type="submit" lang="{{ lang_code }}"
+                    {% if lang_code == CURRENT_LANGUAGE %}aria-current="true"{% endif %}
+                    title="{{ lang_name }}">
+              {{ lang_code|upper }}<span class="visually-hidden"> — {{ lang_name }}</span>
             </button>
           </form>
         {% endfor %}

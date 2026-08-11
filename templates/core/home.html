@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block content %}
 
-<!-- HERO -->
+<!-- ============================ HERO ============================ -->
+{% if slides %}
 <section class="hero-carousel position-relative overflow-hidden">
-  {% if slides %}
   <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       {% for slide in slides %}
@@ -13,82 +13,132 @@
         <div class="hero-slide-gradient"></div>
         <div class="container">
           <div class="carousel-caption-custom text-white">
-            <span class="badge bg-white text-success-emphasis mb-3 px-3 py-2">{% trans "MINEFOP" %}</span>
-            <h1 class="mb-3">{{ slide.title }}</h1>
-            {% if slide.subtitle %}<p class="lead">{{ slide.subtitle }}</p>{% endif %}
-            {% if slide.link_url %}<a href="{{ slide.link_url }}" class="btn btn-minefop btn-lg mt-2">{{ slide.link_label|default:_("En savoir plus") }}</a>{% endif %}
+            <span class="hero-kicker mb-3">{% trans "République du Cameroun" %}</span>
+            <h1 class="mb-3 mt-3">{{ slide.title }}</h1>
+            {% if slide.subtitle %}<p class="lead" style="color:#d7e7de">{{ slide.subtitle }}</p>{% endif %}
+            {% if slide.link_url %}<a href="{{ slide.link_url }}" class="btn btn-gold btn-lg mt-3">{{ slide.link_label|default:_("En savoir plus") }}<i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a>{% endif %}
           </div>
         </div>
       </div>
       {% endfor %}
     </div>
     {% if slides.count > 1 %}
+    <div class="carousel-indicators">
+      {% for slide in slides %}
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ forloop.counter0 }}"
+              {% if forloop.first %}class="active" aria-current="true"{% endif %}
+              aria-label="{% blocktrans with n=forloop.counter %}Diapositive {{ n }}{% endblocktrans %}"></button>
+      {% endfor %}
+    </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">{% trans "Précédent" %}</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">{% trans "Suivant" %}</span>
     </button>
     {% endif %}
   </div>
-  {% else %}
-  <div class="hero-fallback d-flex align-items-center" style="min-height:460px;">
-    <div class="container">
-      <div class="carousel-caption-custom text-white position-relative">
-        <span class="badge bg-white text-success-emphasis mb-3 px-3 py-2">{% trans "République du Cameroun" %}</span>
-        <h1 class="mb-3">{% trans "Ministère de l'Emploi et de la Formation Professionnelle" %}</h1>
-        <p class="lead">{% trans "Construire une main-d'œuvre camerounaise qualifiée, compétitive et pleinement insérée dans l'emploi." %}</p>
-        <div class="d-flex gap-2 flex-wrap mt-3">
-          <a href="{% url 'structures:training_center_list' %}" class="btn btn-minefop btn-lg">{% trans "Trouver un centre de formation" %}</a>
-          <a href="{% url 'core:mission' %}" class="btn btn-outline-light btn-lg">{% trans "Découvrir nos missions" %}</a>
+</section>
+{% else %}
+<section class="hero">
+  <div class="container py-5">
+    <div class="row align-items-center g-4 g-lg-5 py-4">
+      <div class="col-lg-7">
+        <span class="hero-kicker">{% trans "République du Cameroun" %}</span>
+        <h1 class="mt-3 mb-3">{% trans "Former, qualifier et insérer la jeunesse camerounaise" %}</h1>
+        <p class="lead mb-4">{% trans "Le Ministère de l'Emploi et de la Formation Professionnelle conduit la politique du Gouvernement en matière d'emploi, de formation et d'insertion professionnelles sur l'ensemble du territoire national." %}</p>
+        <div class="d-flex gap-2 flex-wrap">
+          <a href="{% url 'structures:training_center_list' %}" class="btn btn-gold btn-lg">
+            <i class="bi bi-geo-alt-fill me-2" aria-hidden="true"></i>{% trans "Trouver un centre de formation" %}
+          </a>
+          <a href="{% url 'core:mission' %}" class="btn btn-outline-light btn-lg">{% trans "Nos missions" %}</a>
         </div>
+      </div>
+      <div class="col-lg-5 text-center d-none d-lg-block">
+        <img src="{% static 'img/minefop-logo.png' %}" width="230" height="297" class="img-fluid"
+             style="background:#fff;border-radius:6px;padding:1.25rem;"
+             alt="{% trans "Logo du MINEFOP" %}">
       </div>
     </div>
   </div>
-  {% endif %}
+</section>
+{% endif %}
+
+<!-- ===================== SERVICE SHORTCUTS ===================== -->
+<section class="hero-services">
+  <div class="container">
+    <h2 class="visually-hidden">{% trans "Accès directs" %}</h2>
+    <div class="row g-0">
+      <div class="col-md-3 col-6">
+        <a class="hero-service" href="{% url 'structures:training_center_list' %}">
+          <i class="bi bi-mortarboard-fill" aria-hidden="true"></i><span>{% trans "Se former" %}</span>
+        </a>
+      </div>
+      <div class="col-md-3 col-6">
+        <a class="hero-service" href="{% url 'documents:list' %}">
+          <i class="bi bi-journal-text" aria-hidden="true"></i><span>{% trans "Textes légaux" %}</span>
+        </a>
+      </div>
+      <div class="col-md-3 col-6">
+        <a class="hero-service" href="{% url 'structures:delegations' %}">
+          <i class="bi bi-pin-map-fill" aria-hidden="true"></i><span>{% trans "Nos services en région" %}</span>
+        </a>
+      </div>
+      <div class="col-md-3 col-6">
+        <a class="hero-service" href="{% url 'contact:contact' %}">
+          <i class="bi bi-headset" aria-hidden="true"></i><span>{% trans "Écrire au Ministère" %}</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- KEY FIGURES -->
-<section class="py-5 bg-light">
+<!-- ========================= KEY FIGURES ========================= -->
+<section class="section section-alt">
   <div class="container">
-    <div class="row g-4">
+    <div class="section-head">
+      <h2 class="section-title">{% trans "Le Ministère en chiffres" %}</h2>
+    </div>
+    <div class="row g-3 g-lg-4">
       {% if key_figures %}
         {% for kf in key_figures %}
         <div class="col-6 col-lg-3">
-          <div class="key-figure p-4 text-center h-100">
-            <div class="icon-wrap mx-auto mb-3"><i class="bi {{ kf.icon }}"></i></div>
+          <div class="key-figure">
+            <div class="icon-wrap"><i class="bi {{ kf.icon }}" aria-hidden="true"></i></div>
             <div class="value">{{ kf.value }}</div>
-            <div class="text-muted small mt-1">{{ kf.label }}</div>
+            <div class="label">{{ kf.label }}</div>
           </div>
         </div>
         {% endfor %}
       {% else %}
         <div class="col-6 col-lg-3">
-          <div class="key-figure p-4 text-center h-100">
-            <div class="icon-wrap mx-auto mb-3"><i class="bi bi-geo-alt-fill"></i></div>
+          <div class="key-figure">
+            <div class="icon-wrap"><i class="bi bi-geo-alt-fill" aria-hidden="true"></i></div>
             <div class="value">10</div>
-            <div class="text-muted small mt-1">{% trans "Régions couvertes" %}</div>
+            <div class="label">{% trans "Régions couvertes" %}</div>
           </div>
         </div>
         <div class="col-6 col-lg-3">
-          <div class="key-figure p-4 text-center h-100">
-            <div class="icon-wrap mx-auto mb-3"><i class="bi bi-building"></i></div>
+          <div class="key-figure">
+            <div class="icon-wrap"><i class="bi bi-building" aria-hidden="true"></i></div>
             <div class="value">6</div>
-            <div class="text-muted small mt-1">{% trans "Types de centres publics" %}</div>
+            <div class="label">{% trans "Types de centres publics" %}</div>
           </div>
         </div>
         <div class="col-6 col-lg-3">
-          <div class="key-figure p-4 text-center h-100">
-            <div class="icon-wrap mx-auto mb-3"><i class="bi bi-graph-up-arrow"></i></div>
+          <div class="key-figure">
+            <div class="icon-wrap"><i class="bi bi-graph-up-arrow" aria-hidden="true"></i></div>
             <div class="value">15 000+</div>
-            <div class="text-muted small mt-1">{% trans "Diplômés suivis via Inserjeune" %}</div>
+            <div class="label">{% trans "Diplômés suivis via Inserjeune" %}</div>
           </div>
         </div>
         <div class="col-6 col-lg-3">
-          <div class="key-figure p-4 text-center h-100">
-            <div class="icon-wrap mx-auto mb-3"><i class="bi bi-cash-coin"></i></div>
+          <div class="key-figure">
+            <div class="icon-wrap"><i class="bi bi-cash-coin" aria-hidden="true"></i></div>
             <div class="value">33,4 Mds</div>
-            <div class="text-muted small mt-1">{% trans "Budget 2026 Emploi & Formation Pro. (FCFA)" %}</div>
+            <div class="label">{% trans "Budget 2026 Emploi & Formation Pro. (FCFA)" %}</div>
           </div>
         </div>
       {% endif %}
@@ -96,38 +146,41 @@
   </div>
 </section>
 
-<!-- MISSIONS -->
-<section class="py-5">
+<!-- ========================== MISSIONS ========================== -->
+<section class="section">
   <div class="container">
-    <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-4">
-      <h2 class="section-title mb-0">{% trans "Nos missions" %}</h2>
-      <a href="{% url 'core:mission' %}" class="btn btn-outline-minefop">{% trans "Toutes les missions" %}<i class="bi bi-arrow-right ms-1"></i></a>
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">{% trans "Décret n° 2012/644 du 28 décembre 2012" %}</span>
+        <h2 class="section-title mt-2">{% trans "Nos missions" %}</h2>
+      </div>
+      <a href="{% url 'core:mission' %}" class="btn btn-outline-minefop">{% trans "Toutes les attributions" %}<i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a>
     </div>
     <div class="row g-4">
       <div class="col-md-6 col-lg-3">
-        <div class="mission-card">
-          <div class="icon-wrap"><i class="bi bi-briefcase-fill"></i></div>
+        <div class="mission-card h-100">
+          <div class="icon-wrap"><i class="bi bi-briefcase-fill" aria-hidden="true"></i></div>
           <h3 class="h6 fw-bold">{% trans "Promotion de l'emploi" %}</h3>
           <p class="text-muted small mb-0">{% trans "Élaboration et mise en œuvre de la politique nationale de l'emploi, lutte contre le chômage et le sous-emploi." %}</p>
         </div>
       </div>
       <div class="col-md-6 col-lg-3">
-        <div class="mission-card">
-          <div class="icon-wrap"><i class="bi bi-mortarboard-fill"></i></div>
+        <div class="mission-card h-100">
+          <div class="icon-wrap"><i class="bi bi-mortarboard-fill" aria-hidden="true"></i></div>
           <h3 class="h6 fw-bold">{% trans "Formation professionnelle" %}</h3>
           <p class="text-muted small mb-0">{% trans "Définition des programmes, normes et référentiels de formation, agrément et suivi des structures publiques et privées." %}</p>
         </div>
       </div>
       <div class="col-md-6 col-lg-3">
-        <div class="mission-card">
-          <div class="icon-wrap"><i class="bi bi-signpost-split-fill"></i></div>
+        <div class="mission-card h-100">
+          <div class="icon-wrap"><i class="bi bi-signpost-split-fill" aria-hidden="true"></i></div>
           <h3 class="h6 fw-bold">{% trans "Orientation professionnelle" %}</h3>
           <p class="text-muted small mb-0">{% trans "Information, conseil et orientation des chercheurs d'emploi et des apprenants vers les filières porteuses." %}</p>
         </div>
       </div>
       <div class="col-md-6 col-lg-3">
-        <div class="mission-card">
-          <div class="icon-wrap"><i class="bi bi-people-fill"></i></div>
+        <div class="mission-card h-100">
+          <div class="icon-wrap"><i class="bi bi-people-fill" aria-hidden="true"></i></div>
           <h3 class="h6 fw-bold">{% trans "Régulation de la main-d'œuvre" %}</h3>
           <p class="text-muted small mb-0">{% trans "Placement, visa des contrats de travail, agrément des agences d'emploi et suivi de la main-d'œuvre nationale et expatriée." %}</p>
         </div>
@@ -136,53 +189,71 @@
   </div>
 </section>
 
-<!-- MINISTER WORD -->
-<section class="py-5 bg-light">
+<!-- ======================= WORD OF THE MINISTER ======================= -->
+<section class="section section-alt">
   <div class="container">
-    <div class="row align-items-center g-5">
-      <div class="col-lg-4 text-center">
-        <div class="rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width:220px;height:220px;background:linear-gradient(135deg,var(--cm-green),var(--cm-green-dark));">
-          <i class="bi bi-person-fill text-white" style="font-size:6rem;"></i>
-        </div>
-        <h3 class="h5 fw-bold mt-3 mb-0">{% if minister.full_name %}{{ minister.full_name }}{% else %}{% trans "Le Ministre" %}{% endif %}</h3>
-        <p class="text-muted">{{ minister.title|default:_("Ministre de l'Emploi et de la Formation Professionnelle") }}</p>
-      </div>
-      <div class="col-lg-8">
-        <h2 class="section-title">{% trans "Mot du Ministre" %}</h2>
-        <p class="font-serif-brand fs-5 fst-italic text-muted">
-          {% if minister.message %}{{ minister.message|truncatewords:60 }}{% else %}
-          {% trans "Le Ministère de l'Emploi et de la Formation Professionnelle œuvre chaque jour pour offrir à la jeunesse camerounaise les compétences et les opportunités nécessaires à une insertion professionnelle réussie, au service de l'émergence économique du Cameroun." %}
+    <div class="minister-panel">
+      <div class="row g-0 align-items-stretch">
+        <div class="col-lg-5">
+          {% if minister.photo %}
+            <img src="{{ minister.photo.url }}" class="minister-photo" alt="{{ minister.full_name }}">
+          {% else %}
+            <img src="{% static 'img/minister-portrait.jpg' %}" class="minister-photo"
+                 alt="{% trans "Portrait officiel du Ministre de l'Emploi et de la Formation Professionnelle" %}">
           {% endif %}
-        </p>
-        <a href="{% url 'core:minister' %}" class="btn btn-minefop mt-2">{% trans "Lire le message complet" %}</a>
+        </div>
+        <div class="col-lg-7">
+          <div class="p-4 p-lg-5">
+            <h2 class="section-title">{% trans "Mot du Ministre" %}</h2>
+            <blockquote class="minister-quote mb-4">
+              {% if minister.message %}
+                {{ minister.message|truncatewords:55 }}
+              {% else %}
+                {% trans "Le Ministère de l'Emploi et de la Formation Professionnelle œuvre chaque jour pour offrir à la jeunesse camerounaise les compétences et les opportunités nécessaires à une insertion professionnelle réussie, au service de l'émergence économique du Cameroun." %}
+              {% endif %}
+            </blockquote>
+            <p class="minister-name">{{ minister.full_name|default:_("Le Ministre") }}</p>
+            <p class="minister-role">{{ minister.title|default:_("Ministre de l'Emploi et de la Formation Professionnelle") }}</p>
+            <a href="{% url 'core:minister' %}" class="btn btn-gold mt-4">{% trans "Lire le message intégral" %}<i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- NEWS -->
-<section class="py-5">
+<!-- =========================== NEWS =========================== -->
+<section class="section">
   <div class="container">
-    <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-4">
-      <h2 class="section-title mb-0">{% trans "Actualités" %}</h2>
-      <a href="{% url 'news:list' %}" class="btn btn-outline-minefop">{% trans "Toutes les actualités" %}<i class="bi bi-arrow-right ms-1"></i></a>
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">{% trans "Communication du Ministère" %}</span>
+        <h2 class="section-title mt-2">{% trans "Actualités" %}</h2>
+      </div>
+      <a href="{% url 'news:list' %}" class="btn btn-outline-minefop">{% trans "Toutes les actualités" %}<i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a>
     </div>
     <div class="row g-4">
       {% for article in latest_articles %}
       <div class="col-md-4">
-        <div class="card card-minefop">
+        <article class="card-minefop position-relative h-100">
           {% if article.cover_image %}
-          <img src="{{ article.cover_image.url }}" class="card-img-top" alt="{{ article.title }}">
+          <img src="{{ article.cover_image.url }}" class="card-img-top" alt="" loading="lazy">
           {% else %}
-          <div class="card-img-top d-flex align-items-center justify-content-center"><i class="bi bi-newspaper text-success" style="font-size:2.5rem;"></i></div>
-          {% endif %}
-          <div class="card-body">
-            {% if article.category %}<span class="badge badge-category mb-2">{{ article.category.name }}</span>{% endif %}
-            <h3 class="h6 fw-bold"><a href="{{ article.get_absolute_url }}" class="text-decoration-none text-dark stretched-link">{{ article.title }}</a></h3>
-            <p class="text-muted small">{{ article.excerpt|truncatechars:110 }}</p>
-            <small class="text-muted"><i class="bi bi-calendar3 me-1"></i>{{ article.published_at|date:"d/m/Y" }}</small>
+          <div class="card-img-top d-flex align-items-center justify-content-center">
+            <i class="bi bi-newspaper" style="font-size:2.25rem;color:var(--green-600)" aria-hidden="true"></i>
           </div>
-        </div>
+          {% endif %}
+          <div class="p-3 p-lg-4">
+            {% if article.category %}<span class="badge-category">{{ article.category.name }}</span>{% endif %}
+            <h3 class="h6 fw-bold mt-2 card-title">
+              <a href="{{ article.get_absolute_url }}" class="stretched-link">{{ article.title }}</a>
+            </h3>
+            <p class="text-muted small">{{ article.excerpt|truncatechars:120 }}</p>
+            <time class="badge-date" datetime="{{ article.published_at|date:'Y-m-d' }}">
+              <i class="bi bi-calendar3 me-1" aria-hidden="true"></i>{{ article.published_at|date:"d/m/Y" }}
+            </time>
+          </div>
+        </article>
       </div>
       {% empty %}
       <div class="col-12">
@@ -193,41 +264,63 @@
   </div>
 </section>
 
-<!-- QUICK LINKS -->
-<section class="py-5 bg-light">
+<!-- ==================== LATEST OFFICIAL TEXTS ==================== -->
+{% if latest_documents %}
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">{% trans "Cadre juridique" %}</span>
+        <h2 class="section-title mt-2">{% trans "Derniers textes publiés" %}</h2>
+      </div>
+      <a href="{% url 'documents:list' %}" class="btn btn-outline-minefop">{% trans "Tous les textes" %}<i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a>
+    </div>
+    <div class="row g-3">
+      {% for doc in latest_documents %}
+      <div class="col-md-6">
+        <div class="doc-row p-3 d-flex align-items-start gap-3 h-100">
+          <span class="doc-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span>
+          <div class="doc-row-body">
+            <h3 class="h6 fw-bold mb-1">{{ doc.title }}</h3>
+            {% if doc.reference_number %}<div class="text-muted small">{{ doc.reference_number }}</div>{% endif %}
+          </div>
+          {% if doc.file %}
+          <a href="{{ doc.file.url }}" class="btn btn-sm btn-outline-minefop doc-row-actions" target="_blank" rel="noopener">
+            <i class="bi bi-download" aria-hidden="true"></i>
+            <span class="visually-hidden">{% trans "Télécharger" %} — {{ doc.title }}</span>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ========================= QUICK LINKS ========================= -->
+<section class="section {% if not latest_documents %}section-alt{% endif %}">
   <div class="container">
     <h2 class="section-title text-center mx-auto" style="width:fit-content;">{% trans "Accès rapides" %}</h2>
-    <div class="row g-4 mt-2">
+    <div class="row g-3 g-lg-4 mt-2">
       <div class="col-md-3 col-6">
-        <a href="{% url 'structures:training_center_list' %}" class="text-decoration-none">
-          <div class="mission-card text-center">
-            <div class="icon-wrap mx-auto"><i class="bi bi-building"></i></div>
-            <h3 class="h6 fw-bold text-dark">{% trans "Centres de formation" %}</h3>
-          </div>
+        <a href="{% url 'structures:training_center_list' %}" class="quick-tile">
+          <i class="bi bi-building" aria-hidden="true"></i><span>{% trans "Centres de formation" %}</span>
         </a>
       </div>
       <div class="col-md-3 col-6">
-        <a href="{% url 'documents:list' %}" class="text-decoration-none">
-          <div class="mission-card text-center">
-            <div class="icon-wrap mx-auto"><i class="bi bi-file-earmark-text-fill"></i></div>
-            <h3 class="h6 fw-bold text-dark">{% trans "Textes légaux" %}</h3>
-          </div>
+        <a href="{% url 'structures:org_chart' %}" class="quick-tile">
+          <i class="bi bi-diagram-3-fill" aria-hidden="true"></i><span>{% trans "Organigramme" %}</span>
         </a>
       </div>
       <div class="col-md-3 col-6">
-        <a href="{% url 'structures:delegations' %}" class="text-decoration-none">
-          <div class="mission-card text-center">
-            <div class="icon-wrap mx-auto"><i class="bi bi-diagram-3-fill"></i></div>
-            <h3 class="h6 fw-bold text-dark">{% trans "Délégations régionales" %}</h3>
-          </div>
+        <a href="{% url 'structures:attached_bodies' %}" class="quick-tile">
+          <i class="bi bi-building-fill-check" aria-hidden="true"></i><span>{% trans "Organismes rattachés" %}</span>
         </a>
       </div>
       <div class="col-md-3 col-6">
-        <a href="{% url 'contact:contact' %}" class="text-decoration-none">
-          <div class="mission-card text-center">
-            <div class="icon-wrap mx-auto"><i class="bi bi-headset"></i></div>
-            <h3 class="h6 fw-bold text-dark">{% trans "Nous contacter" %}</h3>
-          </div>
+        <a href="{% url 'contact:contact' %}" class="quick-tile">
+          <i class="bi bi-headset" aria-hidden="true"></i><span>{% trans "Nous contacter" %}</span>
         </a>
       </div>
     </div>

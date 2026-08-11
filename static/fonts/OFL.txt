@@ -1,0 +1,15 @@
+The font files in this directory are redistributed under the SIL Open Font
+License, Version 1.1.
+
+  * Inter — Copyright (c) 2016 The Inter Project Authors
+    https://github.com/rsms/inter
+  * Source Serif 4 — Copyright (c) 2014-2023 Adobe (http://www.adobe.com/)
+    https://github.com/adobe-fonts/source-serif
+
+Only the `latin` and `latin-ext` subsets are shipped, which is what the
+bilingual French / English content of this site requires.
+
+Full licence text: https://openfontlicense.org/open-font-license-official-text/
+
+The licence permits redistribution and embedding in this form provided the
+fonts are not sold on their own and the copyright notices above are kept.

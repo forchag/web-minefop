@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Mentions légales" %} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{% trans "Éditeur, hébergement, droits d'auteur et conditions de réutilisation des contenus du site officiel du MINEFOP." %}{% endblock %}
+{% block content %}
+{% trans "Mentions légales" as page_title %}
+{% include "partials/page_header.html" %}
+
+<section class="section">
+  <div class="container">
+    <div class="row g-4 g-lg-5">
+      <div class="col-lg-8 prose">
+        <h2 class="h5 fw-bold">{% trans "Éditeur du site" %}</h2>
+        <p>
+          {% blocktrans %}Le présent site est édité par le Ministère de l'Emploi et de la Formation Professionnelle (MINEFOP) de la République du Cameroun.{% endblocktrans %}
+        </p>
+        <ul class="info-list mb-4">
+          <li><span class="info-label" style="min-width:9rem">{% trans "Adresse" %}</span><span>{{ site_contact_info.address }}{% if site_contact_info.po_box %} — {{ site_contact_info.po_box }}{% endif %}</span></li>
+          <li><span class="info-label" style="min-width:9rem">{% trans "Courriel" %}</span><span><a href="mailto:{{ site_contact_info.email }}">{{ site_contact_info.email }}</a></span></li>
+          {% if site_contact_info.phone %}<li><span class="info-label" style="min-width:9rem">{% trans "Téléphone" %}</span><span>{{ site_contact_info.phone }}</span></li>{% endif %}
+          <li><span class="info-label" style="min-width:9rem">{% trans "Directeur de publication" %}</span><span>{% trans "Le Ministre de l'Emploi et de la Formation Professionnelle" %}</span></li>
+        </ul>
+
+        <h2 class="h5 fw-bold">{% trans "Propriété intellectuelle" %}</h2>
+        <p>
+          {% blocktrans %}Les armoiries de la République du Cameroun et le logotype du MINEFOP sont des emblèmes officiels de l'État. Leur reproduction, en dehors des usages d'information et de citation, est soumise à l'autorisation préalable du Ministère.{% endblocktrans %}
+        </p>
+        <p>
+          {% blocktrans %}Les textes législatifs et réglementaires publiés sur ce site sont des actes officiels et peuvent être librement reproduits, sous réserve de citer la référence exacte du texte et de n'en altérer ni le sens ni l'intégrité.{% endblocktrans %}
+        </p>
+
+        <h2 class="h5 fw-bold">{% trans "Valeur juridique des informations" %}</h2>
+        <p>
+          {% blocktrans %}Les informations diffusées sur ce site sont fournies à titre informatif. Seuls les textes publiés au Journal Officiel de la République du Cameroun font foi. En cas de divergence entre le contenu du site et un acte officiel, ce dernier prévaut.{% endblocktrans %}
+        </p>
+
+        <h2 class="h5 fw-bold">{% trans "Données à caractère personnel" %}</h2>
+        <p>
+          {% blocktrans %}Les données transmises via le formulaire de contact (nom, courriel, téléphone, objet et contenu du message) sont collectées aux seules fins de traiter la demande de l'usager. Elles sont conservées par les services du Ministère et ne font l'objet d'aucune cession à des tiers.{% endblocktrans %}
+        </p>
+        <p>
+          {% blocktrans %}Toute personne peut demander l'accès, la rectification ou la suppression des données la concernant en écrivant au Ministère à l'adresse indiquée ci-dessus.{% endblocktrans %}
+        </p>
+
+        <h2 class="h5 fw-bold">{% trans "Traceurs et mesure d'audience" %}</h2>
+        <p>
+          {% blocktrans %}Ce site n'utilise pas de traceur publicitaire et ne dépose aucun cookie de suivi tiers. Seul un cookie technique est utilisé pour mémoriser la langue de consultation et sécuriser les formulaires.{% endblocktrans %}
+        </p>
+
+        <h2 class="h5 fw-bold">{% trans "Liens externes" %}</h2>
+        <p>
+          {% blocktrans %}Le Ministère n'exerce aucun contrôle sur le contenu des sites vers lesquels des liens sont proposés et ne saurait être tenu responsable de leur contenu.{% endblocktrans %}
+        </p>
+
+        <h2 class="h5 fw-bold">{% trans "Signaler une erreur" %}</h2>
+        <p>
+          {% blocktrans %}Une information vous paraît inexacte ou obsolète ? Signalez-la au moyen du formulaire de contact : chaque signalement est examiné par les services compétents.{% endblocktrans %}
+        </p>
+        <a href="{% url 'contact:contact' %}" class="btn btn-minefop">{% trans "Signaler une erreur" %}</a>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card-minefop p-4">
+          <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Voir aussi" %}</h2>
+          <ul class="footer-list list-unstyled d-flex flex-column gap-2">
+            <li><a href="{% url 'core:accessibility' %}" class="text-decoration-none">{% trans "Déclaration d'accessibilité" %}</a></li>
+            <li><a href="{% url 'core:sitemap_page' %}" class="text-decoration-none">{% trans "Plan du site" %}</a></li>
+            <li><a href="{% url 'documents:list' %}" class="text-decoration-none">{% trans "Textes légaux & réglementaires" %}</a></li>
+            <li><a href="{% url 'contact:contact' %}" class="text-decoration-none">{% trans "Nous contacter" %}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

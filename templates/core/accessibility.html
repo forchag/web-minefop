@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Accessibilité" %} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{% trans "Déclaration d'accessibilité numérique du site officiel du MINEFOP : engagements, mesures mises en œuvre et voie de recours." %}{% endblock %}
+{% block content %}
+{% trans "Déclaration d'accessibilité" as page_title %}
+{% trans "L'information publique doit être consultable par toutes et tous, y compris en situation de handicap." as page_subtitle %}
+{% include "partials/page_header.html" %}
+
+<section class="section">
+  <div class="container">
+    <div class="row g-4 g-lg-5">
+      <div class="col-lg-8 prose">
+        <h2 class="h5 fw-bold">{% trans "Notre engagement" %}</h2>
+        <p>
+          {% blocktrans %}Le Ministère de l'Emploi et de la Formation Professionnelle s'attache à rendre ce site accessible au plus grand nombre, en s'appuyant sur les recommandations internationales WCAG 2.1 niveau AA.{% endblocktrans %}
+        </p>
+
+        <h2 class="h5 fw-bold">{% trans "Mesures mises en œuvre" %}</h2>
+        <ul class="list-unstyled d-flex flex-column gap-2 mb-4">
+          <li><i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>{% trans "Un lien « Aller au contenu principal » en tête de chaque page." %}</li>
+          <li><i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>{% trans "Une navigation entièrement utilisable au clavier, avec un indicateur de focus visible." %}</li>
+          <li><i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>{% trans "Des contrastes de couleurs conformes au seuil de 4,5:1 pour le texte courant." %}</li>
+          <li><i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>{% trans "Une structure de titres hiérarchisée et des repères ARIA sur les zones principales." %}</li>
+          <li><i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>{% trans "Des alternatives textuelles pour les images porteuses d'information." %}</li>
+          <li><i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>{% trans "Le respect du réglage système « animations réduites »." %}</li>
+          <li><i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>{% trans "Une mise en page adaptative, lisible sur téléphone comme à l'impression." %}</li>
+          <li><i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>{% trans "Un site bilingue français / anglais, la langue étant déclarée dans le code de chaque page." %}</li>
+        </ul>
+
+        <h2 class="h5 fw-bold">{% trans "Limitations connues" %}</h2>
+        <p>
+          {% blocktrans %}Certains documents mis en téléchargement sont des reproductions de textes officiels au format PDF dont la version d'origine n'a pas été produite dans un format accessible. Une version alternative peut être demandée aux services du Ministère.{% endblocktrans %}
+        </p>
+
+        <h2 class="h5 fw-bold">{% trans "Signaler une difficulté" %}</h2>
+        <p>
+          {% blocktrans %}Si vous rencontrez un obstacle pour accéder à un contenu ou à un service de ce site, contactez-nous : nous vous transmettrons l'information sous une forme accessible dans les meilleurs délais.{% endblocktrans %}
+        </p>
+        <a href="{% url 'contact:contact' %}" class="btn btn-minefop">{% trans "Signaler une difficulté d'accès" %}</a>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card-minefop p-4">
+          <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Raccourcis utiles" %}</h2>
+          <ul class="footer-list list-unstyled d-flex flex-column gap-2 small">
+            <li><kbd>Tab</kbd> — {% trans "élément interactif suivant" %}</li>
+            <li><kbd>Maj</kbd> + <kbd>Tab</kbd> — {% trans "élément précédent" %}</li>
+            <li><kbd>Entrée</kbd> — {% trans "activer un lien ou un bouton" %}</li>
+            <li><kbd>Ctrl</kbd> + <kbd>+</kbd> — {% trans "agrandir le texte" %}</li>
+          </ul>
+        </div>
+        <div class="card-minefop p-4 mt-4">
+          <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Voir aussi" %}</h2>
+          <ul class="footer-list list-unstyled d-flex flex-column gap-2">
+            <li><a href="{% url 'core:legal_notice' %}" class="text-decoration-none">{% trans "Mentions légales" %}</a></li>
+            <li><a href="{% url 'core:sitemap_page' %}" class="text-decoration-none">{% trans "Plan du site" %}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

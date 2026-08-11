@@ -4,15 +4,13 @@
   "description": "Site officiel du Ministère de l'Emploi et de la Formation Professionnelle (MINEFOP) - Cameroun",
   "private": true,
   "scripts": {
-    "build:css": "tailwindcss -i ./static/src/tailwind-input.css -o ./static/css/tailwind-built.css --minify",
-    "watch:css": "tailwindcss -i ./static/src/tailwind-input.css -o ./static/css/tailwind-built.css --watch"
+    "vendor": "npm run vendor:bootstrap && npm run vendor:icons",
+    "vendor:bootstrap": "mkdir -p static/vendor/bootstrap/css static/vendor/bootstrap/js && cp node_modules/bootstrap/dist/css/bootstrap.min.css* static/vendor/bootstrap/css/ && cp node_modules/bootstrap/dist/js/bootstrap.bundle.min.js* static/vendor/bootstrap/js/",
+    "vendor:icons": "mkdir -p static/vendor/bootstrap-icons/fonts && cp node_modules/bootstrap-icons/font/bootstrap-icons.min.css static/vendor/bootstrap-icons/ && cp node_modules/bootstrap-icons/font/fonts/* static/vendor/bootstrap-icons/fonts/"
   },
   "license": "UNLICENSED",
   "dependencies": {
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3"
-  },
-  "devDependencies": {
-    "tailwindcss": "^3.4.13"
   }
 }

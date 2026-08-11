@@ -1,56 +1,72 @@
-{% load i18n %}
-<footer class="site-footer pt-5 pb-4 mt-5">
-  <div class="container">
+{% load i18n static %}
+<footer class="site-footer mt-auto">
+  <div class="container py-5">
     <div class="row g-4">
-      <div class="col-lg-4 col-md-6">
-        <div class="d-flex align-items-center gap-2 mb-3">
-          <span class="brand-emblem">{% include "partials/emblem.html" with size="48" %}</span>
+      <div class="col-lg-4">
+        <div class="footer-brand mb-3">
+          <img src="{% static 'img/minefop-emblem.png' %}" width="58" height="65"
+               alt="{% trans "Armoiries de la République du Cameroun" %}">
           <div>
             <strong class="d-block text-white">MINEFOP</strong>
-            <small class="text-white-50">{% trans "République du Cameroun" %}</small>
+            <span class="d-block">{% trans "République du Cameroun" %}</span>
+            <span class="d-block small" style="color:#8fae9d">{% trans "Paix – Travail – Patrie" %}</span>
           </div>
         </div>
-        <p class="text-white-50">{% trans "Ministère de l'Emploi et de la Formation Professionnelle — au service de l'employabilité et de la qualification professionnelle des Camerounais." %}</p>
+        <p>{% trans "Ministère de l'Emploi et de la Formation Professionnelle — au service de l'employabilité et de la qualification professionnelle des Camerounais." %}</p>
+        {% if site_contact_info.facebook_url or site_contact_info.twitter_url or site_contact_info.linkedin_url or site_contact_info.youtube_url %}
         <div class="d-flex gap-2 mt-3">
-          {% if site_contact_info.facebook_url %}<a href="{{ site_contact_info.facebook_url }}" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a>{% endif %}
-          {% if site_contact_info.twitter_url %}<a href="{{ site_contact_info.twitter_url }}" target="_blank" rel="noopener" class="social-icon" aria-label="X (Twitter)"><i class="bi bi-twitter-x"></i></a>{% endif %}
-          {% if site_contact_info.linkedin_url %}<a href="{{ site_contact_info.linkedin_url }}" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>{% endif %}
-          {% if site_contact_info.youtube_url %}<a href="{{ site_contact_info.youtube_url }}" target="_blank" rel="noopener" class="social-icon" aria-label="YouTube"><i class="bi bi-youtube"></i></a>{% endif %}
+          {% if site_contact_info.facebook_url %}<a href="{{ site_contact_info.facebook_url }}" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook"><i class="bi bi-facebook" aria-hidden="true"></i></a>{% endif %}
+          {% if site_contact_info.twitter_url %}<a href="{{ site_contact_info.twitter_url }}" target="_blank" rel="noopener" class="social-icon" aria-label="X (Twitter)"><i class="bi bi-twitter-x" aria-hidden="true"></i></a>{% endif %}
+          {% if site_contact_info.linkedin_url %}<a href="{{ site_contact_info.linkedin_url }}" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a>{% endif %}
+          {% if site_contact_info.youtube_url %}<a href="{{ site_contact_info.youtube_url }}" target="_blank" rel="noopener" class="social-icon" aria-label="YouTube"><i class="bi bi-youtube" aria-hidden="true"></i></a>{% endif %}
         </div>
+        {% endif %}
       </div>
-      <div class="col-lg-2 col-md-6">
-        <h6>{% trans "Le Ministère" %}</h6>
-        <ul class="list-unstyled d-flex flex-column gap-2">
+
+      <div class="col-lg-2 col-md-4 col-6">
+        <h2>{% trans "Le Ministère" %}</h2>
+        <ul class="footer-list">
           <li><a href="{% url 'core:minister' %}">{% trans "Mot du Ministre" %}</a></li>
           <li><a href="{% url 'core:mission' %}">{% trans "Missions" %}</a></li>
           <li><a href="{% url 'structures:org_chart' %}">{% trans "Organigramme" %}</a></li>
           <li><a href="{% url 'core:history' %}">{% trans "Historique" %}</a></li>
+          <li><a href="{% url 'structures:attached_bodies' %}">{% trans "Organismes rattachés" %}</a></li>
         </ul>
       </div>
-      <div class="col-lg-3 col-md-6">
-        <h6>{% trans "Ressources" %}</h6>
-        <ul class="list-unstyled d-flex flex-column gap-2">
+
+      <div class="col-lg-3 col-md-4 col-6">
+        <h2>{% trans "Ressources" %}</h2>
+        <ul class="footer-list">
           <li><a href="{% url 'structures:training_center_list' %}">{% trans "Centres de formation" %}</a></li>
           <li><a href="{% url 'structures:delegations' %}">{% trans "Délégations régionales" %}</a></li>
-          <li><a href="{% url 'documents:list' %}">{% trans "Textes légaux" %}</a></li>
+          <li><a href="{% url 'documents:list' %}">{% trans "Textes légaux & réglementaires" %}</a></li>
+          <li><a href="{% url 'core:vocational_training' %}">{% trans "Dispositif national de formation" %}</a></li>
           <li><a href="{% url 'news:list' %}">{% trans "Actualités" %}</a></li>
         </ul>
       </div>
-      <div class="col-lg-3 col-md-6">
-        <h6>{% trans "Contact" %}</h6>
-        <ul class="list-unstyled d-flex flex-column gap-2 text-white-50">
-          <li><i class="bi bi-geo-alt-fill me-2"></i>{{ site_contact_info.address }}</li>
-          <li><i class="bi bi-envelope-fill me-2"></i>{{ site_contact_info.email }}</li>
-          {% if site_contact_info.phone %}<li><i class="bi bi-telephone-fill me-2"></i>{{ site_contact_info.phone }}</li>{% endif %}
+
+      <div class="col-lg-3 col-md-4">
+        <h2>{% trans "Nous joindre" %}</h2>
+        <ul class="footer-list">
+          <li><i class="bi bi-geo-alt me-2" aria-hidden="true"></i>{{ site_contact_info.address }}{% if site_contact_info.po_box %} — {{ site_contact_info.po_box }}{% endif %}</li>
+          <li><i class="bi bi-envelope me-2" aria-hidden="true"></i><a href="mailto:{{ site_contact_info.email }}">{{ site_contact_info.email }}</a></li>
+          {% if site_contact_info.phone %}<li><i class="bi bi-telephone me-2" aria-hidden="true"></i>{{ site_contact_info.phone }}</li>{% endif %}
+          {% if site_contact_info.opening_hours %}<li><i class="bi bi-clock me-2" aria-hidden="true"></i>{{ site_contact_info.opening_hours }}</li>{% endif %}
         </ul>
-        <a href="{% url 'contact:contact' %}" class="btn btn-outline-light btn-sm mt-2">{% trans "Formulaire de contact" %}</a>
+        <a href="{% url 'contact:contact' %}" class="btn btn-outline-light btn-sm mt-3">{% trans "Formulaire de contact" %}</a>
       </div>
     </div>
   </div>
-  <div class="footer-bottom mt-4 pt-3">
-    <div class="container d-flex flex-wrap justify-content-between gap-2">
-      <span class="text-white-50">&copy; {% now "Y" %} MINEFOP — {% trans "Tous droits réservés" %}</span>
-      <span class="text-white-50">{% trans "Paix – Travail – Patrie" %}</span>
+
+  <div class="footer-bottom py-3">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
+      <span>&copy; {% now "Y" %} MINEFOP — {% trans "République du Cameroun. Tous droits réservés." %}</span>
+      <ul class="footer-legal">
+        <li><a href="{% url 'core:legal_notice' %}">{% trans "Mentions légales" %}</a></li>
+        <li><a href="{% url 'core:accessibility' %}">{% trans "Accessibilité" %}</a></li>
+        <li><a href="{% url 'core:sitemap_page' %}">{% trans "Plan du site" %}</a></li>
+        <li><a href="{% url 'contact:contact' %}">{% trans "Contact" %}</a></li>
+      </ul>
     </div>
   </div>
 </footer>
