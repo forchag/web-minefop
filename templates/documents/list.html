@@ -1,42 +1,61 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block title %}{% trans "Textes légaux & documents" %} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{% trans "Lois, décrets, arrêtés et documents officiels régissant l'emploi et la formation professionnelle au Cameroun." %}{% endblock %}
 {% block content %}
 {% trans "Textes légaux & documents" as page_title %}
 {% trans "Lois, décrets et documents officiels régissant l'emploi et la formation professionnelle au Cameroun." as page_subtitle %}
 {% include "partials/page_header.html" %}
 
-<section class="py-5">
+<section class="section">
   <div class="container">
-    <div class="row">
-      <div class="col-lg-3 mb-4">
-        <div class="card card-minefop p-3">
-          <h2 class="h6 fw-bold text-uppercase text-muted mb-3">{% trans "Catégories" %}</h2>
+    <div class="row g-4">
+      <div class="col-lg-3">
+        <nav class="card-minefop p-3" aria-label="{% trans 'Catégories de documents' %}">
+          <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Catégories" %}</h2>
           <div class="d-flex flex-column gap-1">
-            <a href="{% url 'documents:list' %}" class="btn btn-sm text-start {% if not active_category %}btn-minefop{% else %}btn-light{% endif %}">{% trans "Tous les documents" %}</a>
+            <a href="{% url 'documents:list' %}" class="btn btn-sm text-start {% if not active_category %}btn-minefop{% else %}btn-light{% endif %}"
+               {% if not active_category %}aria-current="true"{% endif %}>{% trans "Tous les documents" %}</a>
             {% for cat in categories %}
-            <a href="?categorie={{ cat.slug }}" class="btn btn-sm text-start {% if active_category.slug == cat.slug %}btn-minefop{% else %}btn-light{% endif %}">{{ cat.name }}</a>
+            <a href="?categorie={{ cat.slug }}" class="btn btn-sm text-start {% if active_category.slug == cat.slug %}btn-minefop{% else %}btn-light{% endif %}"
+               {% if active_category.slug == cat.slug %}aria-current="true"{% endif %}>{{ cat.name }}</a>
             {% endfor %}
           </div>
+        </nav>
+
+        <div class="alert alert-minefop mt-4 small">
+          <i class="bi bi-info-circle me-1" aria-hidden="true"></i>
+          {% trans "Seuls les textes publiés au Journal Officiel de la République du Cameroun font foi." %}
         </div>
       </div>
+
       <div class="col-lg-9">
         <div class="d-flex flex-column gap-3">
           {% for doc in page_obj %}
-          <div class="doc-row p-3 d-flex align-items-center gap-3 flex-wrap">
-            <div class="doc-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
-            <div class="flex-grow-1">
-              <h2 class="h6 fw-bold mb-1">{{ doc.title }}</h2>
-              {% if doc.reference_number %}<div class="text-muted small">{{ doc.reference_number }}</div>{% endif %}
-              {% if doc.description %}<p class="text-muted small mb-0 mt-1">{{ doc.description|truncatechars:160 }}</p>{% endif %}
+          <div class="doc-row p-3 p-lg-4 d-flex align-items-start gap-3 flex-wrap">
+            <span class="doc-icon"><i class="bi bi-file-earmark-pdf" aria-hidden="true"></i></span>
+            <div class="doc-row-body">
+              {% if doc.category %}<span class="badge-category">{{ doc.category.name }}</span>{% endif %}
+              <h2 class="h6 fw-bold mb-1 mt-2">{{ doc.title }}</h2>
+              {% if doc.reference_number %}<div class="text-muted small fw-semibold">{{ doc.reference_number }}</div>{% endif %}
+              {% if doc.description %}<p class="text-muted small mb-0 mt-1">{{ doc.description|truncatechars:200 }}</p>{% endif %}
             </div>
-            <div class="text-end">
-              {% if doc.published_date %}<div class="text-muted small mb-2"><i class="bi bi-calendar3 me-1"></i>{{ doc.published_date|date:"d/m/Y" }}</div>{% endif %}
-              <a href="{{ doc.file.url }}" class="btn btn-minefop btn-sm" target="_blank" rel="noopener"><i class="bi bi-download me-1"></i>{% trans "Télécharger" %}</a>
+            <div class="doc-row-actions text-lg-end">
+              {% if doc.published_date %}
+              <div class="badge-date mb-2"><i class="bi bi-calendar3 me-1" aria-hidden="true"></i>{{ doc.published_date|date:"d/m/Y" }}</div>
+              {% endif %}
+              {% if doc.file %}
+              <a href="{{ doc.file.url }}" class="btn btn-minefop btn-sm" target="_blank" rel="noopener">
+                <i class="bi bi-download me-1" aria-hidden="true"></i>{% trans "Télécharger" %}
+                <span class="visually-hidden">— {{ doc.title }}</span>
+              </a>
+              {% endif %}
             </div>
           </div>
           {% empty %}
-          <p class="text-muted text-center py-5">{% trans "Aucun document disponible pour cette catégorie." %}</p>
+          <div class="alert alert-minefop">
+            <i class="bi bi-info-circle me-2" aria-hidden="true"></i>{% trans "Aucun document disponible pour cette catégorie." %}
+          </div>
           {% endfor %}
         </div>
         {% include "partials/pagination.html" %}

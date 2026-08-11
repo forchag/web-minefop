@@ -1,3 +1,6 @@
+from django.core.paginator import Paginator
+from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from .models import HeroSlide, KeyFigure, MinisterMessage, Timeline
@@ -36,6 +39,102 @@ def minister_message(request):
 def vocational_training(request):
     """Presentation page: the national vocational-training framework (Loi 2018/010)."""
     return render(request, "core/vocational_training.html")
+
+
+def search(request):
+    """Site-wide search across news, official texts and training centres."""
+    from apps.documents.models import Document
+    from apps.news.models import Article
+    from apps.structures.models import TrainingCenter
+
+    query = (request.GET.get("q") or "").strip()
+    results = []
+
+    if query:
+        for article in Article.objects.filter(is_published=True).filter(
+            Q(title__icontains=query)
+            | Q(excerpt__icontains=query)
+            | Q(body__icontains=query)
+        )[:40]:
+            results.append(
+                {
+                    "kind": "news",
+                    "title": article.title,
+                    "summary": article.excerpt,
+                    "url": article.get_absolute_url(),
+                    "date": article.published_at,
+                }
+            )
+
+        for document in Document.objects.filter(
+            Q(title__icontains=query)
+            | Q(reference_number__icontains=query)
+            | Q(description__icontains=query)
+        )[:40]:
+            results.append(
+                {
+                    "kind": "document",
+                    "title": document.title,
+                    "summary": document.reference_number or document.description,
+                    "url": document.file.url if document.file else "",
+                    "date": document.published_date,
+                }
+            )
+
+        for center in TrainingCenter.objects.select_related("region").filter(
+            Q(name__icontains=query)
+            | Q(town__icontains=query)
+            | Q(specialties__icontains=query)
+        )[:40]:
+            results.append(
+                {
+                    "kind": "center",
+                    "title": center.name,
+                    "summary": f"{center.get_center_type_display()} — {center.town}",
+                    "url": center.get_absolute_url(),
+                    "date": None,
+                }
+            )
+
+    paginator = Paginator(results, 15)
+    context = {
+        "query": query,
+        "page_obj": paginator.get_page(request.GET.get("page")),
+        "result_count": len(results),
+    }
+    return render(request, "core/search.html", context)
+
+
+def legal_notice(request):
+    return render(request, "core/legal_notice.html")
+
+
+def accessibility(request):
+    return render(request, "core/accessibility.html")
+
+
+def sitemap_page(request):
+    """Human-readable site map (the machine-readable one lives at /sitemap.xml)."""
+    from apps.documents.models import DocumentCategory
+    from apps.news.models import NewsCategory
+
+    context = {
+        "news_categories": NewsCategory.objects.all(),
+        "document_categories": DocumentCategory.objects.all(),
+    }
+    return render(request, "core/sitemap.html", context)
+
+
+def robots_txt(request):
+    host = request.get_host()
+    lines = [
+        "User-agent: *",
+        "Disallow: /admin/",
+        "Allow: /",
+        "",
+        f"Sitemap: {request.scheme}://{host}/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain; charset=utf-8")
 
 
 def error_404(request, exception=None):

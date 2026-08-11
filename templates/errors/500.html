@@ -1,11 +1,36 @@
-{% extends "base.html" %}
-{% load i18n %}
-{% block title %}500 — {{ SITE_NAME }}{% endblock %}
-{% block content %}
-<div class="container py-5 text-center">
-  <p class="display-1 fw-bold" style="color:var(--cm-red);">500</p>
-  <h1 class="h3 mb-3">{% trans "Une erreur est survenue" %}</h1>
-  <p class="text-muted mb-4">{% trans "Veuillez réessayer ultérieurement." %}</p>
-  <a href="{% url 'core:home' %}" class="btn btn-minefop">{% trans "Retour à l'accueil" %}</a>
-</div>
-{% endblock %}
+{% load i18n static %}<!DOCTYPE html>
+{% comment %}
+Deliberately standalone: a 500 is often caused by the database or by a context
+processor, so this page extends nothing and reads no context variables. It only
+needs the static files to render.
+{% endcomment %}
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% trans "Erreur technique" %} (500) — MINEFOP</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32.png' %}">
+  <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+</head>
+<body>
+  <div class="tricolor-bar"><span class="bar-green"></span><span class="bar-red"></span><span class="bar-yellow"></span></div>
+  <main class="section">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-7">
+          <img src="{% static 'img/minefop-emblem.png' %}" width="80" height="90" class="mb-4"
+               alt="{% trans "Armoiries de la République du Cameroun" %}">
+          <p class="display-1 fw-bold mb-0 font-serif-brand" style="color:var(--cm-red);">500</p>
+          <h1 class="h3 mb-3">{% trans "Une erreur technique est survenue" %}</h1>
+          <p class="text-muted mx-auto mb-4">
+            {% trans "Nos services sont momentanément indisponibles. Les équipes techniques du Ministère ont été informées. Merci de réessayer dans quelques instants." %}
+          </p>
+          <a href="/" class="btn btn-minefop">{% trans "Retour à l'accueil" %}</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

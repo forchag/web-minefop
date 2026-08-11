@@ -1,51 +1,75 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block title %}{% trans "Centres de formation" %} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{% trans "Annuaire national des centres de formation professionnelle publics et privés agréés par le MINEFOP." %}{% endblock %}
 {% block content %}
 {% trans "Centres de formation professionnelle" as page_title %}
 {% trans "Annuaire des structures publiques et privées agréées réparties sur le territoire national." as page_subtitle %}
 {% include "partials/page_header.html" %}
 
-<section class="py-5">
+<section class="section">
   <div class="container">
-    <form method="get" class="row g-2 mb-4">
-      <div class="col-md-4">
-        <select name="type" class="form-select" onchange="this.form.submit()">
-          <option value="">{% trans "Tous les types" %}</option>
-          {% for value, label in center_types %}
-          <option value="{{ value }}" {% if active_type == value %}selected{% endif %}>{{ label }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="col-md-4">
-        <select name="region" class="form-select" onchange="this.form.submit()">
-          <option value="">{% trans "Toutes les régions" %}</option>
-          {% for region in regions %}
-          <option value="{{ region.id }}" {% if active_region_id == region.id %}selected{% endif %}>{{ region.name }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="col-md-2">
-        <button class="btn btn-minefop w-100" type="submit">{% trans "Filtrer" %}</button>
+    <form method="get" class="filter-bar mb-4">
+      <div class="row g-2 align-items-end">
+        <div class="col-md-4">
+          <label class="form-label small fw-semibold" for="filter-type">{% trans "Type de centre" %}</label>
+          <select id="filter-type" name="type" class="form-select">
+            <option value="">{% trans "Tous les types" %}</option>
+            {% for value, label in center_types %}
+            <option value="{{ value }}" {% if active_type == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label small fw-semibold" for="filter-region">{% trans "Région" %}</label>
+          <select id="filter-region" name="region" class="form-select">
+            <option value="">{% trans "Toutes les régions" %}</option>
+            {% for region in regions %}
+            <option value="{{ region.id }}" {% if active_region_id == region.id %}selected{% endif %}>{{ region.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-minefop w-100" type="submit">
+            <i class="bi bi-funnel me-1" aria-hidden="true"></i>{% trans "Filtrer" %}
+          </button>
+        </div>
+        <div class="col-md-2">
+          <a class="btn btn-outline-minefop w-100" href="{% url 'structures:training_center_list' %}">{% trans "Réinitialiser" %}</a>
+        </div>
       </div>
     </form>
 
-    <div class="row g-4">
+    <p class="text-muted small" role="status">
+      {% blocktrans count counter=page_obj.paginator.count %}{{ counter }} centre référencé.{% plural %}{{ counter }} centres référencés.{% endblocktrans %}
+    </p>
+
+    <div class="row g-4 mt-1">
       {% for center in page_obj %}
       <div class="col-md-6 col-lg-4">
-        <div class="card card-minefop p-4">
-          <span class="badge badge-category align-self-start mb-2">{{ center.get_center_type_display }}</span>
-          <h2 class="h6 fw-bold"><a href="{% url 'structures:training_center_detail' center.pk %}" class="text-decoration-none text-dark stretched-link">{{ center.name }}</a></h2>
-          <p class="text-muted small mb-1"><i class="bi bi-geo-alt-fill me-1"></i>{{ center.town }}{% if center.region %}, {{ center.region.name }}{% endif %}</p>
+        <div class="card-minefop position-relative p-4 h-100">
+          <span class="badge-category">{{ center.get_center_type_display|truncatechars:44 }}</span>
+          <h2 class="h6 fw-bold mt-3 card-title">
+            <a href="{{ center.get_absolute_url }}" class="stretched-link">{{ center.name }}</a>
+          </h2>
+          <p class="text-muted small mb-2">
+            <i class="bi bi-geo-alt-fill me-1" aria-hidden="true"></i>{{ center.town }}{% if center.region %}, {{ center.region.name }}{% endif %}
+          </p>
           {% if center.specialty_list %}
-          <div class="d-flex flex-wrap gap-1 mt-2">
-            {% for s in center.specialty_list|slice:":3" %}<span class="badge bg-light text-dark border">{{ s }}</span>{% endfor %}
+          <div class="d-flex flex-wrap gap-1 mt-auto pt-2">
+            {% for s in center.specialty_list|slice:":3" %}
+            <span class="badge rounded-pill" style="background:var(--surface);color:var(--ink-soft);border:1px solid var(--rule);font-weight:500;">{{ s }}</span>
+            {% endfor %}
           </div>
           {% endif %}
         </div>
       </div>
       {% empty %}
-      <p class="text-muted text-center py-5">{% trans "Aucun centre ne correspond à vos critères." %}</p>
+      <div class="col-12">
+        <div class="alert alert-minefop">
+          <i class="bi bi-info-circle me-2" aria-hidden="true"></i>{% trans "Aucun centre ne correspond à vos critères de recherche." %}
+        </div>
+      </div>
       {% endfor %}
     </div>
     {% include "partials/pagination.html" %}

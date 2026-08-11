@@ -1,0 +1,39 @@
+{% load i18n %}
+{% comment %}
+Official-site identification strip. Government portals carry this band so a
+visitor can tell an authentic public site from an imitation; the collapsible
+panel explains what to look for in the address bar.
+{% endcomment %}
+<div class="gov-banner">
+  <div class="container py-2">
+    <div class="d-flex flex-wrap align-items-center gap-2">
+      <span class="gov-banner-flag" aria-hidden="true">
+        <span style="background:#04502c"></span><span style="background:#ce1126"></span><span style="background:#fcd116"></span>
+      </span>
+      <span>{% trans "Un site officiel du Gouvernement de la République du Cameroun" %}</span>
+      <button class="gov-banner-toggle ms-1" type="button" data-bs-toggle="collapse" data-bs-target="#govBannerDetails" aria-expanded="false" aria-controls="govBannerDetails">
+        {% trans "Comment le vérifier" %}
+      </button>
+    </div>
+  </div>
+  <div class="collapse gov-banner-details" id="govBannerDetails">
+    <div class="container py-3">
+      <div class="row g-3">
+        <div class="col-md-6 d-flex gap-3">
+          <i class="bi bi-globe2 fs-5" style="color:var(--green-700)" aria-hidden="true"></i>
+          <p class="mb-0">
+            <strong>{% trans "Les adresses officielles se terminent par .cm" %}</strong><br>
+            {% trans "Ce site est publié par le Ministère de l'Emploi et de la Formation Professionnelle. Vérifiez toujours le nom de domaine avant de transmettre une information." %}
+          </p>
+        </div>
+        <div class="col-md-6 d-flex gap-3">
+          <i class="bi bi-shield-lock fs-5" style="color:var(--green-700)" aria-hidden="true"></i>
+          <p class="mb-0">
+            <strong>{% trans "Connexion sécurisée (HTTPS)" %}</strong><br>
+            {% trans "Le cadenas affiché par votre navigateur indique que la connexion est chiffrée. Le Ministère ne demande jamais de paiement en ligne pour l'accès à ses services." %}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

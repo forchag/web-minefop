@@ -2,48 +2,70 @@
 {% load i18n %}
 {% block title %}{{ article.title }} — {{ SITE_NAME }}{% endblock %}
 {% block meta_description %}{{ article.excerpt }}{% endblock %}
+{% block og_title %}{{ article.title }}{% endblock %}
+{% block og_description %}{{ article.excerpt }}{% endblock %}
+{% block og_image %}{% if article.cover_image %}{{ request.scheme }}://{{ request.get_host }}{{ article.cover_image.url }}{% else %}{{ block.super }}{% endif %}{% endblock %}
 {% block content %}
 <div class="page-header">
   <div class="container">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb mb-2">
+    <nav aria-label="{% trans 'Fil d’Ariane' %}">
+      <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'core:home' %}">{% trans "Accueil" %}</a></li>
         <li class="breadcrumb-item"><a href="{% url 'news:list' %}">{% trans "Actualités" %}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ article.title }}</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ article.title|truncatechars:60 }}</li>
       </ol>
     </nav>
-    <h1 class="h2 mb-0">{{ article.title }}</h1>
-    <p class="mb-0 mt-2 opacity-75"><i class="bi bi-calendar3 me-1"></i>{{ article.published_at|date:"d F Y" }}{% if article.category %} · {{ article.category.name }}{% endif %}</p>
+    <h1>{{ article.title }}</h1>
+    <p class="page-subtitle">
+      <time datetime="{{ article.published_at|date:'Y-m-d' }}"><i class="bi bi-calendar3 me-1" aria-hidden="true"></i>{{ article.published_at|date:"d F Y" }}</time>
+      {% if article.category %} · {{ article.category.name }}{% endif %}
+    </p>
   </div>
 </div>
 
-<section class="py-5">
+<section class="section">
   <div class="container">
-    <div class="row g-5">
-      <div class="col-lg-8">
+    <div class="row g-4 g-lg-5">
+      <article class="col-lg-8">
         {% if article.cover_image %}
-        <img src="{{ article.cover_image.url }}" class="img-fluid rounded-3 mb-4" alt="{{ article.title }}">
+        <figure class="mb-4">
+          <img src="{{ article.cover_image.url }}" class="img-fluid rounded w-100" style="border:1px solid var(--rule);" alt="">
+        </figure>
         {% endif %}
-        <div class="fs-5 lh-lg">{{ article.body|linebreaks }}</div>
-        <a href="{% url 'news:list' %}" class="btn btn-outline-minefop mt-4"><i class="bi bi-arrow-left me-1"></i>{% trans "Retour aux actualités" %}</a>
-      </div>
+        <p class="lead">{{ article.excerpt }}</p>
+        <div class="article-body">{{ article.body|linebreaks }}</div>
+
+        <div class="d-flex flex-wrap gap-2 mt-5 pt-4" style="border-top:1px solid var(--rule);">
+          <a href="{% url 'news:list' %}" class="btn btn-outline-minefop">
+            <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>{% trans "Retour aux actualités" %}
+          </a>
+          <button type="button" class="btn btn-outline-minefop" onclick="window.print()">
+            <i class="bi bi-printer me-1" aria-hidden="true"></i>{% trans "Imprimer" %}
+          </button>
+        </div>
+      </article>
+
       <div class="col-lg-4">
         {% if related %}
-        <h2 class="h6 fw-bold text-uppercase text-muted mb-3">{% trans "À lire aussi" %}</h2>
+        <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "À lire aussi" %}</h2>
         <div class="d-flex flex-column gap-3">
           {% for item in related %}
-          <a href="{{ item.get_absolute_url }}" class="text-decoration-none text-dark">
-            <div class="d-flex gap-3 align-items-center border rounded-3 p-2">
-              <div class="doc-icon"><i class="bi bi-newspaper"></i></div>
-              <div>
-                <div class="fw-semibold small">{{ item.title|truncatechars:60 }}</div>
-                <small class="text-muted">{{ item.published_at|date:"d/m/Y" }}</small>
-              </div>
-            </div>
+          <a href="{{ item.get_absolute_url }}" class="doc-row p-3 d-flex gap-3 align-items-center text-decoration-none" style="color:var(--ink)">
+            <span class="doc-icon doc-icon-green"><i class="bi bi-newspaper" aria-hidden="true"></i></span>
+            <span>
+              <span class="d-block fw-semibold small">{{ item.title|truncatechars:70 }}</span>
+              <span class="badge-date">{{ item.published_at|date:"d/m/Y" }}</span>
+            </span>
           </a>
           {% endfor %}
         </div>
         {% endif %}
+
+        <div class="card-minefop p-4 mt-4">
+          <h2 class="h6 fw-bold mb-2">{% trans "Rester informé" %}</h2>
+          <p class="text-muted small">{% trans "Retrouvez l'ensemble des communiqués et des textes publiés par le Ministère." %}</p>
+          <a href="{% url 'documents:list' %}" class="btn btn-outline-minefop btn-sm">{% trans "Textes & documents" %}</a>
+        </div>
       </div>
     </div>
   </div>

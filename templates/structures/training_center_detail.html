@@ -1,43 +1,62 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block title %}{{ center.name }} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ center.get_center_type_display }} — {{ center.town }}{% if center.region %}, {{ center.region.name }}{% endif %}.{% endblock %}
 {% block content %}
 <div class="page-header">
   <div class="container">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb mb-2">
+    <nav aria-label="{% trans 'Fil d’Ariane' %}">
+      <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'core:home' %}">{% trans "Accueil" %}</a></li>
         <li class="breadcrumb-item"><a href="{% url 'structures:training_center_list' %}">{% trans "Centres de formation" %}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ center.name }}</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ center.name|truncatechars:60 }}</li>
       </ol>
     </nav>
-    <h1 class="h2 mb-0">{{ center.name }}</h1>
-    <p class="mb-0 mt-2 opacity-75">{{ center.get_center_type_display }}</p>
+    <h1>{{ center.name }}</h1>
+    <p class="page-subtitle">{{ center.get_center_type_display }}</p>
   </div>
 </div>
 
-<section class="py-5">
+<section class="section">
   <div class="container">
-    <div class="row g-5">
+    <div class="row g-4 g-lg-5">
       <div class="col-lg-8">
-        {% if center.description %}<p class="fs-5">{{ center.description }}</p>{% endif %}
+        {% if center.description %}
+        <p class="lead">{{ center.description }}</p>
+        {% else %}
+        <p class="text-muted">{% trans "La présentation détaillée de ce centre sera prochainement mise en ligne." %}</p>
+        {% endif %}
+
         {% if center.specialty_list %}
-        <h2 class="h6 fw-bold text-uppercase text-muted mt-4">{% trans "Filières de formation" %}</h2>
+        <h2 class="h6 fw-bold text-uppercase text-muted mt-4 mb-3" style="letter-spacing:.06em;">{% trans "Filières de formation" %}</h2>
         <div class="d-flex flex-wrap gap-2">
-          {% for s in center.specialty_list %}<span class="badge bg-light text-dark border py-2 px-3">{{ s }}</span>{% endfor %}
+          {% for s in center.specialty_list %}
+          <span class="badge rounded-pill py-2 px-3" style="background:var(--green-100);color:var(--green-800);font-weight:600;">{{ s }}</span>
+          {% endfor %}
         </div>
         {% endif %}
+
+        <div class="alert alert-minefop mt-5">
+          <i class="bi bi-info-circle me-2" aria-hidden="true"></i>
+          {% trans "Les conditions d'admission et le calendrier des inscriptions sont communiqués par le centre et par la délégation régionale dont il relève." %}
+          <a href="{% url 'structures:delegations' %}">{% trans "Voir les délégations régionales" %}</a>
+        </div>
       </div>
+
       <div class="col-lg-4">
-        <div class="card card-minefop p-4">
-          <h2 class="h6 fw-bold text-uppercase text-muted mb-3">{% trans "Coordonnées" %}</h2>
-          <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
-            <li><i class="bi bi-geo-alt-fill me-2 text-success"></i>{{ center.town }}{% if center.address %}, {{ center.address }}{% endif %}{% if center.region %} — {{ center.region.name }}{% endif %}</li>
-            {% if center.phone %}<li><i class="bi bi-telephone-fill me-2 text-success"></i>{{ center.phone }}</li>{% endif %}
-            {% if center.email %}<li><i class="bi bi-envelope-fill me-2 text-success"></i>{{ center.email }}</li>{% endif %}
-            <li><i class="bi bi-bookmark-check-fill me-2 text-success"></i>{% if center.is_public %}{% trans "Structure publique" %}{% else %}{% trans "Structure privée agréée" %}{% endif %}</li>
+        <div class="card-minefop p-4">
+          <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Coordonnées" %}</h2>
+          <ul class="list-unstyled d-flex flex-column gap-3 mb-0 small">
+            <li><i class="bi bi-geo-alt-fill me-2 text-success" aria-hidden="true"></i>{{ center.town }}{% if center.address %}, {{ center.address }}{% endif %}{% if center.region %} — {{ center.region.name }}{% endif %}</li>
+            {% if center.phone %}<li><i class="bi bi-telephone-fill me-2 text-success" aria-hidden="true"></i>{{ center.phone }}</li>{% endif %}
+            {% if center.email %}<li><i class="bi bi-envelope-fill me-2 text-success" aria-hidden="true"></i><a href="mailto:{{ center.email }}" class="text-decoration-none">{{ center.email }}</a></li>{% endif %}
+            <li><i class="bi bi-patch-check-fill me-2 text-success" aria-hidden="true"></i>{% if center.is_public %}{% trans "Structure publique" %}{% else %}{% trans "Structure privée agréée par l'État" %}{% endif %}</li>
           </ul>
         </div>
+
+        <a href="{% url 'structures:training_center_list' %}" class="btn btn-outline-minefop w-100 mt-4">
+          <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>{% trans "Retour à l'annuaire" %}
+        </a>
       </div>
     </div>
   </div>

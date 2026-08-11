@@ -1,26 +1,48 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% block title %}{% trans "Mot du Ministre" %} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{% trans "Message du Ministre de l'Emploi et de la Formation Professionnelle de la République du Cameroun." %}{% endblock %}
+{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/minister-square.jpg' %}{% endblock %}
+
 {% block content %}
 {% trans "Mot du Ministre" as page_title %}
+{% trans "Le message du membre du Gouvernement en charge de l'emploi et de la formation professionnelle." as page_subtitle %}
 {% include "partials/page_header.html" %}
 
-<section class="py-5">
+<section class="section">
   <div class="container">
-    <div class="row g-5">
-      <div class="col-lg-4 text-center">
-        {% if minister.photo %}
-        <img src="{{ minister.photo.url }}" class="rounded-4 img-fluid mb-3" alt="{{ minister.full_name }}">
-        {% else %}
-        <div class="rounded-4 mx-auto d-flex align-items-center justify-content-center mb-3" style="width:100%;max-width:280px;height:280px;background:linear-gradient(135deg,var(--cm-green),var(--cm-green-dark));">
-          <i class="bi bi-person-fill text-white" style="font-size:7rem;"></i>
+    <div class="row g-4 g-lg-5">
+      <div class="col-lg-4">
+        <div class="portrait-card">
+          {% if minister.photo %}
+            <img src="{{ minister.photo.url }}" alt="{{ minister.full_name }}">
+          {% else %}
+            <img src="{% static 'img/minister-square.jpg' %}"
+                 alt="{% trans "Portrait officiel du Ministre de l'Emploi et de la Formation Professionnelle" %}">
+          {% endif %}
+          <div class="portrait-body">
+            <h2 class="h5 fw-bold mb-1">{{ minister.full_name|default:_("Le Ministre") }}</h2>
+            <p class="text-muted small mb-0">{{ minister.title|default:_("Ministre de l'Emploi et de la Formation Professionnelle") }}</p>
+          </div>
         </div>
-        {% endif %}
-        <h2 class="h5 fw-bold mb-0">{{ minister.full_name|default:_("Le Ministre") }}</h2>
-        <p class="text-muted">{{ minister.title|default:_("Ministre de l'Emploi et de la Formation Professionnelle") }}</p>
+
+        <div class="card-minefop p-4 mt-4">
+          <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Le cabinet" %}</h2>
+          <ul class="footer-list list-unstyled d-flex flex-column gap-2 mb-3 small">
+            <li><i class="bi bi-chevron-right me-1 text-success" aria-hidden="true"></i>{% trans "Secrétariat Particulier" %}</li>
+            <li><i class="bi bi-chevron-right me-1 text-success" aria-hidden="true"></i>{% trans "Conseillers Techniques" %}</li>
+            <li><i class="bi bi-chevron-right me-1 text-success" aria-hidden="true"></i>{% trans "Inspection Générale des Services" %}</li>
+            <li><i class="bi bi-chevron-right me-1 text-success" aria-hidden="true"></i>{% trans "Inspection Générale des Formations" %}</li>
+          </ul>
+          <a href="{% url 'structures:org_chart' %}" class="btn btn-outline-minefop btn-sm">{% trans "Voir l'organigramme" %}</a>
+        </div>
       </div>
+
       <div class="col-lg-8">
-        <blockquote class="font-serif-brand fs-4 fst-italic border-start border-4 ps-4" style="border-color:var(--cm-green) !important;">
+        <span class="eyebrow">{% trans "Message officiel" %}</span>
+        <h2 class="section-title mt-2">{% trans "Aux Camerounaises et aux Camerounais" %}</h2>
+
+        <div class="article-body">
           {% if minister.message %}
             {{ minister.message|linebreaks }}
           {% else %}
@@ -29,11 +51,22 @@
             <p>{% blocktrans %}Notre feuille de route s'articule autour de trois priorités : moderniser l'offre de formation professionnelle publique et privée, renforcer l'adéquation entre les compétences formées et les besoins du marché du travail, et accompagner l'insertion socio-professionnelle de la jeunesse sur l'ensemble du territoire national.{% endblocktrans %}</p>
             <p>{% blocktrans %}Ce site internet se veut un espace d'information transparent sur nos missions, notre organisation, nos centres de formation et les textes qui encadrent notre action. Je vous souhaite une excellente navigation.{% endblocktrans %}</p>
           {% endif %}
-        </blockquote>
-        <div class="alert alert-minefop mt-4">
-          <i class="bi bi-info-circle-fill me-2"></i>
-          {% trans "Contenu à personnaliser par le Ministère avec le nom, la photo officielle et le message du Ministre en exercice via l'espace agent." %}
         </div>
+
+        <figure class="mt-4 mb-0">
+          <img src="{% static 'img/minister-office.jpg' %}" class="img-fluid rounded"
+               style="border:1px solid var(--rule);" loading="lazy"
+               alt="{% trans "Le Ministre dans son bureau au siège du MINEFOP à Yaoundé" %}">
+          <figcaption class="text-muted small mt-2">
+            {% trans "Le Ministre au siège du MINEFOP, Yaoundé." %}
+          </figcaption>
+        </figure>
+
+        {% if minister.updated_at %}
+        <p class="text-muted small mt-4 mb-0">
+          <i class="bi bi-clock-history me-1" aria-hidden="true"></i>{% trans "Message mis à jour le" %} {{ minister.updated_at|date:"d F Y" }}
+        </p>
+        {% endif %}
       </div>
     </div>
   </div>

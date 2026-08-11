@@ -1,36 +1,84 @@
-{% load i18n static %}<!DOCTYPE html>
+{% load i18n static site_extras %}<!DOCTYPE html>
 <html lang="{{ CURRENT_LANGUAGE_CODE }}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}{{ SITE_NAME }} — {% trans "Ministère de l'Emploi et de la Formation Professionnelle" %}{% endblock %}</title>
-  <meta name="description" content="{% block meta_description %}{% trans "Site officiel du Ministère de l'Emploi et de la Formation Professionnelle (MINEFOP) du Cameroun." %}{% endblock %}">
+  <title>{% block title %}{% trans "Ministère de l'Emploi et de la Formation Professionnelle" %} — {{ SITE_NAME }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{% trans "Site officiel du Ministère de l'Emploi et de la Formation Professionnelle (MINEFOP) de la République du Cameroun : missions, organisation, centres de formation, textes légaux et actualités." %}{% endblock %}">
+  <meta name="theme-color" content="#04502c">
+  <meta name="author" content="{% trans "Ministère de l'Emploi et de la Formation Professionnelle — République du Cameroun" %}">
+  <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='8' y='0' fill='%2304502C'/%3E%3Crect width='24' height='8' y='8' fill='%23CE1126'/%3E%3Crect width='24' height='8' y='16' fill='%23FCD116'/%3E%3C/svg%3E">
+  {% get_available_languages as AVAILABLE_LANGUAGES %}
+  {% for lang_code, lang_name in AVAILABLE_LANGUAGES %}
+  <link rel="alternate" hreflang="{{ lang_code }}" href="{% translated_url lang_code %}">
+  {% endfor %}
+
+  <!-- Social sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MINEFOP — {% trans "République du Cameroun" %}">
+  <meta property="og:locale" content="{{ CURRENT_LANGUAGE_CODE }}">
+  <meta property="og:title" content="{% block og_title %}{% trans "Ministère de l'Emploi et de la Formation Professionnelle" %}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{% trans "Site officiel du MINEFOP — République du Cameroun." %}{% endblock %}">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/minefop-logo.png' %}{% endblock %}">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32.png' %}">
+  <link rel="apple-touch-icon" href="{% static 'img/favicon-180.png' %}">
+
+  <!-- Self-hosted typefaces (no third-party CDN) -->
+  <link rel="preload" as="font" type="font/woff2" href="{% static 'fonts/inter-latin.woff2' %}" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="{% static 'fonts/source-serif-4-latin.woff2' %}" crossorigin>
+  <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
 
   <!-- Bootstrap (components, grid, reset) -->
   <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="{% static 'vendor/bootstrap-icons/bootstrap-icons.min.css' %}">
-  <!-- Tailwind (utility classes, preflight disabled) -->
-  <link rel="stylesheet" href="{% static 'css/tailwind-built.css' %}">
-  <!-- MINEFOP brand styles -->
+  <!-- MINEFOP institutional design system -->
   <link rel="stylesheet" href="{% static 'css/custom.css' %}">
   {% block extra_css %}{% endblock %}
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "GovernmentOrganization",
+    "name": "Ministère de l'Emploi et de la Formation Professionnelle",
+    "alternateName": ["MINEFOP", "Ministry of Employment and Vocational Training"],
+    "url": "{{ request.scheme }}://{{ request.get_host }}",
+    "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'img/minefop-logo.png' %}",
+    "parentOrganization": {
+      "@type": "GovernmentOrganization",
+      "name": "Gouvernement de la République du Cameroun"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{ site_contact_info.address }}",
+      "addressLocality": "Yaoundé",
+      "addressCountry": "CM"
+    },
+    "email": "{{ site_contact_info.email }}"{% if site_contact_info.phone %},
+    "telephone": "{{ site_contact_info.phone }}"{% endif %}
+  }
+  </script>
 </head>
 <body>
-  <a class="visually-hidden-focusable btn btn-minefop position-absolute top-0 start-0 m-2" href="#main-content" style="z-index:2000;">{% trans "Aller au contenu" %}</a>
+  <a class="skip-link visually-hidden-focusable" href="#main-content">{% trans "Aller au contenu principal" %}</a>
 
+  {% include "partials/gov_banner.html" %}
   {% include "partials/topbar.html" %}
+  {% include "partials/masthead.html" %}
   {% include "partials/navbar.html" %}
 
-  <main id="main-content">
+  <main id="main-content" tabindex="-1">
     {% if messages %}
-      <div class="container mt-3">
+      <div class="container mt-4">
         {% for message in messages %}
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="status">
             {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans 'Fermer' %}"></button>
           </div>
         {% endfor %}
       </div>

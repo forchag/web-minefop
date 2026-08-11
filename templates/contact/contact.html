@@ -1,57 +1,94 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% trans "Contact" %} — {{ SITE_NAME }}{% endblock %}
+{% block title %}{% trans "Nous contacter" %} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{% trans "Coordonnées, horaires d'ouverture et formulaire de contact du Ministère de l'Emploi et de la Formation Professionnelle." %}{% endblock %}
 {% block content %}
 {% trans "Nous contacter" as page_title %}
+{% trans "Les services du Ministère répondent aux demandes des usagers, des entreprises et des structures de formation." as page_subtitle %}
 {% include "partials/page_header.html" %}
 
-<section class="py-5">
+<section class="section">
   <div class="container">
-    <div class="row g-5">
+    <div class="row g-4 g-lg-5">
       <div class="col-lg-5">
-        <h2 class="section-title">{% trans "Informations" %}</h2>
-        <ul class="list-unstyled d-flex flex-column gap-3">
-          <li class="d-flex gap-3"><span class="doc-icon"><i class="bi bi-geo-alt-fill"></i></span><div><strong>{% trans "Adresse" %}</strong><div class="text-muted">{{ info.address }}{% if info.po_box %}<br>{{ info.po_box }}{% endif %}</div></div></li>
-          <li class="d-flex gap-3"><span class="doc-icon"><i class="bi bi-envelope-fill"></i></span><div><strong>{% trans "Courriel" %}</strong><div class="text-muted">{{ info.email }}</div></div></li>
-          {% if info.phone %}<li class="d-flex gap-3"><span class="doc-icon"><i class="bi bi-telephone-fill"></i></span><div><strong>{% trans "Téléphone" %}</strong><div class="text-muted">{{ info.phone }}</div></div></li>{% endif %}
-          <li class="d-flex gap-3"><span class="doc-icon"><i class="bi bi-clock-fill"></i></span><div><strong>{% trans "Horaires" %}</strong><div class="text-muted">{{ info.opening_hours }}</div></div></li>
+        <h2 class="section-title">{% trans "Coordonnées officielles" %}</h2>
+        <ul class="info-list">
+          <li>
+            <span class="doc-icon doc-icon-green"><i class="bi bi-geo-alt-fill" aria-hidden="true"></i></span>
+            <span><span class="info-label d-block">{% trans "Adresse" %}</span>{{ info.address }}{% if info.po_box %}<br>{{ info.po_box }}{% endif %}</span>
+          </li>
+          <li>
+            <span class="doc-icon doc-icon-green"><i class="bi bi-envelope-fill" aria-hidden="true"></i></span>
+            <span><span class="info-label d-block">{% trans "Courriel" %}</span><a href="mailto:{{ info.email }}">{{ info.email }}</a></span>
+          </li>
+          {% if info.phone %}
+          <li>
+            <span class="doc-icon doc-icon-green"><i class="bi bi-telephone-fill" aria-hidden="true"></i></span>
+            <span><span class="info-label d-block">{% trans "Téléphone" %}</span>{{ info.phone }}</span>
+          </li>
+          {% endif %}
+          <li>
+            <span class="doc-icon doc-icon-green"><i class="bi bi-clock-fill" aria-hidden="true"></i></span>
+            <span><span class="info-label d-block">{% trans "Horaires d'ouverture" %}</span>{{ info.opening_hours }}</span>
+          </li>
         </ul>
 
-        <div class="ratio ratio-4x3 rounded-3 overflow-hidden mt-4 border">
-          <iframe src="{{ info.map_embed_url|default:'https://www.openstreetmap.org/export/embed.html?bbox=11.48%2C3.83%2C11.55%2C3.90&layer=mapnik' }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="{% trans 'Carte' %}"></iframe>
+        <div class="ratio ratio-4x3 rounded overflow-hidden mt-4" style="border:1px solid var(--rule);">
+          <iframe src="{{ info.map_embed_url|default:'https://www.openstreetmap.org/export/embed.html?bbox=11.48%2C3.83%2C11.55%2C3.90&layer=mapnik' }}"
+                  loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                  title="{% trans 'Localisation du Ministère sur la carte' %}"></iframe>
+        </div>
+
+        <div class="alert alert-minefop mt-4 small">
+          <i class="bi bi-shield-check me-1" aria-hidden="true"></i>
+          {% trans "Le Ministère ne demande jamais de paiement pour l'instruction d'un dossier par voie électronique." %}
         </div>
       </div>
+
       <div class="col-lg-7">
         <h2 class="section-title">{% trans "Formulaire de contact" %}</h2>
-        <form method="post" class="row g-3">
+        <p class="text-muted">{% trans "Les champs marqués d'un astérisque (*) sont obligatoires. Une réponse vous sera adressée par courriel." %}</p>
+
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+          <i class="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i>{% trans "Merci de corriger les erreurs signalées ci-dessous." %}
+        </div>
+        {% endif %}
+
+        <form method="post" class="row g-3" novalidate>
           {% csrf_token %}
           <div class="col-md-6">
-            <label class="form-label">{{ form.name.label }}</label>
+            <label class="form-label" for="{{ form.name.id_for_label }}">{{ form.name.label }} *</label>
             {{ form.name }}
+            {% if form.name.errors %}<div class="text-danger small mt-1">{{ form.name.errors|striptags }}</div>{% endif %}
           </div>
           <div class="col-md-6">
-            <label class="form-label">{{ form.email.label }}</label>
+            <label class="form-label" for="{{ form.email.id_for_label }}">{{ form.email.label }} *</label>
             {{ form.email }}
+            {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors|striptags }}</div>{% endif %}
           </div>
           <div class="col-md-6">
-            <label class="form-label">{{ form.phone.label }}</label>
+            <label class="form-label" for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
             {{ form.phone }}
           </div>
           <div class="col-md-6">
-            <label class="form-label">{{ form.subject.label }}</label>
+            <label class="form-label" for="{{ form.subject.id_for_label }}">{{ form.subject.label }} *</label>
             {{ form.subject }}
+            {% if form.subject.errors %}<div class="text-danger small mt-1">{{ form.subject.errors|striptags }}</div>{% endif %}
           </div>
           <div class="col-12">
-            <label class="form-label">{{ form.message.label }}</label>
+            <label class="form-label" for="{{ form.message.id_for_label }}">{{ form.message.label }} *</label>
             {{ form.message }}
+            {% if form.message.errors %}<div class="text-danger small mt-1">{{ form.message.errors|striptags }}</div>{% endif %}
           </div>
-          {% if form.errors %}
           <div class="col-12">
-            <div class="alert alert-danger">{% trans "Merci de corriger les erreurs ci-dessous." %}</div>
-          </div>
-          {% endif %}
-          <div class="col-12">
-            <button type="submit" class="btn btn-minefop btn-lg"><i class="bi bi-send-fill me-1"></i>{% trans "Envoyer le message" %}</button>
+            <p class="text-muted small mb-3">
+              {% blocktrans %}Les informations transmises sont utilisées uniquement pour traiter votre demande.{% endblocktrans %}
+              <a href="{% url 'core:legal_notice' %}">{% trans "En savoir plus" %}</a>
+            </p>
+            <button type="submit" class="btn btn-minefop btn-lg">
+              <i class="bi bi-send-fill me-1" aria-hidden="true"></i>{% trans "Envoyer le message" %}
+            </button>
           </div>
         </form>
       </div>

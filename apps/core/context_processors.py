@@ -1,5 +1,22 @@
 from django.conf import settings
 
+# Groups of view names used by the primary navigation to decide which top-level
+# menu should be marked as the active section.
+MINISTRY_VIEWS = (
+    "core:minister",
+    "core:mission",
+    "core:history",
+    "structures:org_chart",
+    "structures:attached_bodies",
+    "structures:delegations",
+)
+
+TRAINING_VIEWS = (
+    "core:vocational_training",
+    "structures:training_center_list",
+    "structures:training_center_detail",
+)
+
 
 def site_context(request):
     """Global template context available on every page."""
@@ -10,4 +27,6 @@ def site_context(request):
         "CONTACT_RECIPIENT_EMAIL": settings.CONTACT_RECIPIENT_EMAIL,
         "CURRENT_LANGUAGE_CODE": getattr(request, "LANGUAGE_CODE", "fr"),
         "site_contact_info": ContactInfo.load(),
+        "ministry_views": MINISTRY_VIEWS,
+        "training_views": TRAINING_VIEWS,
     }

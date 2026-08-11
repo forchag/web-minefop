@@ -1,0 +1,38 @@
+{% load i18n static %}
+<header class="masthead">
+  <div class="container">
+    <div class="row align-items-center g-3">
+      <div class="col-lg-8">
+        <a class="masthead-brand" href="{% url 'core:home' %}">
+          <img src="{% static 'img/minefop-emblem.png' %}" width="66" height="74"
+               alt="{% trans "Armoiries de la République du Cameroun" %}">
+          <span>
+            <span class="masthead-republic">{% trans "République du Cameroun" %}</span>
+            <span class="masthead-name">{% trans "Ministère de l'Emploi et de la Formation Professionnelle" %}</span>
+            <span class="masthead-name-en" lang="{% if CURRENT_LANGUAGE_CODE == 'en' %}fr{% else %}en{% endif %}">
+              {% if CURRENT_LANGUAGE_CODE == 'en' %}Ministère de l'Emploi et de la Formation Professionnelle{% else %}Ministry of Employment and Vocational Training{% endif %}
+              — MINEFOP
+            </span>
+          </span>
+        </a>
+      </div>
+      <div class="col-lg-4">
+        <div class="d-flex flex-column align-items-lg-end gap-2">
+          <span class="masthead-motto d-none d-lg-block">{% trans "Paix – Travail – Patrie" %}</span>
+          <form class="site-search w-100" role="search" action="{% url 'core:search' %}" method="get">
+            <label class="visually-hidden" for="site-search-input">{% trans "Rechercher sur le site" %}</label>
+            <div class="input-group">
+              <input id="site-search-input" class="form-control" type="search" name="q"
+                     value="{{ request.GET.q|default:'' }}"
+                     placeholder="{% trans 'Rechercher : centre, texte, actualité…' %}">
+              <button class="btn" type="submit">
+                <i class="bi bi-search" aria-hidden="true"></i>
+                <span class="visually-hidden">{% trans "Rechercher" %}</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

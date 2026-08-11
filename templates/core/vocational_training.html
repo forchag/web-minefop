@@ -5,9 +5,9 @@
 {% trans "Cadre légal & dispositif national de la formation professionnelle" as page_title %}
 {% include "partials/page_header.html" %}
 
-<section class="py-5">
+<section class="section">
   <div class="container">
-    <div class="row g-5">
+    <div class="row g-4 g-lg-5">
       <div class="col-lg-8">
         <h2 class="section-title">{% trans "La loi n° 2018/010 du 11 juillet 2018" %}</h2>
         <p>{% blocktrans %}La loi régissant la formation professionnelle au Cameroun fixe le cadre juridique général ainsi que les orientations fondamentales de la formation professionnelle. Le champ de la formation professionnelle couvre l'ensemble des formations post-éducation de base, assurées par des structures publiques ou par des structures privées agréées par l'État.{% endblocktrans %}</p>
@@ -16,21 +16,21 @@
         <h3 class="h5 fw-bold mt-4">{% trans "Les trois piliers de la formation professionnelle" %}</h3>
         <div class="row g-3 mt-1">
           <div class="col-md-4">
-            <div class="mission-card">
+            <div class="mission-card h-100">
               <div class="icon-wrap"><i class="bi bi-book-half"></i></div>
               <h4 class="h6 fw-bold">{% trans "Formation initiale" %}</h4>
               <p class="text-muted small mb-0">{% trans "Transmet les compétences, connaissances et savoir-faire indispensables à l'exercice d'une activité professionnelle." %}</p>
             </div>
           </div>
           <div class="col-md-4">
-            <div class="mission-card">
+            <div class="mission-card h-100">
               <div class="icon-wrap"><i class="bi bi-arrow-repeat"></i></div>
               <h4 class="h6 fw-bold">{% trans "Formation continue" %}</h4>
               <p class="text-muted small mb-0">{% trans "Assure le recyclage ou le perfectionnement des professionnels, en structure ou en entreprise." %}</p>
             </div>
           </div>
           <div class="col-md-4">
-            <div class="mission-card">
+            <div class="mission-card h-100">
               <div class="icon-wrap"><i class="bi bi-tools"></i></div>
               <h4 class="h6 fw-bold">{% trans "Apprentissage" %}</h4>
               <p class="text-muted small mb-0">{% trans "Formation alternée de longue durée entre entreprise et centre, sanctionnée par une qualification reconnue." %}</p>
@@ -89,21 +89,21 @@
         <h3 class="h5 fw-bold mt-5">{% trans "Un dispositif en pleine modernisation" %}</h3>
         <div class="row g-3 mt-1">
           <div class="col-md-4">
-            <div class="mission-card">
+            <div class="mission-card h-100">
               <div class="icon-wrap"><i class="bi bi-rocket-takeoff-fill"></i></div>
               <h4 class="h6 fw-bold">JEME</h4>
               <p class="text-muted small mb-0">{% blocktrans %}« Un Jeune, un Métier, un Emploi » : programme national doté de 17,72 milliards de FCFA, lancé en novembre 2025 pour former et insérer durablement les jeunes de 15 à 35 ans.{% endblocktrans %}</p>
             </div>
           </div>
           <div class="col-md-4">
-            <div class="mission-card">
+            <div class="mission-card h-100">
               <div class="icon-wrap"><i class="bi bi-graph-up-arrow"></i></div>
               <h4 class="h6 fw-bold">Inserjeune</h4>
               <p class="text-muted small mb-0">{% blocktrans %}Plateforme numérique de suivi de l'insertion professionnelle : plus de 15 000 diplômés, 350 établissements et 450 entreprises partenaires recensés.{% endblocktrans %}</p>
             </div>
           </div>
           <div class="col-md-4">
-            <div class="mission-card">
+            <div class="mission-card h-100">
               <div class="icon-wrap"><i class="bi bi-laptop"></i></div>
               <h4 class="h6 fw-bold">D-CLIC</h4>
               <p class="text-muted small mb-0">{% blocktrans %}Projet mené avec l'Organisation Internationale de la Francophonie pour former 300 jeunes de 18 à 35 ans aux métiers du numérique.{% endblocktrans %}</p>
@@ -113,7 +113,7 @@
       </div>
 
       <div class="col-lg-4">
-        <div class="card card-minefop p-4 mb-4">
+        <div class="card-minefop p-4 mb-4">
           <h2 class="h5 fw-bold mb-3"><i class="bi bi-file-earmark-pdf text-danger me-2"></i>{% trans "Textes de référence" %}</h2>
           <ul class="list-unstyled d-flex flex-column gap-2 small">
             <li><i class="bi bi-dot"></i>{% trans "Loi n° 2018/010 du 11 juillet 2018 régissant la formation professionnelle" %}</li>
@@ -122,7 +122,7 @@
           </ul>
           <a href="{% url 'documents:list' %}" class="btn btn-outline-minefop btn-sm mt-2">{% trans "Télécharger les textes" %}</a>
         </div>
-        <div class="card card-minefop p-4">
+        <div class="card-minefop p-4">
           <h2 class="h5 fw-bold mb-3"><i class="bi bi-patch-check-fill text-success me-2"></i>{% trans "Validation des Acquis de l'Expérience" %}</h2>
           <p class="text-muted small mb-0">{% blocktrans %}La VAE est un droit reconnu à toute personne disposant d'aptitudes professionnelles acquises dans la vie active, lui permettant d'obtenir une certification correspondant à son expérience.{% endblocktrans %}</p>
         </div>

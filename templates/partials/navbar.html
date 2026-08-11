@@ -1,50 +1,65 @@
 {% load i18n %}
-<nav class="navbar navbar-expand-lg navbar-light bg-white main-navbar py-2 sticky-top">
+{% with view_name=request.resolver_match.view_name namespace=request.resolver_match.namespace %}
+<nav class="navbar navbar-expand-lg main-navbar sticky-top" aria-label="{% trans 'Navigation principale' %}">
   <div class="container">
-    <a class="navbar-brand navbar-brand-minefop" href="{% url 'core:home' %}">
-      <span class="brand-emblem">{% include "partials/emblem.html" with size="40" %}</span>
-      <span class="brand-title">
-        <strong>MINEFOP</strong>
-        <small>{% trans "Emploi & Formation Professionnelle" %}</small>
-      </span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-text d-lg-none text-white fw-bold">MINEFOP</span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="{% trans 'Afficher ou masquer le menu' %}">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mainNav">
-      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+      <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link {% if request.resolver_match.view_name == 'core:home' %}active{% endif %}" href="{% url 'core:home' %}">{% trans "Accueil" %}</a>
+          <a class="nav-link {% if view_name == 'core:home' %}active{% endif %}"
+             {% if view_name == 'core:home' %}aria-current="page"{% endif %}
+             href="{% url 'core:home' %}">{% trans "Accueil" %}</a>
         </li>
+
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% trans "Le Ministère" %}</a>
+          <a class="nav-link dropdown-toggle {% if view_name in ministry_views %}active{% endif %}" href="#" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">{% trans "Le Ministère" %}</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'core:minister' %}">{% trans "Mot du Ministre" %}</a></li>
-            <li><a class="dropdown-item" href="{% url 'core:mission' %}">{% trans "Missions" %}</a></li>
-            <li><a class="dropdown-item" href="{% url 'core:history' %}">{% trans "Historique" %}</a></li>
-            <li><a class="dropdown-item" href="{% url 'structures:org_chart' %}">{% trans "Organigramme" %}</a></li>
-            <li><a class="dropdown-item" href="{% url 'structures:attached_bodies' %}">{% trans "Organismes rattachés" %}</a></li>
-            <li><a class="dropdown-item" href="{% url 'structures:delegations' %}">{% trans "Délégations régionales" %}</a></li>
+            <li><a class="dropdown-item {% if view_name == 'core:minister' %}active{% endif %}" href="{% url 'core:minister' %}">{% trans "Mot du Ministre" %}</a></li>
+            <li><a class="dropdown-item {% if view_name == 'core:mission' %}active{% endif %}" href="{% url 'core:mission' %}">{% trans "Missions & attributions" %}</a></li>
+            <li><a class="dropdown-item {% if view_name == 'core:history' %}active{% endif %}" href="{% url 'core:history' %}">{% trans "Historique" %}</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item {% if view_name == 'structures:org_chart' %}active{% endif %}" href="{% url 'structures:org_chart' %}">{% trans "Organigramme" %}</a></li>
+            <li><a class="dropdown-item {% if view_name == 'structures:attached_bodies' %}active{% endif %}" href="{% url 'structures:attached_bodies' %}">{% trans "Organismes rattachés" %}</a></li>
+            <li><a class="dropdown-item {% if view_name == 'structures:delegations' %}active{% endif %}" href="{% url 'structures:delegations' %}">{% trans "Délégations régionales" %}</a></li>
           </ul>
         </li>
+
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% trans "Formation Professionnelle" %}</a>
+          <a class="nav-link dropdown-toggle {% if view_name in training_views %}active{% endif %}" href="#" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">{% trans "Formation & Emploi" %}</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'core:vocational_training' %}">{% trans "Cadre légal & dispositif national" %}</a></li>
-            <li><a class="dropdown-item" href="{% url 'structures:training_center_list' %}">{% trans "Centres de formation" %}</a></li>
-            <li><a class="dropdown-item" href="{% url 'documents:list' %}">{% trans "Textes légaux & réglementaires" %}</a></li>
+            <li><a class="dropdown-item {% if view_name == 'core:vocational_training' %}active{% endif %}" href="{% url 'core:vocational_training' %}">{% trans "Le dispositif national de formation" %}</a></li>
+            <li><a class="dropdown-item {% if 'training_center' in view_name %}active{% endif %}" href="{% url 'structures:training_center_list' %}">{% trans "Annuaire des centres de formation" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'documents:list' %}?categorie=formation-professionnelle">{% trans "Textes régissant la formation" %}</a></li>
           </ul>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link {% if 'actualites' in request.path %}active{% endif %}" href="{% url 'news:list' %}">{% trans "Actualités" %}</a>
+          <a class="nav-link {% if namespace == 'news' %}active{% endif %}"
+             {% if namespace == 'news' %}aria-current="page"{% endif %}
+             href="{% url 'news:list' %}">{% trans "Actualités" %}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if 'documents' in request.path %}active{% endif %}" href="{% url 'documents:list' %}">{% trans "Documents" %}</a>
+          <a class="nav-link {% if namespace == 'documents' %}active{% endif %}"
+             {% if namespace == 'documents' %}aria-current="page"{% endif %}
+             href="{% url 'documents:list' %}">{% trans "Textes & documents" %}</a>
         </li>
+      </ul>
+      <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="btn btn-minefop ms-lg-2 mt-2 mt-lg-0" href="{% url 'contact:contact' %}">{% trans "Nous contacter" %}</a>
+          <a class="nav-link {% if namespace == 'contact' %}active{% endif %}"
+             {% if namespace == 'contact' %}aria-current="page"{% endif %}
+             href="{% url 'contact:contact' %}">
+            <i class="bi bi-headset me-1" aria-hidden="true"></i>{% trans "Nous contacter" %}
+          </a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+{% endwith %}
