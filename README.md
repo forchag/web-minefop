@@ -62,17 +62,31 @@ l'administration, pas du gabarit.
 
 Pour le logo, l'ordre est : le fichier téléversé depuis l'administration
 d'abord, puis l'**adresse du logo** fournie par la structure, et à défaut le
-sigle sur le fond tricolore. Si l'adresse fournie cesse de répondre, la vignette
+sigle sur le fond tricolore. Si l'adresse fournie cesse de répondre — ou si
+l'image ne charge jamais dans le navigateur, voir plus bas —, la vignette
 bascule elle aussi sur le sigle plutôt que d'afficher une image cassée.
 
-Pour ne plus dépendre des serveurs des structures, la commande suivante
-télécharge les logos une fois et les héberge sur le domaine du Ministère :
+Plusieurs de ces structures hébergent leur site sous WordPress, dont la
+protection anti-hotlink par défaut bloque silencieusement toute image demandée
+avec un en-tête Referer étranger : la requête n'échoue pas de façon visible,
+l'image ne s'affiche simplement jamais. Chaque `<img>` de vignette porte donc
+`referrerpolicy="no-referrer"`, qui contourne ce blocage.
+
+Pour ne plus dépendre du tout des serveurs des structures, la commande
+suivante télécharge chaque logo une fois et l'héberge sur le domaine du
+Ministère :
 
 ```bash
 python manage.py fetch_partner_logos            # récupère ce qui manque
-python manage.py fetch_partner_logos --dry-run  # liste sans rien modifier
+python manage.py fetch_partner_logos --dry-run  # vérifie que chaque adresse répond, sans rien modifier
 python manage.py fetch_partner_logos --force    # retélécharge tout
 ```
+
+`--dry-run` interroge réellement chaque adresse (HEAD, puis GET si HEAD est
+refusé) et indique pour chacune si elle répond, avec son type et sa taille —
+exécutez-la depuis une machine ayant un accès internet normal vers les sites
+des structures, pas depuis un environnement dont la politique réseau bloque
+déjà certains de ces hôtes.
 
 Hormis ces logos, aucune police et aucun script n'est jamais chargé depuis un
 tiers : le champ de particules et les portes coulissantes sont écrits à la main

@@ -1,9 +1,18 @@
 """Mirror the portal's partner logos onto the Ministry's own domain.
 
 Each tile on the entry portal can name the logo address supplied by the
-structure it links to. Serving the image straight from that address works, but
-leaves the portal depending on eleven other servers: if one is down, slow, or
-drops to plain http, the tile breaks or the browser refuses to load it.
+structure it links to. Serving the image straight from that address works most
+of the time, but two things commonly break it, and both look identical to a
+visitor — the tile just shows its acronym instead of the logo:
+
+* the source server is down, slow, or has moved the file;
+* the source server runs a hotlink-protection plugin (very common on the
+  WordPress sites several of these structures use) that silently refuses any
+  image request whose Referer header names a foreign site. The request never
+  errors in a way a visitor would notice — the image simply never loads.
+  `referrerpolicy="no-referrer"` on the `<img>` tag already defeats that for
+  the browser-side embed, but the surest fix is to stop depending on that
+  server at all.
 
 This command downloads each address once and stores the file against the
 partner, after which `PartnerSite.logo_src` serves the local copy and the
@@ -12,10 +21,15 @@ already has an uploaded file is skipped unless --force is given.
 
     python manage.py fetch_partner_logos
     python manage.py fetch_partner_logos --force        # re-download everything
-    python manage.py fetch_partner_logos --dry-run      # report, change nothing
+    python manage.py fetch_partner_logos --dry-run      # check reachability only
+
+Run this from an environment with real internet access to the structures'
+sites — a sandboxed one may have some of those hosts blocked by its own
+network policy, which is not the same as the address being broken.
 """
 
 import mimetypes
+from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
@@ -34,6 +48,13 @@ ALLOWED_TYPES = {
     "image/webp": ".webp",
     "image/svg+xml": ".svg",
 }
+# A plain browser UA. Some of the sites we fetch from block requests that
+# identify themselves as a script or bot; sending no Referer (the default —
+# never set one below) is what actually defeats referer-based hotlink checks.
+USER_AGENT = (
+    "Mozilla/5.0 (compatible; MINEFOP-portal-logo-sync/1.0; "
+    "+https://minefop.cm)"
+)
 
 
 class Command(BaseCommand):
@@ -48,7 +69,7 @@ class Command(BaseCommand):
         parser.add_argument(
             "--dry-run",
             action="store_true",
-            help="Report what would be downloaded without changing anything.",
+            help="Check that each supplied address answers, without downloading or saving anything.",
         )
 
     def handle(self, *args, **options):
@@ -60,6 +81,10 @@ class Command(BaseCommand):
             self.stdout.write("No partner carries a logo address — nothing to fetch.")
             return
 
+        if dry_run:
+            self._check(partners)
+            return
+
         fetched = skipped = failed = 0
         for partner in partners:
             label = partner.acronym or partner.name
@@ -67,10 +92,6 @@ class Command(BaseCommand):
             if partner.logo and not force:
                 self.stdout.write(f"  {label}: already hosted here, skipping")
                 skipped += 1
-                continue
-
-            if dry_run:
-                self.stdout.write(f"  {label}: would download {partner.logo_url}")
                 continue
 
             try:
@@ -85,9 +106,6 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS(f"  {label}: saved as {partner.logo.name}"))
             fetched += 1
 
-        if dry_run:
-            return
-
         self.stdout.write("")
         self.stdout.write(f"Downloaded {fetched}, skipped {skipped}, failed {failed}.")
         if failed:
@@ -96,17 +114,81 @@ class Command(BaseCommand):
                 "file through Sites partenaires to host them here instead."
             )
 
+    def _check(self, partners):
+        """--dry-run: actually reach each address and report what came back.
+
+        This is the closest thing to "does the logo really load" that can be
+        run without touching the database — point it at a machine with normal
+        internet access rather than treating a sandboxed check as conclusive.
+        """
+        ok = already_hosted = broken = 0
+        for partner in partners:
+            label = partner.acronym or partner.name
+            if partner.logo:
+                self.stdout.write(f"  {label}: already hosted here — {partner.logo.url}")
+                already_hosted += 1
+                continue
+
+            try:
+                content_type, size = self._probe(partner.logo_url)
+            except Exception as error:  # noqa: BLE001 — report and carry on
+                self.stderr.write(self.style.WARNING(f"  {label}: UNREACHABLE — {error}"))
+                self.stderr.write(f"           {partner.logo_url}")
+                broken += 1
+                continue
+
+            size_note = f", {size:,} bytes" if size is not None else ""
+            self.stdout.write(
+                self.style.SUCCESS(f"  {label}: reachable — {content_type or 'unknown type'}{size_note}")
+            )
+            ok += 1
+
+        self.stdout.write("")
+        self.stdout.write(f"Reachable: {ok}, already hosted here: {already_hosted}, broken: {broken}.")
+        if broken:
+            self.stdout.write(
+                "Run without --dry-run to mirror the reachable ones onto this domain; "
+                "a broken address needs a new one from the structure, or a logo "
+                "uploaded directly through Sites partenaires."
+            )
+
+    def _probe(self, url):
+        """HEAD the address; some servers reject HEAD, so fall back to a GET."""
+        parsed = urlparse(url)
+        if parsed.scheme not in ("http", "https"):
+            raise ValueError(f"unsupported address ({parsed.scheme or 'no scheme'})")
+
+        for method in ("HEAD", "GET"):
+            request = Request(url, method=method, headers={"User-Agent": USER_AGENT})
+            try:
+                with urlopen(request, timeout=TIMEOUT) as response:  # noqa: S310
+                    content_type = (response.headers.get_content_type() or "").lower()
+                    length = response.headers.get("Content-Length")
+                    return content_type, int(length) if length else None
+            except HTTPError as error:
+                if method == "HEAD" and error.code in (405, 501):
+                    continue  # the server doesn't support HEAD — try GET
+                raise ValueError(f"HTTP {error.code} {error.reason}") from error
+            except URLError as error:
+                raise ValueError(str(error.reason)) from error
+        raise AssertionError("unreachable")  # both methods raised or returned above
+
     def _download(self, url):
         parsed = urlparse(url)
         if parsed.scheme not in ("http", "https"):
             raise ValueError(f"unsupported address ({parsed.scheme or 'no scheme'})")
 
-        request = Request(url, headers={"User-Agent": "MINEFOP-portal/1.0"})
-        with urlopen(request, timeout=TIMEOUT) as response:  # noqa: S310 — address comes from the admin
-            content_type = (response.headers.get_content_type() or "").lower()
-            # Read one byte past the cap so an oversized file is detected rather
-            # than silently truncated.
-            content = response.read(MAX_BYTES + 1)
+        request = Request(url, headers={"User-Agent": USER_AGENT})
+        try:
+            with urlopen(request, timeout=TIMEOUT) as response:  # noqa: S310
+                content_type = (response.headers.get_content_type() or "").lower()
+                # Read one byte past the cap so an oversized file is detected
+                # rather than silently truncated.
+                content = response.read(MAX_BYTES + 1)
+        except HTTPError as error:
+            raise ValueError(f"HTTP {error.code} {error.reason}") from error
+        except URLError as error:
+            raise ValueError(str(error.reason)) from error
 
         if len(content) > MAX_BYTES:
             raise ValueError(f"larger than {MAX_BYTES // (1024 * 1024)} MB")

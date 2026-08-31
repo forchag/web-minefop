@@ -192,6 +192,17 @@ class EntryPortalTests(TestCase):
         )
         self.assertContains(self.client.get("/"), self.with_supplied_logo.logo_url)
 
+    def test_a_logo_image_sends_no_referrer(self):
+        """Several structures' sites block hotlinked images by their Referer
+        header; sending none at all is what actually gets the logo to load."""
+        body = self.client.get("/").content.decode()
+        images = re.findall(r"<img\b[^>]*>", body)
+        logo_images = [tag for tag in images if "data-acronym" in tag]
+        self.assertTrue(logo_images)
+        for tag in logo_images:
+            with self.subTest(tag=tag):
+                self.assertIn('referrerpolicy="no-referrer"', tag)
+
     def test_a_partner_tile_falls_back_to_its_acronym_without_any_logo(self):
         response = self.client.get("/")
         self.assertContains(response, '<span class="bloc-acronym" aria-hidden="true">PRC</span>')
