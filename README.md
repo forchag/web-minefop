@@ -70,6 +70,32 @@ visiteur demande un mouvement réduit, les deux boutons restent de simples liens
 python manage.py test
 ```
 
+## Mettre à jour un déploiement
+
+`scripts/update.sh` enchaîne toutes les étapes d'une mise à jour du serveur :
+récupération du code depuis GitHub, installation des dépendances, exécution de
+la suite de tests, application des migrations, compilation des traductions et
+collecte des fichiers statiques, puis rechargement du service web.
+
+```bash
+./scripts/update.sh                       # met à jour la branche courante
+./scripts/update.sh --branch main         # bascule sur main et la met à jour
+./scripts/update.sh --check               # simulation : affiche sans exécuter
+MINEFOP_SERVICE=minefop.service ./scripts/update.sh   # recharge le service
+```
+
+Le script s'arrête à la première erreur : tant qu'il n'est pas allé au bout, le
+site continue de servir la version précédente. Les tests s'exécutent **avant**
+la base de données et les fichiers publiés, de sorte qu'un dépôt cassé
+n'atteigne jamais les visiteurs. Il refuse également d'avancer si la copie de
+travail du serveur contient des modifications non validées, et ne crée jamais de
+commit de fusion (`git merge --ff-only`).
+
+Options utiles : `--no-pull` (reconstruire sans récupérer de code), `--no-deps`,
+`--no-tests`, `--vendor` (régénérer `static/vendor/` avec npm), `--seed`
+(injecter le contenu initial, sans jamais écraser l'existant). `./scripts/update.sh --help`
+liste l'ensemble.
+
 ## Charte et identité de l'État
 
 Les armoiries de la République et le logotype MINEFOP sont dans `static/img/` :
