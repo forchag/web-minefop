@@ -112,7 +112,17 @@ class SearchTests(TestCase):
 
 
 class EntryPortalTests(TestCase):
-    """The root of the domain serves the bilingual entry portal, not a redirect."""
+    """The root of the domain serves the bilingual entry portal, not a redirect.
+
+    templates/core/portal.html is currently maintained by hand rather than
+    rendered from Sites partenaires: the Ministry replaced the data-driven
+    version with a static template (see the "Update portal.html" / "Delete
+    MINJEC block from portal.html" commits), and asked for it to stay exactly
+    as written. The tests below split accordingly — some exercise PartnerSite
+    itself (still real, still used by the admin), others exercise the actual
+    markup the page ships today. Editing Sites partenaires in the admin has no
+    effect on this page unless portal.html is changed to read it again.
+    """
 
     @classmethod
     def setUpTestData(cls):
@@ -160,13 +170,30 @@ class EntryPortalTests(TestCase):
         self.assertIn('href="/fr/"', body)
         self.assertIn('href="/en/"', body)
 
-    def test_the_portal_lists_every_active_partner_site(self):
+    def test_the_portal_links_to_the_institutions_and_partners_it_currently_lists(self):
+        """Locks in today's ten hard-coded tiles so a future edit to
+        portal.html is a deliberate, visible diff in this test — not a silent
+        loss of a link nobody notices until a visitor reports it missing."""
         response = self.client.get("/")
-        self.assertContains(response, self.institution.url)
-        self.assertContains(response, self.with_supplied_logo.url)
-        # A partner without a website is still listed, as a non-clickable tile.
-        self.assertContains(response, "PIAASI")
-        self.assertContains(response, "Site en cours de publication")
+        for href in [
+            "https://www.prc.cm",
+            "https://www.spm.gov.cm",
+            "https://www.onjcameroun.cm",
+            "https://www.cnjcnyc.cm",
+            "https://www.cnjcjobhub.cm",
+            "https://fnecm.org",
+            "https://onefop.cm",
+            "https://www.cnffdp.cm",
+        ]:
+            with self.subTest(href=href):
+                self.assertContains(response, href)
+        # PIASSI has no site of its own yet (href="#"); CIOP links to a page on
+        # this domain (/ciop/) rather than out — both still keep their tile.
+        self.assertContains(response, "PIASSI")
+        self.assertContains(response, 'href="/ciop/"')
+        # Deliberately removed from the portal (see "Delete MINJEC block from
+        # portal.html") — still present as an OrgUnit and in Textes & documents.
+        self.assertNotContains(response, "MINJEC")
         self.assertNotContains(response, self.hidden.name)
 
     def test_each_tile_is_placed_in_the_column_it_was_given(self):
@@ -192,20 +219,12 @@ class EntryPortalTests(TestCase):
         )
         self.assertContains(self.client.get("/"), self.with_supplied_logo.logo_url)
 
-    def test_a_logo_image_sends_no_referrer(self):
-        """Several structures' sites block hotlinked images by their Referer
-        header; sending none at all is what actually gets the logo to load."""
-        body = self.client.get("/").content.decode()
-        images = re.findall(r"<img\b[^>]*>", body)
-        logo_images = [tag for tag in images if "data-acronym" in tag]
-        self.assertTrue(logo_images)
-        for tag in logo_images:
-            with self.subTest(tag=tag):
-                self.assertIn('referrerpolicy="no-referrer"', tag)
-
-    def test_a_partner_tile_falls_back_to_its_acronym_without_any_logo(self):
-        response = self.client.get("/")
-        self.assertContains(response, '<span class="bloc-acronym" aria-hidden="true">PRC</span>')
+    # There is no referrerpolicy or JS acronym-fallback to test here any more:
+    # portal.html's <img> tags are now written by hand (see the class
+    # docstring) and carry neither. That does mean a structure's own
+    # hotlink-protected site, or a dead logo address, will show a browser's
+    # default broken-image icon rather than falling back gracefully — worth
+    # knowing if a tile ever looks broken on the live page.
 
     def test_the_portal_loads_its_code_and_type_from_this_domain(self):
         """Scripts, stylesheets, fonts and icons must never come from a third party.
@@ -226,9 +245,20 @@ class EntryPortalTests(TestCase):
                 self.assertTrue(asset.startswith("/"), f"{asset} is not served from this domain")
 
     def test_no_asset_is_loaded_over_plain_http(self):
-        """An http:// asset is blocked as mixed content once the site is on https."""
+        """An http:// asset is blocked as mixed content once the site is on https.
+
+        CIOP's logo is still served at http://www.orientation.cm/... in
+        portal.html as written — that is the address on record, kept here
+        deliberately (see the class docstring) rather than corrected on this
+        page's behalf. It is allowlisted below so this test still fails on any
+        *other* asset that starts using plain http, which is the regression
+        this test exists to catch.
+        """
+        KNOWN_HTTP_ASSET = "http://www.orientation.cm/wp-content/uploads/2019/06/logo-cosup.png"
         body = self.client.get("/").content.decode()
         for asset in re.findall(r'\ssrc="([^"]+)"', body):
+            if asset == KNOWN_HTTP_ASSET:
+                continue
             with self.subTest(asset=asset):
                 self.assertFalse(asset.startswith("http://"), f"{asset} would be blocked as mixed content")
 
