@@ -19,7 +19,7 @@
       return;
     }
 
-    var COLOR = "#0056b3";
+    var COLOR = "#00672b";
     var LINK_DISTANCE = 120;
     var AREA_PER_PARTICLE = 700 * 700 / 50; // ~50 particles over a 700x700 area
     var particles = [];
