@@ -169,7 +169,34 @@
     });
   }
 
+  /* ------------------------------------------------------- logo fallbacks */
+  /* A tile may serve a logo from the address its structure supplied. If that
+   * host is down or has moved the file, show the acronym rather than leaving a
+   * blank tile — the same stand-in used when no logo is recorded at all. */
+  function wireLogoFallbacks() {
+    var logos = document.querySelectorAll(".bloc img[data-acronym]");
+    Array.prototype.forEach.call(logos, function (logo) {
+      function fallBack() {
+        var stand_in = document.createElement("span");
+        stand_in.className = "bloc-acronym";
+        stand_in.setAttribute("aria-hidden", "true");
+        stand_in.textContent = logo.getAttribute("data-acronym");
+        if (logo.parentNode) {
+          logo.parentNode.replaceChild(stand_in, logo);
+        }
+      }
+
+      logo.addEventListener("error", fallBack);
+      // The image may have failed before this script ran.
+      if (logo.complete && logo.naturalWidth === 0) {
+        fallBack();
+      }
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
+    wireLogoFallbacks();
+
     var canvas = document.getElementById("particles-js");
     if (canvas && canvas.getContext && !reduceMotion.matches) {
       startParticles(canvas);

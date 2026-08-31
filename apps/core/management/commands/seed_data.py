@@ -16,6 +16,23 @@ from apps.structures.models import AttachedBody, Delegation, OrgUnit, Region, Tr
 
 SOURCE_PDF_DIR = Path("/root/.claude/uploads/c7a73db5-06c7-58e1-9148-9e5a48db3149")
 
+#: Logo addresses supplied for the portal, keyed by acronym. They are used
+#: until the image is mirrored onto this domain — see the management command
+#: "fetch_partner_logos".
+PARTNER_LOGO_URLS = {
+    "PRC": "https://www.minjec.gov.cm/portail/images/bloc/prc.png",
+    "SPM": "https://www.minjec.gov.cm/portail/images/bloc/spm.jpg",
+    "MINJEC": "https://minjec.gov.cm/site/wp-content/uploads/2022/10/logo.png",
+    "ONJ": "https://www.minjec.gov.cm/portail/images/bloc/onj.png",
+    "CNJC": "https://raw.githubusercontent.com/forchag/SOME-PICS/refs/heads/main/new.jpeg",
+    "JobHub": "https://raw.githubusercontent.com/forchag/SOME-PICS/refs/heads/main/cnjcnycjoblogo.png",
+    "FNE": "https://fnecm.org/images/stories/lefne7questions/LogoFNEnu.png",
+    "ONEFOP": "https://onefop.cm/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-07-at-07.43.13.jpeg",
+    "PIAASI": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRdA0liNY2iPRS6czCI_QXUASXGhpUNWkm1wSlw2YE&s=10",
+    "CIOP": "https://www.orientation.cm/wp-content/uploads/2019/06/logo-cosup.png",
+    "CNFFDP": "https://raw.githubusercontent.com/forchag/SOME-PICS/refs/heads/main/Logo%20CNFFDP.png",
+}
+
 
 def legacy_url(fragment):
     """Percent-encode a legacy ``minefop.cm/images`` path so it is a valid URL."""
@@ -129,63 +146,94 @@ class Command(BaseCommand):
 
     # ------------------------------------------------------------------
     def seed_partner_sites(self):
-        """The website directory published on the entry portal."""
+        """The website directory published on the entry portal.
+
+        Placement is deliberate: the institutions of the Republic and the youth
+        bodies flank the card on the left, the employment and training bodies on
+        the right, each tile carrying the banner colour of the Ministry's
+        portal. Any of it can be reordered, recoloured or hidden afterwards from
+        **Sites partenaires** in the administration.
+        """
         if PartnerSite.objects.exists():
             return
 
         institution = PartnerSite.Group.INSTITUTION
         partner = PartnerSite.Group.PARTNER
         service = PartnerSite.Group.SERVICE
+        left = PartnerSite.Column.LEFT
+        right = PartnerSite.Column.RIGHT
 
+        # (column, order, group, name, acronym, url, tint, description, active)
+        # Logo addresses are supplied per structure below via LOGO_URLS.
         data = [
-            (institution, "Présidence de la République du Cameroun", "PRC",
-             "https://www.prc.cm", "Institution présidentielle de la République.", 1),
-            (institution, "Services du Premier Ministre", "SPM",
-             "https://www.spm.gov.cm", "Chef du Gouvernement et coordination de l'action gouvernementale.", 2),
-            (institution, "Ministère de la Jeunesse et de l'Éducation Civique", "MINJEC",
-             "https://minjec.gov.cm", "Politique nationale de la jeunesse et de l'éducation civique.", 3),
+            (left, 1, institution, "Présidence de la République du Cameroun", "PRC",
+             "https://www.prc.cm", "#27ae60",
+             "Institution présidentielle de la République.", True),
+            (left, 2, institution, "Services du Premier Ministre", "SPM",
+             "https://www.spm.gov.cm", "#e74c3c",
+             "Chef du Gouvernement et coordination de l'action gouvernementale.", True),
+            (left, 3, institution, "Ministère de la Jeunesse et de l'Éducation Civique", "MINJEC",
+             "https://minjec.gov.cm", "#e74c3c",
+             "Politique nationale de la jeunesse et de l'éducation civique.", True),
+            (left, 4, partner, "Observatoire National de la Jeunesse", "ONJ",
+             "https://www.onjcameroun.cm", "#f39c12",
+             "Observation et analyse des conditions de vie de la jeunesse.", True),
+            (left, 5, partner, "Conseil National de la Jeunesse du Cameroun", "CNJC",
+             "https://www.cnjcnyc.cm", "#3498db",
+             "Instance nationale de représentation et de concertation de la jeunesse.", True),
+            (left, 6, service, "CNJC JobHub", "JobHub",
+             "https://www.cnjcjobhub.cm", "#3498db",
+             "Plateforme de mise en relation entre offres d'emploi et candidats.", True),
 
-            (partner, "Fonds National de l'Emploi", "FNE",
-             "https://fnecm.org", "Placement, financement de projets et formation des demandeurs d'emploi.", 1),
-            (partner, "Observatoire National de l'Emploi et de la Formation Professionnelle", "ONEFOP",
-             "https://onefop.cm", "Statistiques, annuaires et études sur l'emploi et la formation professionnelle.", 2),
-            (partner, "Centre National de Formation des Formateurs et de Développement des Programmes", "CNFFDP",
-             "https://www.cnffdp.cm", "Formation des formateurs et ingénierie des programmes de formation.", 3),
-            (partner, "Centres d'Information et d'Orientation Professionnelle", "CIOP",
-             "http://www.orientation.cm", "Information, conseil et orientation scolaire, universitaire et professionnelle.", 4),
-            (partner, "Projet Intégré d'Appui aux Acteurs du Secteur Informel", "PIAASI",
-             "", "Structuration, formation et accompagnement des acteurs du secteur informel.", 5),
-            (partner, "Projet d'Appui au Développement de l'Enseignement Secondaire et des Compétences pour la Croissance et l'Emploi", "PADESCE",
-             "", "Refonte des référentiels de métiers et équipement des structures de formation.", 6),
-            (partner, "Observatoire National de la Jeunesse", "ONJ",
-             "https://www.onjcameroun.cm", "Observation et analyse des conditions de vie de la jeunesse.", 7),
-            (partner, "Conseil National de la Jeunesse du Cameroun", "CNJC",
-             "https://www.cnjcnyc.cm", "Instance nationale de représentation et de concertation de la jeunesse.", 8),
+            (right, 1, partner, "Fonds National de l'Emploi", "FNE",
+             "https://fnecm.org", "#16a085",
+             "Placement, financement de projets et formation des demandeurs d'emploi.", True),
+            (right, 2, partner, "Observatoire National de l'Emploi et de la Formation Professionnelle", "ONEFOP",
+             "https://onefop.cm", "#d35400",
+             "Statistiques, annuaires et études sur l'emploi et la formation professionnelle.", True),
+            (right, 3, partner, "Projet Intégré d'Appui aux Acteurs du Secteur Informel", "PIAASI",
+             "", "#9b59b6",
+             "Structuration, formation et accompagnement des acteurs du secteur informel.", True),
+            (right, 4, partner, "Centres d'Information et d'Orientation Professionnelle", "CIOP",
+             "http://www.orientation.cm", "#34495e",
+             "Information, conseil et orientation scolaire, universitaire et professionnelle.", True),
+            (right, 5, partner, "Centre National de Formation des Formateurs et de Développement des Programmes", "CNFFDP",
+             "https://www.cnffdp.cm", "#34495e",
+             "Formation des formateurs et ingénierie des programmes de formation.", True),
 
-            (service, "Plateforme SIGE — Système d'Information et de Gestion de l'Éducation", "SIGE",
-             "http://www.sige-sectoriel.cm", "Système d'information sectoriel de l'éducation et de la formation.", 1),
-            (service, "Inserjeune — suivi post-formation", "Inserjeune",
-             "https://app.inserjeune.edu.cm", "Suivi de l'insertion des diplômés et mise en relation avec les entreprises.", 2),
-            (service, "CNJC JobHub", "JobHub",
-             "https://www.cnjcjobhub.cm", "Plateforme de mise en relation entre offres d'emploi et candidats.", 3),
+            # Recorded but not shown on the portal: switch "affiché sur le
+            # portail" on in the administration to add either to a column.
+            (right, 6, partner, "Projet d'Appui au Développement de l'Enseignement Secondaire et des Compétences pour la Croissance et l'Emploi", "PADESCE",
+             "", "#34495e",
+             "Refonte des référentiels de métiers et équipement des structures de formation.", False),
+            (right, 7, service, "Plateforme SIGE — Système d'Information et de Gestion de l'Éducation", "SIGE",
+             "http://www.sige-sectoriel.cm", "#34495e",
+             "Système d'information sectoriel de l'éducation et de la formation.", False),
+            (right, 8, service, "Inserjeune — suivi post-formation", "Inserjeune",
+             "https://app.inserjeune.edu.cm", "#34495e",
+             "Suivi de l'insertion des diplômés et mise en relation avec les entreprises.", False),
         ]
 
         logo_dir = Path(settings.STATICFILES_DIRS[0]) / "img" / "partners"
-        for group, name, acronym, url, description, order in data:
-            partner = PartnerSite(
+        for column, order, group, name, acronym, url, tint, description, is_active in data:
+            site = PartnerSite(
+                column=column,
+                order=order,
                 group=group,
                 name=name,
                 acronym=acronym,
                 url=url,
+                tint=tint,
                 description=description,
-                order=order,
+                is_active=is_active,
             )
+            site.logo_url = PARTNER_LOGO_URLS.get(acronym, "")
             logo_name = PartnerSite.BUNDLED_LOGOS.get(acronym)
             logo_path = logo_dir / logo_name if logo_name else None
             if logo_path and logo_path.exists():
                 with logo_path.open("rb") as f:
-                    partner.logo.save(logo_name, File(f), save=False)
-            partner.save()
+                    site.logo.save(logo_name, File(f), save=False)
+            site.save()
         self.stdout.write("Portal website directory created.")
 
     # ------------------------------------------------------------------
