@@ -12,7 +12,8 @@ Site institutionnel du Ministère de l'Emploi et de la Formation Professionnelle
   `static/css/custom.css` — le système de design institutionnel du Ministère
   (tokens de couleur, masthead, navigation, cartes, états de focus, styles
   d'impression)
-- **Typographie** : Inter (interface) et Source Serif 4 (titres institutionnels),
+- **Typographie** : Inter (interface) et Source Serif 4 (titres institutionnels)
+  pour le site, Poppins et Source Sans 3 pour le portail d'entrée — toutes
   auto-hébergées dans `static/fonts/` sous licence SIL OFL
 - **Aucun CDN** : Bootstrap, les icônes et les polices sont servis depuis le
   domaine du Ministère ; le site n'émet aucune requête vers un tiers
@@ -42,13 +43,26 @@ ministre, organismes et programmes, sites partenaires du portail, etc.
 
 ## Portail d'entrée et sites partenaires
 
-La page servie à la racine du domaine est alimentée par le modèle
-**Sites partenaires** (`apps.core.models.PartnerSite`), organisé en trois
-rubriques : *institutions de la République*, *organismes, projets et
-partenaires*, *services et plateformes en ligne*. Chaque entrée peut recevoir un
-logo téléversé ; à défaut, la vignette affiche l'icône de sa rubrique — aucune
-image n'est jamais chargée depuis un tiers. Une entrée sans adresse de site
-reste listée, sans lien, avec la mention « Site en cours de publication ».
+La page servie à la racine du domaine reprend la charte du portail du
+Ministère : une carte blanche posée sur le dégradé national, encadrée de deux
+colonnes de vignettes d'institutions, avec au centre les deux portes vers les
+versions française et anglaise du site.
+
+Elle est alimentée par le modèle **Sites partenaires**
+(`apps.core.models.PartnerSite`), organisé en trois rubriques : *institutions de
+la République*, *organismes, projets et partenaires*, *services et plateformes
+en ligne*. Les entrées actives sont réparties à parts égales entre les deux
+colonnes, dans l'ordre des rubriques. Une entrée sans adresse de site reste
+affichée, sans lien, avec la mention « Site en cours de publication ».
+
+Chaque entrée peut recevoir un logo téléversé depuis l'administration ; à
+défaut, la vignette affiche le sigle sur le même fond tricolore. Les quelques
+logos disponibles librement sont versionnés dans `static/img/partners/` et
+attachés par `seed_data` — aucune image, aucune police et aucun script n'est
+jamais chargé depuis un tiers : le champ de particules et les portes coulissantes
+sont écrits à la main dans `static/js/portal.js`, sans particles.js, jQuery ni
+GSAP. Le tout reste une amélioration progressive : sans JavaScript, ou lorsque le
+visiteur demande un mouvement réduit, les deux boutons restent de simples liens.
 
 ### Tests
 

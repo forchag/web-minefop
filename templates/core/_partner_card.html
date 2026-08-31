@@ -1,18 +1,22 @@
 {% comment %}
-One tile in the entry portal's website directory. Logos are only ever served
-from this domain: when the Ministry has not uploaded one, the tile falls back
-to the icon of its group, so the grid stays even and the page still makes no
-third-party request.
+One institution tile in the entry portal's two side columns. Logos are only
+ever served from this domain: when the Ministry has not supplied one, the tile
+shows the acronym on the same tricolour ground, so the grid stays even and the
+page still makes no third-party request.
+
+A partner whose website is not published yet keeps its tile — the overlay says
+so instead of offering a dead link.
 {% endcomment %}
-<{% if partner.url %}a class="partner-card" href="{{ partner.url }}" target="_blank" rel="noopener"{% else %}span class="partner-card is-offline"{% endif %}>
-  <span class="partner-logo" aria-hidden="true">
-    {% if partner.logo %}<img src="{{ partner.logo.url }}" alt="">{% else %}<i class="bi {{ partner.icon }}"></i>{% endif %}
-  </span>
-  <span class="partner-body">
-    <span class="partner-name">{{ partner.name }}{% if partner.acronym and partner.acronym != partner.name %} ({{ partner.acronym }}){% endif %}</span>
-    {% if partner.description %}<span class="partner-desc">{{ partner.description }}</span>{% endif %}
-    <span class="partner-visit">
-      {% if partner.url %}Consulter le site <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>{% else %}Site en cours de publication{% endif %}
-    </span>
-  </span>
-</{% if partner.url %}a{% else %}span{% endif %}>
+<div class="bloc">
+  {% if partner.url %}<a href="{{ partner.url }}" target="_blank" rel="noopener">{% endif %}
+    {% if partner.logo %}
+      <img src="{{ partner.logo.url }}" alt="" loading="lazy">
+    {% else %}
+      <span class="bloc-acronym" aria-hidden="true">{{ partner.acronym|default:partner.name }}</span>
+    {% endif %}
+    <div class="title">
+      <h2>{{ partner.name }}</h2>
+      <span>{% if partner.url %}Consulter le site{% else %}Site en cours de publication{% endif %}</span>
+    </div>
+  {% if partner.url %}</a>{% endif %}
+</div>

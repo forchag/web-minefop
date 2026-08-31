@@ -1,12 +1,13 @@
 {% load static %}<!DOCTYPE html>
 {% comment %}
 Entry portal served at the root of the domain, outside the /fr/ and /en/
-language prefixes. It is deliberately bilingual and self-contained: a visitor
-has not yet chosen a language here, so both versions of every label are shown
-side by side, and the page carries neither the site navigation nor the search
-form. Its two roles are to open the door into either language version of the
-site and to publish the directory of institutional, partner and online-service
-websites that surround the Ministry's action.
+language prefixes. It reproduces the Ministry's portal design: the institutions
+of the Republic and the bodies working alongside the Ministry framing a central
+card that opens either language version of the site.
+
+A visitor has not chosen a language here, so the page is deliberately bilingual
+throughout and carries neither the site navigation nor the search form. Every
+asset it loads is served from this domain.
 {% endcomment %}
 <html lang="fr">
 <head>
@@ -14,7 +15,7 @@ websites that surround the Ministry's action.
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MINEFOP — Portail officiel / Official portal | République du Cameroun</title>
   <meta name="description" content="Portail d'entrée du Ministère de l'Emploi et de la Formation Professionnelle du Cameroun : accès aux versions française et anglaise du site, aux institutions de la République, aux organismes partenaires et aux services en ligne.">
-  <meta name="theme-color" content="#04502c">
+  <meta name="theme-color" content="#003d82">
   <link rel="canonical" href="{{ request.build_absolute_uri }}">
   <link rel="alternate" hreflang="fr" href="{{ request.scheme }}://{{ request.get_host }}/fr/">
   <link rel="alternate" hreflang="en" href="{{ request.scheme }}://{{ request.get_host }}/en/">
@@ -29,142 +30,124 @@ websites that surround the Ministry's action.
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32.png' %}">
   <link rel="apple-touch-icon" href="{% static 'img/favicon-180.png' %}">
 
-  <link rel="preload" as="font" type="font/woff2" href="{% static 'fonts/inter-latin.woff2' %}" crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href="{% static 'fonts/source-serif-4-latin.woff2' %}" crossorigin>
-  <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+  <link rel="preload" as="font" type="font/woff2" href="{% static 'fonts/poppins-700-latin.woff2' %}" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="{% static 'fonts/source-sans-3-latin.woff2' %}" crossorigin>
+  <link rel="stylesheet" href="{% static 'css/portal-fonts.css' %}">
   <link rel="stylesheet" href="{% static 'vendor/bootstrap-icons/bootstrap-icons.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/portal.css' %}">
 </head>
 <body>
-  <a class="skip-link" href="#portal-main">Aller au contenu principal / Skip to main content</a>
+  <a class="skip-link" href="#portal-doors">Aller au contenu principal / Skip to main content</a>
 
-  <div class="flag-strip" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="portal-container">
+    <div class="year-tag">{% now "Y" %}</div>
 
-  <header class="portal-masthead">
-    <div class="portal-wrap">
-      <img class="portal-emblem" src="{% static 'img/minefop-emblem.png' %}" width="74" height="83"
-           alt="Armoiries de la République du Cameroun">
-      <div class="portal-identity">
-        <span class="portal-republic">République du Cameroun · Republic of Cameroon</span>
-        <span class="portal-ministry">Ministère de l'Emploi et de la Formation Professionnelle</span>
-        <span class="portal-ministry-en" lang="en">Ministry of Employment and Vocational Training — MINEFOP</span>
-      </div>
-      <p class="portal-motto">Paix – Travail – Patrie<br><span lang="en">Peace – Work – Fatherland</span></p>
-    </div>
-  </header>
+    <header class="portal-header">
+      <h1>MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE</h1>
+      <p>PORTAIL OFFICIEL — OFFICIAL PORTAL</p>
+      <p class="slogan">Un métier, un emploi — pour toutes et tous</p>
+    </header>
 
-  <main id="portal-main">
-    <section class="portal-doors">
-      <div class="portal-wrap">
-        <h1>Se former, se qualifier, travailler — à tout âge</h1>
-        <p class="lede">
-          Le Ministère de l'Emploi et de la Formation Professionnelle conduit la politique
-          nationale de l'emploi, de la formation et de l'insertion professionnelles. Ses
-          dispositifs sont ouverts à toute personne en recherche d'emploi, en reconversion
-          ou en quête d'une qualification, sur l'ensemble du territoire national.
-        </p>
-        <p class="lede" lang="en">
-          Train, qualify, work — at any age. The Ministry's employment and vocational
-          training services are open to everyone looking for work, changing career or
-          seeking a qualification, anywhere in the country.
-        </p>
+    <div class="portal-content">
+      <canvas id="particles-js" aria-hidden="true"></canvas>
+      <div class="pattern-overlay"></div>
 
-        <div class="door-buttons">
-          <a class="door-button" href="/fr/" data-door>
-            <i class="bi bi-door-open" aria-hidden="true"></i>
-            <span>
-              <span class="door-lang">Français</span>
-              Accéder au portail
-            </span>
-          </a>
-          <a class="door-button" href="/en/" data-door lang="en">
-            <i class="bi bi-door-open" aria-hidden="true"></i>
-            <span>
-              <span class="door-lang">English</span>
-              Access the portal
-            </span>
-          </a>
+      <div class="row">
+        {% comment %} Left column — institutions {% endcomment %}
+        <div class="col col-sm-2">
+          <ul class="institution-grid">
+            {% for partner in left_column %}
+            <li>{% include "core/_partner_card.html" %}</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        {% comment %} Centre column — the doors into the site {% endcomment %}
+        <div class="col col-sm-8" id="portal-doors">
+          <div class="portail">
+            <div class="pattern-overlay"></div>
+
+            <div class="title-minjec">
+              <div class="logo">
+                <img src="{% static 'img/minefop-emblem.png' %}" width="90" height="101"
+                     alt="Armoiries de la République du Cameroun">
+              </div>
+              <div class="title-minjec-text">
+                <h3>République du Cameroun</h3>
+                <h1>MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE</h1>
+                <h2>Se former, se qualifier, travailler — à tout âge</h2>
+                <p>Paix – Travail – Patrie</p>
+                <h3 lang="en">Republic of Cameroon</h3>
+                <h1 lang="en">MINISTRY OF EMPLOYMENT AND VOCATIONAL TRAINING</h1>
+                <h2 lang="en">Train, qualify, work — at any age</h2>
+              </div>
+              <div class="logo">
+                <img src="{% static 'img/minefop-logo.png' %}" width="70" height="90"
+                     alt="Logo du MINEFOP">
+              </div>
+            </div>
+
+            <div class="after-title">
+              <div class="button-group">
+                <a class="btn-minefop" href="/fr/" data-door>
+                  <i class="bi bi-door-open" aria-hidden="true"></i>ACCÉDER AU PORTAIL
+                </a>
+                <a class="btn-minefop" href="/en/" data-door lang="en">
+                  <i class="bi bi-door-open" aria-hidden="true"></i>ACCESS THE PORTAL
+                </a>
+              </div>
+            </div>
+
+            <div class="but-portail">
+              <p>Portail Web du Ministère de l'Emploi et de la Formation Professionnelle</p>
+              <p>******</p>
+              <p lang="en">Web portal of the Ministry of Employment and Vocational Training</p>
+            </div>
+
+            <div class="security-badge">
+              <span>
+                <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
+                Connexion sécurisée · Secure connection
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {% comment %} Right column — bodies, programmes and online services {% endcomment %}
+        <div class="col col-sm-2">
+          <ul class="institution-grid">
+            {% for partner in right_column %}
+            <li>{% include "core/_partner_card.html" %}</li>
+            {% endfor %}
+          </ul>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="portal-section">
-      <div class="portal-wrap">
-        <span class="section-kicker">Institutions de la République / Institutions of the Republic</span>
-        <h2>Les institutions</h2>
-        <p class="section-note">Les sites officiels des institutions de la République du Cameroun.</p>
-        {% if institutions %}
-        <ul class="partner-grid">
-          {% for partner in institutions %}
-          <li>{% include "core/_partner_card.html" %}</li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p class="portal-empty">La liste des institutions sera publiée prochainement.</p>
-        {% endif %}
-      </div>
-    </section>
-
-    <section class="portal-section alt">
-      <div class="portal-wrap">
-        <span class="section-kicker">Organismes, programmes et projets / Bodies, programmes and projects</span>
-        <h2>Nos partenaires</h2>
-        <p class="section-note">
-          Les organismes placés sous la tutelle du Ministère, les programmes qu'il pilote et
-          les partenaires qui concourent à ses missions.
-        </p>
-        {% if partner_bodies %}
-        <ul class="partner-grid">
-          {% for partner in partner_bodies %}
-          <li>{% include "core/_partner_card.html" %}</li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p class="portal-empty">La liste des organismes partenaires sera publiée prochainement.</p>
-        {% endif %}
-      </div>
-    </section>
-
-    <section class="portal-section">
-      <div class="portal-wrap">
-        <span class="section-kicker">Services en ligne / Online services</span>
-        <h2>Les plateformes du secteur</h2>
-        <p class="section-note">
-          Les téléservices et plateformes numériques du secteur de l'emploi et de la
-          formation professionnelle, accessibles directement.
-        </p>
-        {% if online_services %}
-        <ul class="partner-grid">
-          {% for partner in online_services %}
-          <li>{% include "core/_partner_card.html" %}</li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p class="portal-empty">Les services en ligne seront publiés prochainement.</p>
-        {% endif %}
-      </div>
-    </section>
-  </main>
-
-  <footer class="portal-footer">
-    <div class="portal-wrap">
-      <p><strong>Ministère de l'Emploi et de la Formation Professionnelle</strong> — République du Cameroun</p>
-      {% if site_contact_info.address %}<p>{{ site_contact_info.address }}{% if site_contact_info.po_box %} — {{ site_contact_info.po_box }}{% endif %}</p>{% endif %}
-      <ul class="portal-footer-links">
+    <footer class="portal-footer">
+      <p>&copy; {% now "Y" %} MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE — RÉPUBLIQUE DU CAMEROUN</p>
+      <ul>
         <li><a href="/fr/">Site en français</a></li>
         <li><a href="/en/" lang="en">English version</a></li>
         <li><a href="/fr/contact/">Nous contacter</a></li>
         <li><a href="/fr/mentions-legales/">Mentions légales</a></li>
         <li><a href="/fr/accessibilite/">Accessibilité</a></li>
       </ul>
-      <p>&copy; {% now "Y" %} MINEFOP — Tous droits réservés / All rights reserved</p>
-    </div>
-  </footer>
+      <p>Tous droits réservés | All rights reserved</p>
+    </footer>
+  </div>
 
-  <div class="door-overlay" id="doorOverlay" aria-hidden="true">
-    <p class="door-caption">Accès au portail<br><span lang="en">Entering the portal</span></p>
-    <div class="door-panel left"></div>
-    <div class="door-panel right"></div>
+  {% comment %} Elevator-style sliding door screen, shown while entering the site {% endcomment %}
+  <div class="door-wrapper" id="doorWrapper" aria-hidden="true">
+    <p class="door-opening-text">Accès au portail</p>
+    <div class="elevator-door-frame">
+      <div class="door-backdrop"></div>
+      <div class="portal-light"></div>
+      {% comment %}Transparent cut-out: this one sits on the dark door screen.{% endcomment %}
+      <img class="national-emblem" src="{% static 'img/minefop-emblem-transparent.png' %}" alt="">
+      <div class="door-panel door-left"><span class="door-handle left-handle"></span></div>
+      <div class="door-panel door-right"><span class="door-handle right-handle"></span></div>
+    </div>
   </div>
 
   <script src="{% static 'js/portal.js' %}"></script>

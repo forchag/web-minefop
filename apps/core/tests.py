@@ -151,7 +151,7 @@ class EntryPortalTests(TestCase):
         self.assertIn('href="/fr/"', body)
         self.assertIn('href="/en/"', body)
 
-    def test_the_portal_lists_active_partner_sites_by_group(self):
+    def test_the_portal_lists_every_active_partner_site(self):
         response = self.client.get("/")
         self.assertContains(response, self.institution.url)
         self.assertContains(response, self.service.url)
@@ -159,6 +159,25 @@ class EntryPortalTests(TestCase):
         self.assertContains(response, "PIAASI")
         self.assertContains(response, "Site en cours de publication")
         self.assertNotContains(response, self.hidden.name)
+
+    def test_the_portal_splits_the_directory_into_two_balanced_columns(self):
+        """The design flanks the central card with a column on either side."""
+        context = self.client.get("/").context
+        left = list(context["left_column"])
+        right = list(context["right_column"])
+        # Every active partner appears exactly once, inactive ones not at all.
+        self.assertEqual(
+            sorted(p.pk for p in left + right),
+            sorted(
+                PartnerSite.objects.filter(is_active=True).values_list("pk", flat=True)
+            ),
+        )
+        self.assertLessEqual(abs(len(left) - len(right)), 1)
+        self.assertNotIn(self.hidden, left + right)
+
+    def test_a_partner_tile_falls_back_to_its_acronym_without_a_logo(self):
+        response = self.client.get("/")
+        self.assertContains(response, '<span class="bloc-acronym" aria-hidden="true">PRC</span>')
 
     def test_the_portal_loads_no_asset_from_a_third_party(self):
         """Scripts, stylesheets and images must all come from this domain."""
