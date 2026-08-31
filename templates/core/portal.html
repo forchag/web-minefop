@@ -44,8 +44,7 @@ asset it loads is served from this domain.
 
         <header class="portal-header">
             <h1>MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE</h1>
-            <p>PROGRAMME JEME (JEUNE, MÉTIER, EMPLOI) — PORTAIL OFFICIEL</p>
-            <p class="slogan">One Youth – One Trade – One Job</p>
+            <p>PORTAIL OFFICIEL</p>
         </header>
 
         <div class="portal-content">
@@ -134,19 +133,11 @@ asset it loads is served from this domain.
                                 <img src="{% static 'img/minefop-emblem.png' %}" width="90" height="101"
                                 alt="Armoiries de la République du Cameroun">
                             </div>
-                            {% comment %}
-                            The page's one <h1> is in the masthead above; the identity block
-                            repeats it for the design, so these lines carry the same styling
-                            through classes instead of stacking further headings.
-                            {% endcomment %}
                             <div class="title-minjec-text">
                                 <p class="tm-republic">République du Cameroun</p>
                                 <p class="tm-name">MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE</p>
-                                <p class="tm-programme">PROGRAMME JEME (JEUNE, MÉTIER, EMPLOI)</p>
-                                <p class="tm-motto">One Youth – One Trade – One Job</p>
                                 <p class="tm-republic" lang="en">Republic of Cameroon</p>
                                 <p class="tm-name" lang="en">MINISTRY OF EMPLOYMENT AND VOCATIONAL TRAINING</p>
-                                <p class="tm-programme" lang="en">JEME PROGRAM</p>
                             </div>
                             <div class="logo">
                                 <img src="{% static 'img/minefop-logo.png' %}" width="70" height="90"
@@ -166,9 +157,9 @@ asset it loads is served from this domain.
                         </div>
 
                         <div class="but-portail">
-                            <p>Portail Web du Ministère de l'Emploi et de la Formation Professionnelle — Emploi Jeunes</p>
+                            <p>Portail Web du Ministère de l'Emploi et de la Formation Professionnelle</p>
                             <p>******</p>
-                            <p lang="en">Web portal of the Ministry of Employment and Vocational Training — Youth Jobs</p>
+                            <p lang="en">Web portal of the Ministry of Employment and Vocational Training</p>
                         </div>
 
                         {% comment %} Security badge — image from index.html alongside the text version {% endcomment %}
@@ -249,7 +240,7 @@ asset it loads is served from this domain.
         </div>
 
         <footer class="portal-footer">
-            <p>&copy; {% now "Y" %} MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE — PROJET YOUTH JOBS</p>
+            <p>&copy; {% now "Y" %} MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE</p>
             <ul>
                 <li><a href="/fr/">Site en français</a></li>
                 <li><a href="/en/" lang="en">English version</a></li>
@@ -267,7 +258,6 @@ asset it loads is served from this domain.
         <div class="elevator-door-frame">
             <div class="door-backdrop"></div>
             <div class="portal-light"></div>
-            {% comment %}Transparent cut-out: this one sits on the dark door screen.{% endcomment %}
             <img class="national-emblem" src="{% static 'img/minefop-emblem-transparent.png' %}" alt="">
             <div class="door-panel door-left"><span class="door-handle left-handle"></span></div>
             <div class="door-panel door-right"><span class="door-handle right-handle"></span></div>
