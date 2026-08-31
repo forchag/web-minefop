@@ -1,9 +1,24 @@
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import F, Q
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from .models import HeroSlide, KeyFigure, MinisterMessage, Timeline
+from .models import HeroSlide, KeyFigure, MinisterMessage, PartnerSite, Timeline
+
+
+def portal(request):
+    """The entry page served at the root of the domain.
+
+    It carries the State identification, the two language doors into the site
+    and the directory of institutional, partner and online-service websites.
+    """
+    partners = PartnerSite.objects.filter(is_active=True)
+    context = {
+        "institutions": partners.filter(group=PartnerSite.Group.INSTITUTION),
+        "partner_bodies": partners.filter(group=PartnerSite.Group.PARTNER),
+        "online_services": partners.filter(group=PartnerSite.Group.SERVICE),
+    }
+    return render(request, "core/portal.html", context)
 
 
 def home(request):
@@ -17,7 +32,9 @@ def home(request):
         "latest_articles": Article.objects.filter(is_published=True).order_by(
             "-published_at"
         )[:3],
-        "latest_documents": Document.objects.order_by("-published_date")[:4],
+        "latest_documents": Document.objects.order_by(
+            F("published_date").desc(nulls_last=True), "title"
+        )[:4],
     }
     return render(request, "core/home.html", context)
 
@@ -76,7 +93,7 @@ def search(request):
                     "kind": "document",
                     "title": document.title,
                     "summary": document.reference_number or document.description,
-                    "url": document.file.url if document.file else "",
+                    "url": document.download_url,
                     "date": document.published_date,
                 }
             )

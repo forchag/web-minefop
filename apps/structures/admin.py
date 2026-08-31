@@ -32,5 +32,6 @@ class TrainingCenterAdmin(admin.ModelAdmin):
 
 @admin.register(AttachedBody)
 class AttachedBodyAdmin(admin.ModelAdmin):
-    list_display = ("name", "acronym", "order")
+    list_display = ("name", "acronym", "kind", "order")
+    list_filter = ("kind",)
     list_editable = ("order",)

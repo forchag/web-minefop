@@ -14,5 +14,6 @@ class DocumentCategoryAdmin(admin.ModelAdmin):
 class DocumentAdmin(admin.ModelAdmin):
     list_display = ("title", "category", "reference_number", "published_date")
     list_filter = ("category",)
+    list_select_related = ("category",)
     search_fields = ("title", "reference_number", "description")
     date_hierarchy = "published_date"

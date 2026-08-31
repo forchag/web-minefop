@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import HeroSlide, KeyFigure, MinisterMessage, Timeline
+from .models import HeroSlide, KeyFigure, MinisterMessage, PartnerSite, Timeline
 
 
 @admin.register(HeroSlide)
@@ -31,3 +31,12 @@ class TimelineAdmin(admin.ModelAdmin):
     list_display = ("year", "title", "order")
     list_editable = ("order",)
     ordering = ("order",)
+
+
+@admin.register(PartnerSite)
+class PartnerSiteAdmin(admin.ModelAdmin):
+    list_display = ("name", "acronym", "group", "url", "order", "is_active")
+    list_filter = ("group", "is_active")
+    list_editable = ("order", "is_active")
+    search_fields = ("name", "acronym")
+    ordering = ("group", "order")

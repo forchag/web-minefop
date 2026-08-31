@@ -14,7 +14,12 @@ def org_chart(request):
 
 
 def attached_bodies(request):
-    return render(request, "structures/attached_bodies.html", {"bodies": AttachedBody.objects.all()})
+    """Bodies under the Ministry's supervision, then the programmes it steers."""
+    context = {
+        "bodies": AttachedBody.objects.filter(kind=AttachedBody.Kind.BODY),
+        "programmes": AttachedBody.objects.filter(kind=AttachedBody.Kind.PROGRAMME),
+    }
+    return render(request, "structures/attached_bodies.html", context)
 
 
 def delegations(request):

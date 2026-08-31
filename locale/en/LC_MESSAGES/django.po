@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-11 15:30+0100\n"
+"POT-Creation-Date: 2026-08-31 09:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -171,8 +171,44 @@ msgstr "historical milestone"
 msgid "historique"
 msgstr "history"
 
+msgid "Institutions de la République"
+msgstr "Institutions of the Republic"
+
+msgid "Organismes, projets et partenaires"
+msgstr "Bodies, projects and partners"
+
+msgid "Services et plateformes en ligne"
+msgstr "Online services and platforms"
+
 msgid "nom"
 msgstr "name"
+
+msgid "sigle"
+msgstr "acronym"
+
+msgid "Affiché en vignette lorsque aucun logo n'est téléversé."
+msgstr "Shown as a monogram tile when no logo has been uploaded."
+
+msgid "rubrique"
+msgstr "section"
+
+msgid "adresse du site"
+msgstr "website address"
+
+msgid "Laisser vide pour une structure dont le site n'est pas encore publié."
+msgstr "Leave empty for a body whose website is not published yet."
+
+msgid "logo"
+msgstr "logo"
+
+msgid "affiché sur le portail"
+msgstr "shown on the portal"
+
+msgid "site partenaire"
+msgstr "partner website"
+
+msgid "sites partenaires"
+msgstr "partner websites"
 
 msgid "slug"
 msgstr "slug"
@@ -194,6 +230,12 @@ msgstr "E.g.: Law n° 2018/010 of 11 July 2018"
 
 msgid "fichier PDF"
 msgstr "PDF file"
+
+msgid "adresse du fichier"
+msgstr "file address"
+
+msgid "À utiliser lorsque le document n'a pas encore été téléversé et reste hébergé à son adresse d'origine. Le fichier téléversé prévaut."
+msgstr "Use this when the document has not been uploaded yet and is still hosted at its original address. An uploaded file takes precedence."
 
 msgid "date de signature/publication"
 msgstr "signature/publication date"
@@ -360,17 +402,23 @@ msgstr "training centre"
 msgid "centres de formation"
 msgstr "training centres"
 
-msgid "sigle"
-msgstr "acronym"
+msgid "Organisme rattaché"
+msgstr "Attached body"
+
+msgid "Programme ou projet"
+msgstr "Programme or project"
+
+msgid "nature"
+msgstr "nature"
 
 msgid "site web"
 msgstr "website"
 
-msgid "organisme rattaché"
-msgstr "affiliated body"
+msgid "organisme, programme ou projet"
+msgstr "body, programme or project"
 
-msgid "organismes rattachés"
-msgstr "affiliated bodies"
+msgid "organismes, programmes et projets"
+msgstr "bodies, programmes and projects"
 
 msgid "Ministère de l'Emploi et de la Formation Professionnelle"
 msgstr "Ministry of Employment and Vocational Training"
@@ -583,11 +631,11 @@ msgstr "Previous"
 msgid "Suivant"
 msgstr "Next"
 
-msgid "Former, qualifier et insérer la jeunesse camerounaise"
-msgstr "Training, qualifying and employing Cameroon's young people"
+msgid "Se former, se qualifier, travailler — à tout âge"
+msgstr "Train, qualify, work — at any age"
 
-msgid "Le Ministère de l'Emploi et de la Formation Professionnelle conduit la politique du Gouvernement en matière d'emploi, de formation et d'insertion professionnelles sur l'ensemble du territoire national."
-msgstr "The Ministry of Employment and Vocational Training carries out the Government's policy on employment, training and integration into working life throughout the national territory."
+msgid "Le Ministère de l'Emploi et de la Formation Professionnelle conduit la politique du Gouvernement en matière d'emploi, de formation et d'insertion professionnelles. Ses dispositifs sont ouverts à toute personne en recherche d'emploi, en reconversion ou en quête d'une qualification, sur l'ensemble du territoire national."
+msgstr "The Ministry of Employment and Vocational Training implements the Government's policy on employment, training and labour-market integration. Its services are open to everyone looking for work, changing career or seeking a qualification, anywhere in the country."
 
 msgid "Trouver un centre de formation"
 msgstr "Find a training centre"
@@ -625,8 +673,8 @@ msgstr "Types of public centres"
 msgid "Diplômés suivis via Inserjeune"
 msgstr "Graduates tracked via Inserjeune"
 
-msgid "Budget 2026 Emploi & Formation Pro. (FCFA)"
-msgstr "2026 Employment & Vocational Training Budget (FCFA)"
+msgid "Spécialités professionnelles recensées"
+msgstr "Vocational specialities recorded"
 
 msgid "Toutes les attributions"
 msgstr "All responsibilities"
@@ -661,8 +709,8 @@ msgstr "Official portrait of the Minister of Employment and Vocational Training"
 msgid "Mot du Ministre"
 msgstr "Minister's Message"
 
-msgid "Le Ministère de l'Emploi et de la Formation Professionnelle œuvre chaque jour pour offrir à la jeunesse camerounaise les compétences et les opportunités nécessaires à une insertion professionnelle réussie, au service de l'émergence économique du Cameroun."
-msgstr "The Ministry of Employment and Vocational Training works every day to give Cameroonian youth the skills and opportunities needed for successful professional integration, in service of Cameroon's economic emergence."
+msgid "Le Ministère de l'Emploi et de la Formation Professionnelle œuvre chaque jour pour offrir à toutes les Camerounaises et à tous les Camerounais les compétences et les opportunités nécessaires à une insertion professionnelle réussie, au service de l'émergence économique du Cameroun."
+msgstr "The Ministry of Employment and Vocational Training works every day to give every Cameroonian the skills and opportunities needed to succeed in the labour market, in the service of Cameroon's economic emergence."
 
 msgid "Le Ministre"
 msgstr "The Minister"
@@ -700,8 +748,8 @@ msgstr "Training centres"
 msgid "Organigramme"
 msgstr "Organisation chart"
 
-msgid "Organismes rattachés"
-msgstr "Affiliated bodies"
+msgid "Organismes & programmes"
+msgstr "Bodies & programmes"
 
 msgid "Éditeur, hébergement, droits d'auteur et conditions de réutilisation des contenus du site officiel du MINEFOP."
 msgstr "Publisher, hosting, copyright and reuse conditions for the content of the official MINEFOP website."
@@ -799,8 +847,8 @@ msgstr "Dear fellow citizens,"
 msgid "Le Ministère de l'Emploi et de la Formation Professionnelle porte l'ambition du Gouvernement de doter chaque Camerounaise et chaque Camerounais des compétences nécessaires pour accéder à un emploi décent ou entreprendre avec succès."
 msgstr "The Ministry of Employment and Vocational Training carries the Government's ambition to equip every Cameroonian with the skills needed to access decent employment or succeed in entrepreneurship."
 
-msgid "Notre feuille de route s'articule autour de trois priorités : moderniser l'offre de formation professionnelle publique et privée, renforcer l'adéquation entre les compétences formées et les besoins du marché du travail, et accompagner l'insertion socio-professionnelle de la jeunesse sur l'ensemble du territoire national."
-msgstr "Our roadmap is built around three priorities: modernising the public and private vocational training offer, strengthening the match between trained skills and labour market needs, and supporting the socio-professional integration of young people across the whole country."
+msgid "Notre feuille de route s'articule autour de trois priorités : moderniser l'offre de formation professionnelle publique et privée, renforcer l'adéquation entre les compétences formées et les besoins du marché du travail, et accompagner l'insertion socio-professionnelle de toute personne en recherche d'emploi ou de qualification, sur l'ensemble du territoire national."
+msgstr "Our roadmap is built around three priorities: modernising the public and private vocational training offer, strengthening the match between trained skills and labour market needs, and supporting the socio-professional integration of everyone looking for work or for a qualification, across the whole country."
 
 msgid "Ce site internet se veut un espace d'information transparent sur nos missions, notre organisation, nos centres de formation et les textes qui encadrent notre action. Je vous souhaite une excellente navigation."
 msgstr "This website aims to be a transparent source of information about our missions, our organisation, our training centres and the texts that govern our action. I wish you a pleasant visit."
@@ -844,8 +892,8 @@ msgstr "Designing and organising short-cycle training activities;"
 msgid "De l'orientation et du placement de la main-d'œuvre ;"
 msgstr "Career guidance and placement of the workforce;"
 
-msgid "De l'organisation et du suivi de l'insertion professionnelle des jeunes formés ;"
-msgstr "Organising and monitoring the professional integration of trained youth;"
+msgid "De l'organisation et du suivi de l'insertion professionnelle des personnes formées ;"
+msgstr "Organising and monitoring the labour-market integration of trained people;"
 
 msgid "De l'organisation des activités de recyclage ou de requalification pour les travailleurs en activité et ceux ayant perdu leur emploi ;"
 msgstr "Organising retraining or reskilling activities for workers in employment and those who have lost their jobs;"
@@ -871,8 +919,8 @@ msgstr "View the full text"
 msgid "Nos valeurs"
 msgstr "Our values"
 
-msgid "Équité et égalité des chances"
-msgstr "Fairness and equal opportunity"
+msgid "Équité et égalité des chances, à tout âge"
+msgstr "Fairness and equal opportunity, at any age"
 
 msgid "Qualité et excellence de la formation"
 msgstr "Quality and excellence in training"
@@ -931,6 +979,9 @@ msgstr "The Ministry"
 msgid "Missions & attributions"
 msgstr "Missions & responsibilities"
 
+msgid "Organismes, programmes & projets"
+msgstr "Bodies, programmes & projects"
+
 msgid "Délégations régionales"
 msgstr "Regional delegations"
 
@@ -954,6 +1005,9 @@ msgstr "Services for the public"
 
 msgid "Recherche sur le site"
 msgstr "Search this site"
+
+msgid "Portail d'entrée & sites partenaires"
+msgstr "Entry portal & partner websites"
 
 msgid "Informations légales"
 msgstr "Legal information"
@@ -1039,14 +1093,14 @@ msgstr "The National Centre for Trainer Training and Curriculum Development (CNF
 msgid "Un dispositif en pleine modernisation"
 msgstr "A system undergoing rapid modernisation"
 
-msgid "« Un Jeune, un Métier, un Emploi » : programme national doté de 17,72 milliards de FCFA, lancé en novembre 2025 pour former et insérer durablement les jeunes de 15 à 35 ans."
-msgstr "\"One Youth, One Skill, One Job\": a national programme worth 17.72 billion FCFA, launched in November 2025 to durably train and integrate young people aged 15 to 35."
+msgid "Programme national lancé en novembre 2025 pour former, qualifier et insérer durablement en zones rurales, péri-urbaines et urbaines : apprentissage d'un métier, accès à l'emploi salarié ou création d'activité."
+msgstr "National programme launched in November 2025 to train, qualify and durably integrate people in rural, peri-urban and urban areas: learning a trade, finding salaried work or starting a business."
 
 msgid "Plateforme numérique de suivi de l'insertion professionnelle : plus de 15 000 diplômés, 350 établissements et 450 entreprises partenaires recensés."
 msgstr "Digital platform for tracking professional integration: over 15,000 graduates, 350 institutions and 450 partner companies registered."
 
-msgid "Projet mené avec l'Organisation Internationale de la Francophonie pour former 300 jeunes de 18 à 35 ans aux métiers du numérique."
-msgstr "Project run with the International Organisation of La Francophonie to train 300 young people aged 18 to 35 in digital professions."
+msgid "Projet mené avec l'Organisation Internationale de la Francophonie pour former 300 bénéficiaires aux métiers du numérique."
+msgstr "Project run with the International Organisation of La Francophonie to train 300 participants in digital trades."
 
 msgid "Textes de référence"
 msgstr "Reference texts"
@@ -1207,17 +1261,26 @@ msgstr "Texts governing training"
 msgid "Pagination"
 msgstr "Pagination"
 
+msgid "Portail & sites partenaires"
+msgstr "Portal & partner websites"
+
 msgid "Espace agent"
 msgstr "Staff area"
 
 msgid "Choix de la langue"
 msgstr "Language selection"
 
-msgid "Organismes, fonds et projets placés sous la tutelle ou rattachés au Ministère de l'Emploi et de la Formation Professionnelle."
-msgstr "Bodies, funds and projects supervised by or attached to the Ministry of Employment and Vocational Training."
+msgid "Organismes, fonds, programmes et projets placés sous la tutelle du Ministère de l'Emploi et de la Formation Professionnelle ou concourant à ses missions."
+msgstr "Bodies, funds, programmes and projects placed under the supervision of the Ministry of Employment and Vocational Training or contributing to its missions."
 
-msgid "Les structures placées sous la tutelle du Ministère ou concourant à ses missions."
-msgstr "The bodies supervised by the Ministry or contributing to its missions."
+msgid "Les structures placées sous la tutelle du Ministère et les programmes qu'il pilote."
+msgstr "The bodies placed under the Ministry's supervision and the programmes it steers."
+
+msgid "Titre VIII du décret n° 2012/644"
+msgstr "Title VIII of decree no. 2012/644"
+
+msgid "Organismes rattachés"
+msgstr "Affiliated bodies"
 
 msgid "Site web"
 msgstr "Website"
@@ -1227,6 +1290,18 @@ msgstr "new window"
 
 msgid "Aucun organisme rattaché n'est renseigné pour le moment."
 msgstr "No affiliated body has been listed yet."
+
+msgid "Mise en œuvre de la politique sectorielle"
+msgstr "Delivering the sector policy"
+
+msgid "Programmes & projets"
+msgstr "Programmes & projects"
+
+msgid "Les programmes et projets conduits par le Ministère s'adressent à toute personne souhaitant apprendre un métier, se requalifier ou accéder à un emploi, sans condition d'âge."
+msgstr "The programmes and projects run by the Ministry are open to anyone wishing to learn a trade, retrain or find work, with no age condition."
+
+msgid "Aucun programme n'est renseigné pour le moment."
+msgstr "No programme has been recorded yet."
 
 msgid "Coordonnées des services déconcentrés du MINEFOP dans les dix régions du Cameroun."
 msgstr "Contact details for MINEFOP's decentralised services in Cameroon's ten regions."
@@ -1321,6 +1396,7 @@ msgstr "Filter"
 msgid "Réinitialiser"
 msgstr "Reset"
 
+#, python-format
 msgid "%(counter)s centre référencé."
 msgid_plural "%(counter)s centres référencés."
 msgstr[0] "%(counter)s centre listed."
@@ -1328,6 +1404,21 @@ msgstr[1] "%(counter)s centres listed."
 
 msgid "Aucun centre ne correspond à vos critères de recherche."
 msgstr "No centre matches your search criteria."
+
+#~ msgid "organisme rattaché"
+#~ msgstr "affiliated body"
+
+#~ msgid "organismes rattachés"
+#~ msgstr "affiliated bodies"
+
+#~ msgid "Former, qualifier et insérer la jeunesse camerounaise"
+#~ msgstr "Training, qualifying and employing Cameroon's young people"
+
+#~ msgid "Budget 2026 Emploi & Formation Pro. (FCFA)"
+#~ msgstr "2026 Employment & Vocational Training Budget (FCFA)"
+
+#~ msgid "« Un Jeune, un Métier, un Emploi » : programme national doté de 17,72 milliards de FCFA, lancé en novembre 2025 pour former et insérer durablement les jeunes de 15 à 35 ans."
+#~ msgstr "\"One Youth, One Skill, One Job\": a national programme worth 17.72 billion FCFA, launched in November 2025 to durably train and integrate young people aged 15 to 35."
 
 #~ msgid "Horaires"
 #~ msgstr "Opening hours"
