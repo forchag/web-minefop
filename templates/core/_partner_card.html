@@ -5,13 +5,20 @@ from this domain — and otherwise from the address the structure supplied. With
 neither — or if the supplied address stops answering — the tile shows the
 acronym on the same tricolour ground, so the grid stays even either way.
 
+referrerpolicy="no-referrer" matters for a logo still served from its
+structure's own site: several of them run WordPress with a security plugin
+that blocks any image request carrying a foreign Referer header (a common
+anti-hotlinking default) — the request never errors, the image just never
+appears. Sending no Referer at all sidesteps that. It costs nothing for a logo
+already hosted on this domain, so it is set unconditionally.
+
 A partner whose website is not published yet keeps its tile — the overlay says
 so instead of offering a dead link.
 {% endcomment %}
 <div class="bloc">
   {% if partner.url %}<a href="{{ partner.url }}" target="_blank" rel="noopener">{% endif %}
     {% if partner.logo_src %}
-      <img src="{{ partner.logo_src }}" alt="" loading="lazy"
+      <img src="{{ partner.logo_src }}" alt="" loading="lazy" referrerpolicy="no-referrer"
            data-acronym="{{ partner.acronym|default:partner.name }}">
     {% else %}
       <span class="bloc-acronym" aria-hidden="true">{{ partner.acronym|default:partner.name }}</span>
