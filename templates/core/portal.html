@@ -37,119 +37,334 @@ asset it loads is served from this domain.
   <link rel="stylesheet" href="{% static 'css/portal.css' %}">
 </head>
 <body>
-  <a class="skip-link" href="#portal-doors">Aller au contenu principal / Skip to main content</a>
-
-  <div class="portal-container">
-    <div class="year-tag">{% now "Y" %}</div>
-
-    <header class="portal-header">
-      <h1>MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE</h1>
-      <p>PORTAIL OFFICIEL — OFFICIAL PORTAL</p>
-      <p class="slogan">Un métier, un emploi — pour toutes et tous</p>
-    </header>
-
+    <div class="portal-container">
+      <div class="year-tag">2026</div>
+      <div class="portal-header">
+        <h1>MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE</h1>
+        <p>PROGRAMME JEME (JEUNE, MÉTIER, EMPLOI) - PORTAL OFFICIEL</p>
+        <p class="slogan">One Youth – One Trade – One Job</p>
+      </div>
+    
     <div class="portal-content">
-      <canvas id="particles-js" aria-hidden="true"></canvas>
+      <div id="particles-js"></div>
       <div class="pattern-overlay"></div>
-
       <div class="row">
-        {% comment %} Left column — institutions {% endcomment %}
+        {% comment %} Left Column - Institutions {% endcomment %}
         <div class="col col-sm-2">
-          <ul class="institution-grid">
-            {% for partner in left_column %}
-            <li>{% include "core/_partner_card.html" %}</li>
-            {% endfor %}
-          </ul>
-        </div>
+          <div class="institution-grid">
+            <div class="bloc">
+              <a target="_blank" href="https://www.prc.cm">
+              <img src="https://www.minjec.gov.cm/portail/images/bloc/prc.png" alt="PRESIDENCE DE LA REPUBLIQUE">
+              <div class="title" style="background: rgba(39, 174, 96, 0.9)">
+                <h2>PRESIDENCE DE LA REPUBLIQUE</h2>
+                <span>Consulter le site</span>
+              </div>
+            </a>
+            </div>
 
-        {% comment %} Centre column — the doors into the site {% endcomment %}
-        <div class="col col-sm-8" id="portal-doors">
+            <div class="bloc">
+            <a target="_blank" href="https://www.spm.gov.cm">
+              <img src="https://www.minjec.gov.cm/portail/images/bloc/spm.jpg" alt="Services du PREMIER MINISTRE">
+              <div class="title" style="background: rgba(231, 76, 60, 0.9)">
+                <h2>Services du PREMIER MINISTRE</h2>
+                <span>Consulter le site</span>
+              </div>
+            </a>
+            </div>
+
+            <div class="bloc">
+            <a target="_blank" href="https://minjec.gov.cm">
+              <img src="https://minjec.gov.cm/site/wp-content/uploads/2022/10/logo.png" alt="MINJEC">
+              <div class="title" style="background: rgba(231, 76, 60, 0.9)">
+                <h2>MINJEC</h2>
+                <span>Consulter le site</span>
+              </div>
+            </a>
+            </div>
+            
+            <div class="bloc">
+            <a target="_blank" href="https://www.onjcameroun.cm">
+              <img src="https://www.minjec.gov.cm/portail/images/bloc/onj.png" alt="OBSERVATOIRE NATIONALE DE LA JEUNESSE">
+              <div class="title" style="background: rgba(243, 156, 18, 0.9)">
+                <h2>OBSERVATOIRE NATIONALE DE LA JEUNESSE</h2>
+                <span>Consulter le site</span>
+              </div>
+            </a>
+            </div>
+
+            <div class="bloc">
+            <a target="_blank" href="https://www.cnjcnyc.cm">
+              <img src="https://raw.githubusercontent.com/forchag/SOME-PICS/refs/heads/main/new.jpeg" alt="CONSEIL NATIONAL DE LA JEUNESSE">
+              <div class="title" style="background: rgba(52, 152, 219, 0.9)">
+                <h2>CONSEIL NATIONAL DE LA JEUNESSE</h2>
+                <span>Consulter le site</span>
+              </div>
+            </a>
+            </div>
+            <div class="bloc">
+            <a target="_blank" href="https://www.cnjcjobhub.cm">
+              <img src="https://raw.githubusercontent.com/forchag/SOME-PICS/refs/heads/main/cnjcnycjoblogo.png" alt="CONSEIL NATIONAL DE LA JEUNESSE">
+              <div class="title" style="background: rgba(52, 152, 219, 0.9)">
+                <h2>CNJCJOBHUB</h2>
+                <span>Consulter le site</span>
+              </div>
+            </a>
+            </div>
+          </div>
+        </div>
+        
+        {% comment %} Center Column - MINEFOP Portal {% endcomment %}
+        <div class="col col-sm-8">
           <div class="portail">
             <div class="pattern-overlay"></div>
-
             <div class="title-minjec">
               <div class="logo">
-                <img src="{% static 'img/minefop-emblem.png' %}" width="90" height="101"
-                     alt="Armoiries de la République du Cameroun">
+                <img src="https://minjec.gov.cm/site/wp-content/uploads/2022/10/logo.png" alt="Logo du MINJEC">
               </div>
               <div class="title-minjec-text">
                 <h3>République du Cameroun</h3>
                 <h1>MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE</h1>
-                <h2>Se former, se qualifier, travailler — à tout âge</h2>
-                <p>Paix – Travail – Patrie</p>
-                <h3 lang="en">Republic of Cameroon</h3>
-                <h1 lang="en">MINISTRY OF EMPLOYMENT AND VOCATIONAL TRAINING</h1>
-                <h2 lang="en">Train, qualify, work — at any age</h2>
+                <h2>PROGRAMME JEME (JEUNE, MÉTIER, EMPLOI)</h2>
+                <p class="slogan">One Youth – One Trade – One Job</p>
+                <h3>REPUBLIC OF CAMEROON</h3>
+                <h1>MINISTRY OF EMPLOYMENT AND VOCATIONAL TRAINING</h1>
+                <h2>JEME PROGRAM</h2>
               </div>
               <div class="logo">
-                <img src="{% static 'img/minefop-logo.png' %}" width="70" height="90"
-                     alt="Logo du MINEFOP">
+                <img src="https://raw.githubusercontent.com/forchag/SOME-PICS/refs/heads/main/MINEFOP-removebg-preview.png" alt="Armoirie du Cameroun">
               </div>
             </div>
-
+            
             <div class="after-title">
               <div class="button-group">
-                <a class="btn-minefop" href="/fr/" data-door>
-                  <i class="bi bi-door-open" aria-hidden="true"></i>ACCÉDER AU PORTAIL
+                <a class="btn-minefop" href="/fr/portal/">
+                  <i class="fas fa-door-open"></i>ACCÉDER AU PORTAIL
                 </a>
-                <a class="btn-minefop" href="/en/" data-door lang="en">
-                  <i class="bi bi-door-open" aria-hidden="true"></i>ACCESS THE PORTAL
+                <a class="btn-minefop" href="/en/portal/">
+                  <i class="fas fa-door-open"></i>ACCESS THE PORTAL
                 </a>
               </div>
             </div>
-
+            
             <div class="but-portail">
-              <p>Portail Web du Ministère de l'Emploi et de la Formation Professionnelle</p>
+              <p>Portail Web du Ministère de l'Emploi et de la Formation Professionnelle - Emploi Jeunes</p>
               <p>******</p>
-              <p lang="en">Web portal of the Ministry of Employment and Vocational Training</p>
+              <p>Web portal of the Ministry of Employment and Vocational Training - Youth Jobs</p>
             </div>
-
+            
             <div class="security-badge">
-              <span>
-                <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
-                Connexion sécurisée · Secure connection
-              </span>
+              <img src="https://www.positivessl.com/images/seals/positivessl_trust_seal_md_167x42.png" alt="SSL Secured">
             </div>
           </div>
         </div>
-
-        {% comment %} Right column — bodies, programmes and online services {% endcomment %}
+        
+        {% comment %} Right Column - Institutions {% endcomment %}
         <div class="col col-sm-2">
-          <ul class="institution-grid">
-            {% for partner in right_column %}
-            <li>{% include "core/_partner_card.html" %}</li>
-            {% endfor %}
-          </ul>
+          <div class="institution-grid">
+            <div class="bloc">
+            <a target="_blank" href="#">
+              <img src="https://fnecm.org/images/stories/lefne7questions/LogoFNEnu.png" alt="FONDS NATIONAL DE L'EMPLOI">
+              <div class="title" style="background: rgba(22, 160, 133, 0.9)">
+                <h2>FONDS NATIONAL DE L'EMPLOI</h2>
+                <span>Consulter le site</span>
+              </div>
+            </a>
+            </div>
+
+            <div class="bloc">
+            <a target="_blank" href="#">
+              <img src="https://onefop.cm/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-07-at-07.43.13.jpeg" alt="ONEFOP">
+              <div class="title" style="background: rgba(211, 84, 0, 0.9)">
+                <h2>ONEFOP</h2>
+                <span>Consulter le site</span>
+              </div>
+            </a>
+            </div>
+
+            <div class="bloc">
+            <a target="_blank" href="#">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRdA0liNY2iPRS6czCI_QXUASXGhpUNWkm1wSlw2YE&s=10" alt="PIASSI">
+              <div class="title" style="background: rgba(155, 89, 182, 0.9)">
+                <h2>PIASSI</h2>
+                <span>Consulter le site</span>
+              </div>
+            </a>
+            </div>
+
+            <div class="bloc">
+            <a href="/ciop/">
+              <img src="http://www.orientation.cm/wp-content/uploads/2019/06/logo-cosup.png" alt="CIOP">
+              <div class="title" style="background: rgba(52, 73, 94, 0.9)">
+                <h2>CIOP</h2>
+                <span>Consulter le site</span>
+              </div>
+            </a>
+            </div>
+
+                        <div class="bloc">
+            <a href="https://www.cnffdp.cm">
+              <img src="https://raw.githubusercontent.com/forchag/SOME-PICS/refs/heads/main/Logo%20CNFFDP.png" alt="CIOP">
+              <div class="title" style="background: rgba(52, 73, 94, 0.9)">
+                <h2>Centre National de Formation des Formateurs et de Développement des Programmes</h2>
+                <span>Consulter le site</span>
+              </div>
+            </a>
+            </div>
+            
+          </div>
         </div>
       </div>
     </div>
-
-    <footer class="portal-footer">
-      <p>&copy; {% now "Y" %} MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE — RÉPUBLIQUE DU CAMEROUN</p>
-      <ul>
-        <li><a href="/fr/">Site en français</a></li>
-        <li><a href="/en/" lang="en">English version</a></li>
-        <li><a href="/fr/contact/">Nous contacter</a></li>
-        <li><a href="/fr/mentions-legales/">Mentions légales</a></li>
-        <li><a href="/fr/accessibilite/">Accessibilité</a></li>
-      </ul>
+    
+    <div class="portal-footer">
+      <p>&copy; 2026 MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE - PROJET YOUTH JOBS</p>
       <p>Tous droits réservés | All rights reserved</p>
-    </footer>
-  </div>
-
-  {% comment %} Elevator-style sliding door screen, shown while entering the site {% endcomment %}
-  <div class="door-wrapper" id="doorWrapper" aria-hidden="true">
-    <p class="door-opening-text">Accès au portail</p>
-    <div class="elevator-door-frame">
-      <div class="door-backdrop"></div>
-      <div class="portal-light"></div>
-      {% comment %}Transparent cut-out: this one sits on the dark door screen.{% endcomment %}
-      <img class="national-emblem" src="{% static 'img/minefop-emblem-transparent.png' %}" alt="">
-      <div class="door-panel door-left"><span class="door-handle left-handle"></span></div>
-      <div class="door-panel door-right"><span class="door-handle right-handle"></span></div>
     </div>
   </div>
 
-  <script src="{% static 'js/portal.js' %}"></script>
+  {% comment %} Elevator-Style Sliding Door Animation {% endcomment %}
+  <div class="door-wrapper">
+    <div class="door-opening-text">Accès au Portail</div>
+    <div class="elevator-door-frame">
+      <div class="door-overlay"></div>
+      <div class="door-panel door-left">
+        <div class="door-handle left-handle"></div>
+      </div>
+      <div class="door-panel door-right">
+        <div class="door-handle right-handle"></div>
+      </div>
+      <div class="portal-light"></div>
+      <div class="national-emblem"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      particlesJS("particles-js", {
+        particles: {
+          number: { value: 50, density: { enable: true, value_area: 700 } },
+          color: { value: "#0056b3" },
+          shape: { type: "circle" },
+          opacity: { value: 0.3, random: true },
+          size: { value: 3, random: true },
+          line_linked: {
+            enable: true,
+            distance: 120,
+            color: "#0056b3",
+            opacity: 0.2,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 1.2,
+            direction: "none",
+            random: true,
+            straight: false,
+            out_mode: "out",
+            bounce: false
+          }
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: { enable: true, mode: "grab" },
+            onclick: { enable: true, mode: "push" },
+            resize: true
+          },
+          modes: {
+            grab: { distance: 120, line_linked: { opacity: 0.6 } },
+            push: { particles_nb: 3 }
+          }
+        },
+        retina_detect: true
+      });
+      
+      // Button animation effect
+      $('.btn-minefop').on('mouseenter', function() {
+        gsap.to($(this), { 
+          duration: 0.3,
+          scale: 1.05,
+          boxShadow: "0 8px 25px rgba(0, 86, 179, 0.5)"
+        });
+      }).on('mouseleave', function() {
+        gsap.to($(this), { 
+          duration: 0.3,
+          scale: 1,
+          boxShadow: "0 6px 15px rgba(0, 86, 179, 0.3)"
+        });
+      });
+    });
+    
+    // Elevator-style sliding door animation with proper redirect
+    jQuery(function($) {
+      $('.btn-minefop').on('click', function(e) {
+        e.preventDefault();
+        const target = $(this).attr('href');
+        
+        // Show the door
+        $('.door-wrapper').css('display', 'flex');
+        $('body').addClass('no-scroll');
+        
+        // Create a timeline for the door animation
+        const tl = gsap.timeline();
+        
+        tl
+          // Initial effects
+          .to('.door-opening-text', { 
+            duration: 0.5, 
+            opacity: 1,
+            y: 0
+          })
+          
+          // Door opening animation (sliding horizontally)
+          .to('.door-left', {
+            duration: 1.5,
+            x: '-100%',
+            ease: 'power3.inOut'
+          }, '+=0.2')
+          .to('.door-right', {
+            duration: 1.5,
+            x: '100%',
+            ease: 'power3.inOut'
+          }, '<')
+          
+          // Light effects
+          .to('.portal-light', {
+            duration: 1.5,
+            opacity: 1,
+            width: '500px',
+            height: '500px',
+            ease: 'power3.out'
+          }, '<')
+          
+          // Final transition
+          .to('.elevator-door-frame', {
+            duration: 1,
+            scale: 1.2,
+            opacity: 0
+          })
+          .to('.door-wrapper', {
+            duration: 0.5,
+            opacity: 0,
+            onComplete: function() {
+              // Redirect after animation completes
+              window.location.href = target;
+            }
+          });
+      });
+    });
+  </script>
+  <script>
+    // Cache visited public pages and assets on the device so repeat visits
+    // load instantly; only changed content is fetched from the server.
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js').catch(function () {});
+      });
+    }
+  </script>
 </body>
 </html>
