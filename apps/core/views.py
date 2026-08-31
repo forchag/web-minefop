@@ -12,14 +12,12 @@ def portal(request):
     It carries the State identification, the two language doors into the site
     and the directory of institutional, partner and online-service websites.
     """
-    # The design flanks the central card with two columns of tiles. Splitting
-    # the ordered directory in half keeps them balanced however many partners
-    # the Ministry publishes, and keeps the groups in their curated order.
-    partners = list(PartnerSite.objects.filter(is_active=True))
-    half = (len(partners) + 1) // 2
+    # Which tile sits on which side is an editorial decision, not a layout
+    # one, so each entry carries its column and its rank within it.
+    partners = PartnerSite.objects.filter(is_active=True)
     context = {
-        "left_column": partners[:half],
-        "right_column": partners[half:],
+        "left_column": partners.filter(column=PartnerSite.Column.LEFT),
+        "right_column": partners.filter(column=PartnerSite.Column.RIGHT),
     }
     return render(request, "core/portal.html", context)
 

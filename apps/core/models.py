@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -108,6 +109,10 @@ class PartnerSite(models.Model):
         PARTNER = "partner", _("Organismes, projets et partenaires")
         SERVICE = "service", _("Services et plateformes en ligne")
 
+    class Column(models.TextChoices):
+        LEFT = "left", _("Colonne de gauche")
+        RIGHT = "right", _("Colonne de droite")
+
     name = models.CharField(_("nom"), max_length=250)
     acronym = models.CharField(
         _("sigle"),
@@ -126,16 +131,64 @@ class PartnerSite(models.Model):
     )
     description = models.CharField(_("description"), max_length=250, blank=True)
     logo = models.ImageField(_("logo"), upload_to="partners/", blank=True, null=True)
+    logo_url = models.URLField(
+        _("adresse du logo"),
+        max_length=500,
+        blank=True,
+        help_text=_(
+            "Adresse du logo fourni par la structure, utilisée tant qu'aucun "
+            "fichier n'a été téléversé ci-dessus. La commande "
+            "« fetch_partner_logos » récupère ces images et les héberge sur le "
+            "domaine du Ministère."
+        ),
+    )
+    column = models.CharField(
+        _("colonne"),
+        max_length=10,
+        choices=Column.choices,
+        default=Column.LEFT,
+        help_text=_("Côté du portail où la vignette est placée."),
+    )
+    tint = models.CharField(
+        _("couleur du bandeau"),
+        max_length=7,
+        blank=True,
+        validators=[RegexValidator(r"^#[0-9a-fA-F]{6}$", _("Indiquez une couleur hexadécimale, par exemple #27ae60."))],
+        help_text=_(
+            "Couleur du bandeau qui porte le nom de la structure, au survol de "
+            "la vignette. Ex : #27ae60. Laisser vide pour le fond sombre par défaut."
+        ),
+    )
     order = models.PositiveIntegerField(_("ordre"), default=0)
     is_active = models.BooleanField(_("affiché sur le portail"), default=True)
 
     class Meta:
         verbose_name = _("site partenaire")
         verbose_name_plural = _("sites partenaires")
-        ordering = ["group", "order", "name"]
+        ordering = ["column", "order", "name"]
 
     def __str__(self):
         return f"{self.acronym} — {self.name}" if self.acronym else self.name
+
+    @property
+    def logo_src(self):
+        """Where the tile's logo comes from.
+
+        A file uploaded through the administration wins, because it is served
+        from the Ministry's own domain; otherwise the address supplied by the
+        structure is used, and failing both the tile falls back to the acronym.
+        """
+        if self.logo:
+            return self.logo.url
+        return self.logo_url
+
+    @property
+    def tint_rgba(self):
+        """The banner colour as the portal draws it: the tint at 90% opacity."""
+        if not self.tint:
+            return ""
+        red, green, blue = (int(self.tint[i : i + 2], 16) for i in (1, 3, 5))
+        return f"rgba({red}, {green}, {blue}, 0.9)"
 
     #: Logos shipped with the project, keyed by acronym. `seed_data` attaches
     #: them so a fresh install shows the real marks; anything uploaded through

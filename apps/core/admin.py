@@ -35,8 +35,13 @@ class TimelineAdmin(admin.ModelAdmin):
 
 @admin.register(PartnerSite)
 class PartnerSiteAdmin(admin.ModelAdmin):
-    list_display = ("name", "acronym", "group", "url", "order", "is_active")
-    list_filter = ("group", "is_active")
-    list_editable = ("order", "is_active")
+    list_display = ("name", "acronym", "column", "order", "tint", "has_local_logo", "is_active")
+    list_filter = ("column", "group", "is_active")
+    list_editable = ("column", "order", "is_active")
     search_fields = ("name", "acronym")
-    ordering = ("group", "order")
+    ordering = ("column", "order")
+
+    @admin.display(boolean=True, description="logo hébergé ici")
+    def has_local_logo(self, obj):
+        """False means the tile still loads its logo from the supplied address."""
+        return bool(obj.logo)

@@ -55,14 +55,30 @@ en ligne*. Les entrées actives sont réparties à parts égales entre les deux
 colonnes, dans l'ordre des rubriques. Une entrée sans adresse de site reste
 affichée, sans lien, avec la mention « Site en cours de publication ».
 
-Chaque entrée peut recevoir un logo téléversé depuis l'administration ; à
-défaut, la vignette affiche le sigle sur le même fond tricolore. Les quelques
-logos disponibles librement sont versionnés dans `static/img/partners/` et
-attachés par `seed_data` — aucune image, aucune police et aucun script n'est
-jamais chargé depuis un tiers : le champ de particules et les portes coulissantes
-sont écrits à la main dans `static/js/portal.js`, sans particles.js, jQuery ni
-GSAP. Le tout reste une amélioration progressive : sans JavaScript, ou lorsque le
-visiteur demande un mouvement réduit, les deux boutons restent de simples liens.
+Chaque entrée porte sa **colonne** (gauche ou droite), son **rang** dans
+celle-ci et la **couleur du bandeau** qui affiche le nom au survol de la
+vignette — la place et la teinte de chaque vignette relèvent donc de
+l'administration, pas du gabarit.
+
+Pour le logo, l'ordre est : le fichier téléversé depuis l'administration
+d'abord, puis l'**adresse du logo** fournie par la structure, et à défaut le
+sigle sur le fond tricolore. Si l'adresse fournie cesse de répondre, la vignette
+bascule elle aussi sur le sigle plutôt que d'afficher une image cassée.
+
+Pour ne plus dépendre des serveurs des structures, la commande suivante
+télécharge les logos une fois et les héberge sur le domaine du Ministère :
+
+```bash
+python manage.py fetch_partner_logos            # récupère ce qui manque
+python manage.py fetch_partner_logos --dry-run  # liste sans rien modifier
+python manage.py fetch_partner_logos --force    # retélécharge tout
+```
+
+Hormis ces logos, aucune police et aucun script n'est jamais chargé depuis un
+tiers : le champ de particules et les portes coulissantes sont écrits à la main
+dans `static/js/portal.js`, sans particles.js, jQuery ni GSAP. Le tout reste une
+amélioration progressive : sans JavaScript, ou lorsque le visiteur demande un
+mouvement réduit, les deux boutons restent de simples liens.
 
 ### Tests
 

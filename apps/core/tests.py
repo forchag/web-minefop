@@ -120,23 +120,32 @@ class EntryPortalTests(TestCase):
             name="Présidence de la République du Cameroun",
             acronym="PRC",
             group=PartnerSite.Group.INSTITUTION,
+            column=PartnerSite.Column.LEFT,
+            order=1,
+            tint="#27ae60",
             url="https://www.prc.cm",
         )
-        cls.service = PartnerSite.objects.create(
-            name="Inserjeune — suivi post-formation",
-            acronym="Inserjeune",
-            group=PartnerSite.Group.SERVICE,
-            url="https://app.inserjeune.edu.cm",
+        cls.with_supplied_logo = PartnerSite.objects.create(
+            name="Fonds National de l'Emploi",
+            acronym="FNE",
+            group=PartnerSite.Group.PARTNER,
+            column=PartnerSite.Column.RIGHT,
+            order=1,
+            url="https://fnecm.org",
+            logo_url="https://fnecm.org/images/stories/lefne7questions/LogoFNEnu.png",
         )
         cls.unpublished = PartnerSite.objects.create(
             name="Projet Intégré d'Appui aux Acteurs du Secteur Informel",
             acronym="PIAASI",
             group=PartnerSite.Group.PARTNER,
+            column=PartnerSite.Column.RIGHT,
+            order=2,
         )
         cls.hidden = PartnerSite.objects.create(
             name="Structure retirée du portail",
             acronym="OFF",
             group=PartnerSite.Group.PARTNER,
+            column=PartnerSite.Column.LEFT,
             url="https://example.cm",
             is_active=False,
         )
@@ -154,40 +163,67 @@ class EntryPortalTests(TestCase):
     def test_the_portal_lists_every_active_partner_site(self):
         response = self.client.get("/")
         self.assertContains(response, self.institution.url)
-        self.assertContains(response, self.service.url)
+        self.assertContains(response, self.with_supplied_logo.url)
         # A partner without a website is still listed, as a non-clickable tile.
         self.assertContains(response, "PIAASI")
         self.assertContains(response, "Site en cours de publication")
         self.assertNotContains(response, self.hidden.name)
 
-    def test_the_portal_splits_the_directory_into_two_balanced_columns(self):
-        """The design flanks the central card with a column on either side."""
+    def test_each_tile_is_placed_in_the_column_it_was_given(self):
+        """Which side a tile sits on is recorded per partner, not computed."""
         context = self.client.get("/").context
-        left = list(context["left_column"])
-        right = list(context["right_column"])
-        # Every active partner appears exactly once, inactive ones not at all.
+        self.assertEqual([p.acronym for p in context["left_column"]], ["PRC"])
         self.assertEqual(
-            sorted(p.pk for p in left + right),
-            sorted(
-                PartnerSite.objects.filter(is_active=True).values_list("pk", flat=True)
-            ),
+            [p.acronym for p in context["right_column"]], ["FNE", "PIAASI"]
         )
-        self.assertLessEqual(abs(len(left) - len(right)), 1)
-        self.assertNotIn(self.hidden, left + right)
+        # The hidden entry has a column too, and still stays off the portal.
+        self.assertNotIn(self.hidden, list(context["left_column"]))
 
-    def test_a_partner_tile_falls_back_to_its_acronym_without_a_logo(self):
+    def test_a_tile_carries_the_banner_colour_it_was_given(self):
+        self.assertEqual(self.institution.tint_rgba, "rgba(39, 174, 96, 0.9)")
+        self.assertEqual(self.unpublished.tint_rgba, "")
+        self.assertContains(
+            self.client.get("/"), 'style="background: rgba(39, 174, 96, 0.9)"'
+        )
+
+    def test_a_tile_prefers_a_hosted_logo_then_the_supplied_address(self):
+        self.assertEqual(
+            self.with_supplied_logo.logo_src, self.with_supplied_logo.logo_url
+        )
+        self.assertContains(self.client.get("/"), self.with_supplied_logo.logo_url)
+
+    def test_a_partner_tile_falls_back_to_its_acronym_without_any_logo(self):
         response = self.client.get("/")
         self.assertContains(response, '<span class="bloc-acronym" aria-hidden="true">PRC</span>')
 
-    def test_the_portal_loads_no_asset_from_a_third_party(self):
-        """Scripts, stylesheets and images must all come from this domain."""
+    def test_the_portal_loads_its_code_and_type_from_this_domain(self):
+        """Scripts, stylesheets, fonts and icons must never come from a third party.
+
+        Partner logos are the one exception: a tile may serve the address the
+        structure supplied until that image is mirrored here with
+        "manage.py fetch_partner_logos".
+        """
         body = self.client.get("/").content.decode()
-        assets = re.findall(r'\ssrc="([^"]+)"', body)
-        assets += re.findall(r'<link[^>]+rel="(?:stylesheet|icon|apple-touch-icon|preload)"[^>]+href="([^"]+)"', body)
+        assets = re.findall(r'<script[^>]+src="([^"]+)"', body)
+        assets += re.findall(
+            r'<link[^>]+rel="(?:stylesheet|icon|apple-touch-icon|preload)"[^>]+href="([^"]+)"',
+            body,
+        )
         self.assertTrue(assets)
         for asset in assets:
             with self.subTest(asset=asset):
                 self.assertTrue(asset.startswith("/"), f"{asset} is not served from this domain")
+
+    def test_no_asset_is_loaded_over_plain_http(self):
+        """An http:// asset is blocked as mixed content once the site is on https."""
+        body = self.client.get("/").content.decode()
+        for asset in re.findall(r'\ssrc="([^"]+)"', body):
+            with self.subTest(asset=asset):
+                self.assertFalse(asset.startswith("http://"), f"{asset} would be blocked as mixed content")
+
+    def test_a_supplied_logo_address_is_only_used_when_nothing_is_hosted_here(self):
+        self.with_supplied_logo.logo = "partners/fne.png"
+        self.assertEqual(self.with_supplied_logo.logo_src, self.with_supplied_logo.logo.url)
 
 
 class DocumentDownloadTests(TestCase):

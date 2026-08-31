@@ -1,20 +1,22 @@
 {% comment %}
-One institution tile in the entry portal's two side columns. Logos are only
-ever served from this domain: when the Ministry has not supplied one, the tile
-shows the acronym on the same tricolour ground, so the grid stays even and the
-page still makes no third-party request.
+One institution tile in the entry portal's two side columns. The logo comes
+from the file uploaded through the administration when there is one — served
+from this domain — and otherwise from the address the structure supplied. With
+neither — or if the supplied address stops answering — the tile shows the
+acronym on the same tricolour ground, so the grid stays even either way.
 
 A partner whose website is not published yet keeps its tile — the overlay says
 so instead of offering a dead link.
 {% endcomment %}
 <div class="bloc">
   {% if partner.url %}<a href="{{ partner.url }}" target="_blank" rel="noopener">{% endif %}
-    {% if partner.logo %}
-      <img src="{{ partner.logo.url }}" alt="" loading="lazy">
+    {% if partner.logo_src %}
+      <img src="{{ partner.logo_src }}" alt="" loading="lazy"
+           data-acronym="{{ partner.acronym|default:partner.name }}">
     {% else %}
       <span class="bloc-acronym" aria-hidden="true">{{ partner.acronym|default:partner.name }}</span>
     {% endif %}
-    <div class="title">
+    <div class="title"{% if partner.tint_rgba %} style="background: {{ partner.tint_rgba }}"{% endif %}>
       <h2>{{ partner.name }}</h2>
       <span>{% if partner.url %}Consulter le site{% else %}Site en cours de publication{% endif %}</span>
     </div>
