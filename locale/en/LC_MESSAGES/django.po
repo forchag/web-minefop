@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-31 09:43+0100\n"
+"POT-Creation-Date: 2026-08-31 23:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,100 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "aperçu"
+msgstr "preview"
+
+msgid "Contenu"
+msgstr "Content"
+
+msgid "Publication"
+msgstr "Publication"
+
+msgid "Traçabilité"
+msgstr "Traceability"
+
+msgid "couverture"
+msgstr "cover"
+
+msgid "documents"
+msgstr "documents"
+
+msgid "titre"
+msgstr "title"
+
+msgid "slug"
+msgstr "slug"
+
+msgid "auteur"
+msgstr "author"
+
+msgid "Nom affiché publiquement comme auteur de l'article (personne, service ou cellule de communication)."
+msgstr "Name shown publicly as the author of the article (a person, department or communication unit)."
+
+msgid "chapô"
+msgstr "summary"
+
+msgid "Court résumé affiché dans la liste des articles."
+msgstr "Short summary shown in the article list."
+
+msgid "contenu"
+msgstr "content"
+
+msgid "image de couverture"
+msgstr "cover image"
+
+msgid "Image mise en avant en tête d'article et dans la liste du blog."
+msgstr "Featured image shown at the top of the article and in the blog list."
+
+msgid "date de publication"
+msgstr "publication date"
+
+msgid "publié"
+msgstr "published"
+
+msgid "créé par"
+msgstr "created by"
+
+msgid "Compte de l'espace d'administration ayant créé l'article — distinct du nom d'auteur affiché publiquement."
+msgstr "Admin account that created the article — distinct from the publicly displayed author name."
+
+msgid "créé le"
+msgstr "created on"
+
+msgid "modifié le"
+msgstr "updated on"
+
+msgid "article de blog"
+msgstr "blog article"
+
+msgid "articles de blog"
+msgstr "blog articles"
+
+msgid "article"
+msgstr "article"
+
+msgid "document"
+msgstr "document"
+
+msgid "titre du document"
+msgstr "document title"
+
+msgid "Affiché à la place du nom de fichier ; laisser vide pour l'utiliser tel quel."
+msgstr "Shown instead of the file name; leave empty to use it as is."
+
+msgid "ordre"
+msgstr "order"
+
+msgid "document joint"
+msgstr "attached document"
+
+msgid "documents joints"
+msgstr "attached documents"
+
+#, python-format
+msgid "Ce fichier (%(size)s) dépasse la taille maximale autorisée de %(max)s."
+msgstr "This file (%(size)s) exceeds the maximum allowed size of %(max)s."
 
 msgid "Votre nom"
 msgstr "Your name"
@@ -99,9 +193,6 @@ msgstr "contact messages"
 msgid "Votre message a bien été envoyé. Nous vous répondrons dans les meilleurs délais."
 msgstr "Your message has been sent. We will get back to you as soon as possible."
 
-msgid "titre"
-msgstr "title"
-
 msgid "sous-titre"
 msgstr "subtitle"
 
@@ -113,9 +204,6 @@ msgstr "link label"
 
 msgid "URL du lien"
 msgstr "link URL"
-
-msgid "ordre"
-msgstr "order"
 
 msgid "actif"
 msgstr "active"
@@ -180,6 +268,12 @@ msgstr "Bodies, projects and partners"
 msgid "Services et plateformes en ligne"
 msgstr "Online services and platforms"
 
+msgid "Colonne de gauche"
+msgstr "Left column"
+
+msgid "Colonne de droite"
+msgstr "Right column"
+
 msgid "nom"
 msgstr "name"
 
@@ -201,6 +295,27 @@ msgstr "Leave empty for a body whose website is not published yet."
 msgid "logo"
 msgstr "logo"
 
+msgid "adresse du logo"
+msgstr "logo address"
+
+msgid "Adresse du logo fourni par la structure, utilisée tant qu'aucun fichier n'a été téléversé ci-dessus. La commande « fetch_partner_logos » récupère ces images et les héberge sur le domaine du Ministère."
+msgstr "Logo address supplied by the body, used as long as no file has been uploaded above. The « fetch_partner_logos » command fetches these images and hosts them on the Ministry's domain."
+
+msgid "colonne"
+msgstr "column"
+
+msgid "Côté du portail où la vignette est placée."
+msgstr "Side of the portal where the tile is placed."
+
+msgid "couleur du bandeau"
+msgstr "banner colour"
+
+msgid "Indiquez une couleur hexadécimale, par exemple #27ae60."
+msgstr "Enter a hexadecimal colour, e.g. #27ae60."
+
+msgid "Couleur du bandeau qui porte le nom de la structure, au survol de la vignette. Ex : #27ae60. Laisser vide pour le fond sombre par défaut."
+msgstr "Colour of the banner bearing the body's name, shown when hovering the tile. E.g.: #27ae60. Leave empty for the default dark background."
+
 msgid "affiché sur le portail"
 msgstr "shown on the portal"
 
@@ -209,9 +324,6 @@ msgstr "partner website"
 
 msgid "sites partenaires"
 msgstr "partner websites"
-
-msgid "slug"
-msgstr "slug"
 
 msgid "catégorie de document"
 msgstr "document category"
@@ -240,35 +352,11 @@ msgstr "Use this when the document has not been uploaded yet and is still hosted
 msgid "date de signature/publication"
 msgstr "signature/publication date"
 
-msgid "document"
-msgstr "document"
-
-msgid "documents"
-msgstr "documents"
-
 msgid "catégorie d'actualité"
 msgstr "news category"
 
 msgid "catégories d'actualités"
 msgstr "news categories"
-
-msgid "chapô"
-msgstr "summary"
-
-msgid "contenu"
-msgstr "content"
-
-msgid "image de couverture"
-msgstr "cover image"
-
-msgid "date de publication"
-msgstr "publication date"
-
-msgid "publié"
-msgstr "published"
-
-msgid "article"
-msgstr "article"
 
 msgid "actualités"
 msgstr "news"
@@ -440,6 +528,48 @@ msgstr "Skip to main content"
 
 msgid "Fermer"
 msgstr "Close"
+
+msgid "Fil d’Ariane"
+msgstr "Breadcrumb"
+
+msgid "Accueil"
+msgstr "Home"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Documents joints"
+msgstr "Attached documents"
+
+msgid "Télécharger"
+msgstr "Download"
+
+msgid "Retour au blog"
+msgstr "Back to blog"
+
+msgid "Imprimer"
+msgstr "Print"
+
+msgid "À lire aussi"
+msgstr "Also read"
+
+msgid "Rester informé"
+msgstr "Stay informed"
+
+msgid "Retrouvez l'ensemble des communiqués et des textes publiés par le Ministère."
+msgstr "Browse all the press releases and texts published by the Ministry."
+
+msgid "Actualités"
+msgstr "News"
+
+msgid "Regards, entretiens et prises de parole du Ministère de l'Emploi et de la Formation Professionnelle."
+msgstr "Insights, interviews and statements from the Ministry of Employment and Vocational Training."
+
+msgid "Regards, entretiens et prises de parole du Ministère."
+msgstr "Insights, interviews and statements from the Ministry."
+
+msgid "Aucun article de blog n'est publié pour le moment."
+msgstr "No blog article is published at the moment."
 
 msgid "Nous contacter"
 msgstr "Contact us"
@@ -721,9 +851,6 @@ msgstr "Read the full message"
 msgid "Communication du Ministère"
 msgstr "Ministry communications"
 
-msgid "Actualités"
-msgstr "News"
-
 msgid "Toutes les actualités"
 msgstr "All news"
 
@@ -735,9 +862,6 @@ msgstr "Latest published texts"
 
 msgid "Tous les textes"
 msgstr "All texts"
-
-msgid "Télécharger"
-msgstr "Download"
 
 msgid "Accès rapides"
 msgstr "Quick links"
@@ -994,6 +1118,9 @@ msgstr "The national training system"
 msgid "Annuaire des centres de formation"
 msgstr "Training centre directory"
 
+msgid "Tous les articles"
+msgstr "All articles"
+
 msgid "Textes & documents"
 msgstr "Texts & documents"
 
@@ -1165,26 +1292,8 @@ msgstr "A technical error has occurred"
 msgid "Nos services sont momentanément indisponibles. Les équipes techniques du Ministère ont été informées. Merci de réessayer dans quelques instants."
 msgstr "Our services are temporarily unavailable. The Ministry's technical teams have been notified. Please try again in a few moments."
 
-msgid "Fil d’Ariane"
-msgstr "Breadcrumb"
-
-msgid "Accueil"
-msgstr "Home"
-
 msgid "Retour aux actualités"
 msgstr "Back to news"
-
-msgid "Imprimer"
-msgstr "Print"
-
-msgid "À lire aussi"
-msgstr "Also read"
-
-msgid "Rester informé"
-msgstr "Stay informed"
-
-msgid "Retrouvez l'ensemble des communiqués et des textes publiés par le Ministère."
-msgstr "Browse all the press releases and texts published by the Ministry."
 
 msgid "Communiqués, événements et informations officielles du Ministère de l'Emploi et de la Formation Professionnelle."
 msgstr "Press releases, events and official information from the Ministry of Employment and Vocational Training."
@@ -1446,9 +1555,6 @@ msgstr "No centre matches your search criteria."
 
 #~ msgid "Cadre légal & dispositif national"
 #~ msgstr "Legal framework & national system"
-
-#~ msgid "Documents"
-#~ msgstr "Documents"
 
 #~ msgid "Loi n° 2018/010 encadrant la FP"
 #~ msgstr "Law n° 2018/010 governing vocational training"

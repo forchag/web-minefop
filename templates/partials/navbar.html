@@ -45,6 +45,11 @@
              href="{% url 'news:list' %}">{% trans "Actualités" %}</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link {% if namespace == 'blog' %}active{% endif %}"
+             {% if namespace == 'blog' %}aria-current="page"{% endif %}
+             href="{% url 'blog:list' %}">{% trans "Blog" %}</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link {% if namespace == 'documents' %}active{% endif %}"
              {% if namespace == 'documents' %}aria-current="page"{% endif %}
              href="{% url 'documents:list' %}">{% trans "Textes & documents" %}</a>

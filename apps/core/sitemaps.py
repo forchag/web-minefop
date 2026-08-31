@@ -25,6 +25,7 @@ class StaticViewSitemap(Sitemap):
             ("structures:training_center_list", 0.9),
             ("documents:list", 0.9),
             ("news:list", 0.9),
+            ("blog:list", 0.7),
             ("contact:contact", 0.7),
             ("core:legal_notice", 0.3),
             ("core:accessibility", 0.3),
@@ -52,6 +53,20 @@ class ArticleSitemap(Sitemap):
         return obj.published_at
 
 
+class BlogPostSitemap(Sitemap):
+    changefreq = "weekly"
+    priority = 0.6
+    protocol = "https"
+
+    def items(self):
+        from apps.blog.models import BlogPost
+
+        return BlogPost.objects.filter(is_published=True)
+
+    def lastmod(self, obj):
+        return obj.updated_at
+
+
 class TrainingCenterSitemap(Sitemap):
     changefreq = "monthly"
     priority = 0.6
@@ -66,5 +81,6 @@ class TrainingCenterSitemap(Sitemap):
 SITEMAPS = {
     "pages": StaticViewSitemap,
     "actualites": ArticleSitemap,
+    "blog": BlogPostSitemap,
     "centres": TrainingCenterSitemap,
 }
