@@ -72,6 +72,9 @@ Options:
 
 Environment:
   MINEFOP_SERVICE  systemd unit to reload at the end, e.g. "minefop.service".
+  MINEFOP_VENV     Path to a virtualenv kept outside the checkout. Otherwise the
+                   script uses one already active in your shell, then looks for
+                   venv/, .venv/ or env/ inside the repository.
   PYTHON           Python interpreter to use when no virtualenv is found.
 EOF
 }
@@ -104,30 +107,51 @@ cd "$REPO_ROOT"
 
 # ------------------------------------------------------- python environment --
 step "Python environment"
+
+# Three ways to find the virtualenv, in order of authority:
+#   1. MINEFOP_VENV, for an environment kept outside the checkout;
+#   2. VIRTUAL_ENV, when one is already active in the calling shell;
+#   3. the usual directory names inside the repository.
 VENV=""
-for candidate in venv .venv env; do
-  if [[ -x "$REPO_ROOT/$candidate/bin/python" ]]; then
-    VENV="$REPO_ROOT/$candidate"
-    break
-  fi
-done
+VENV_SOURCE=""
+
+if [[ -n "${MINEFOP_VENV:-}" ]]; then
+  [[ -x "$MINEFOP_VENV/bin/python" ]] || die "MINEFOP_VENV=$MINEFOP_VENV has no bin/python"
+  VENV="$MINEFOP_VENV"
+  VENV_SOURCE="MINEFOP_VENV"
+elif [[ -n "${VIRTUAL_ENV:-}" && -x "${VIRTUAL_ENV}/bin/python" ]]; then
+  VENV="$VIRTUAL_ENV"
+  VENV_SOURCE="already active"
+else
+  for candidate in venv .venv env; do
+    if [[ -x "$REPO_ROOT/$candidate/bin/python" ]]; then
+      VENV="$REPO_ROOT/$candidate"
+      VENV_SOURCE="found in the repository"
+      break
+    fi
+  done
+fi
 
 if [[ -n "$VENV" ]]; then
-  # Activating puts the venv's python and pip first on PATH for the whole run.
+  # Activating puts the venv's python and pip first on PATH for the whole run,
+  # which matters when this script runs from cron or a deploy hook with no
+  # shell profile behind it.
   # shellcheck disable=SC1091
   source "$VENV/bin/activate"
-  ok "using virtualenv $VENV"
-  PY="python"
+  PY="$VENV/bin/python"
+  ok "virtualenv $VENV ($VENV_SOURCE) — $("$PY" -V 2>&1)"
 else
   command -v "$PYTHON" >/dev/null 2>&1 || die "$PYTHON not found — install Python or set PYTHON="
   PY="$PYTHON"
-  warn "no virtualenv found (looked for venv/, .venv/, env/) — using $($PY -V 2>&1)"
-  warn "create one with: $PYTHON -m venv venv && source venv/bin/activate"
+  warn "no virtualenv found — using the system $($PY -V 2>&1)"
+  warn "looked at: MINEFOP_VENV, an active VIRTUAL_ENV, then venv/ .venv/ env/ in $REPO_ROOT"
+  warn "create one with: $PYTHON -m venv venv && ./venv/bin/pip install -r requirements.txt"
 fi
 
 if [[ ! -f "$REPO_ROOT/.env" ]]; then
-  warn "no .env file — Django will fall back to its defaults (DEBUG on, dev SECRET_KEY)."
-  warn "on a real deployment, create one next to manage.py before continuing."
+  warn "no .env file next to manage.py — Django falls back to DEBUG=True and its"
+  warn "insecure development SECRET_KEY. On a public server that leaks settings and"
+  warn "tracebacks to visitors: create a .env before serving this to the public."
 fi
 
 # --------------------------------------------------------------- pull code --
@@ -203,12 +227,10 @@ fi
 # -------------------------------------------------------------- migrations --
 step "Database migrations"
 if (( ! DRY_RUN )); then
+  # Only worth announcing when there is something to apply — "migrate" reports
+  # the no-op case itself.
   pending="$($PY manage.py showmigrations --plan | grep -c '^\[ \]' || true)"
-  if [[ "$pending" == "0" ]]; then
-    ok "no migrations to apply"
-  else
-    info "$pending migration(s) to apply"
-  fi
+  [[ "$pending" == "0" ]] || info "$pending migration(s) to apply"
 fi
 run $PY manage.py migrate --noinput
 did "database up to date"

@@ -96,6 +96,17 @@ Options utiles : `--no-pull` (reconstruire sans récupérer de code), `--no-deps
 (injecter le contenu initial, sans jamais écraser l'existant). `./scripts/update.sh --help`
 liste l'ensemble.
 
+Le script retrouve l'environnement virtuel dans cet ordre : la variable
+`MINEFOP_VENV` (pour un environnement situé hors du dépôt), l'environnement déjà
+activé dans le shell appelant (`VIRTUAL_ENV`), puis `venv/`, `.venv/` ou `env/`
+dans le dépôt. À défaut il utilise le Python du système et le signale — utile à
+savoir lorsque le script est lancé depuis cron ou un hook de déploiement, sans
+profil de shell derrière lui.
+
+```bash
+MINEFOP_VENV=/opt/minefop/venv ./scripts/update.sh
+```
+
 ## Charte et identité de l'État
 
 Les armoiries de la République et le logotype MINEFOP sont dans `static/img/` :
