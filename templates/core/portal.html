@@ -11,150 +11,269 @@ asset it loads is served from this domain.
 {% endcomment %}
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MINEFOP — Portail officiel / Official portal | République du Cameroun</title>
-  <meta name="description" content="Portail d'entrée du Ministère de l'Emploi et de la Formation Professionnelle du Cameroun : accès aux versions française et anglaise du site, aux institutions de la République, aux organismes partenaires et aux services en ligne.">
-  <meta name="theme-color" content="#004a1f">
-  <link rel="canonical" href="{{ request.build_absolute_uri }}">
-  <link rel="alternate" hreflang="fr" href="{{ request.scheme }}://{{ request.get_host }}/fr/">
-  <link rel="alternate" hreflang="en" href="{{ request.scheme }}://{{ request.get_host }}/en/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINEFOP — Portail officiel / Official portal | République du Cameroun</title>
+    <meta name="description" content="Portail d'entrée du Ministère de l'Emploi et de la Formation Professionnelle du Cameroun : accès aux versions française et anglaise du site, aux institutions de la République, aux organismes partenaires et aux services en ligne.">
+    <meta name="theme-color" content="#004a1f">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <link rel="alternate" hreflang="fr" href="{{ request.scheme }}://{{ request.get_host }}/fr/">
+    <link rel="alternate" hreflang="en" href="{{ request.scheme }}://{{ request.get_host }}/en/">
 
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="MINEFOP — République du Cameroun">
-  <meta property="og:title" content="MINEFOP — Portail officiel / Official portal">
-  <meta property="og:description" content="Ministère de l'Emploi et de la Formation Professionnelle — République du Cameroun.">
-  <meta property="og:url" content="{{ request.build_absolute_uri }}">
-  <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/minefop-logo.png' %}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MINEFOP — République du Cameroun">
+    <meta property="og:title" content="MINEFOP — Portail officiel / Official portal">
+    <meta property="og:description" content="Ministère de l'Emploi et de la Formation Professionnelle — République du Cameroun.">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/minefop-logo.png' %}">
 
-  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32.png' %}">
-  <link rel="apple-touch-icon" href="{% static 'img/favicon-180.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/favicon-180.png' %}">
 
-  <link rel="preload" as="font" type="font/woff2" href="{% static 'fonts/poppins-700-latin.woff2' %}" crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href="{% static 'fonts/source-sans-3-latin.woff2' %}" crossorigin>
-  <link rel="stylesheet" href="{% static 'css/portal-fonts.css' %}">
-  <link rel="stylesheet" href="{% static 'vendor/bootstrap-icons/bootstrap-icons.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/portal.css' %}">
+    <link rel="preload" as="font" type="font/woff2" href="{% static 'fonts/poppins-700-latin.woff2' %}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{% static 'fonts/source-sans-3-latin.woff2' %}" crossorigin>
+    <link rel="stylesheet" href="{% static 'css/portal-fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-icons/bootstrap-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/portal.css' %}">
 </head>
 <body>
-  <a class="skip-link" href="#portal-doors">Aller au contenu principal / Skip to main content</a>
+    <a class="skip-link" href="#portal-doors">Aller au contenu principal / Skip to main content</a>
 
-  <div class="portal-container">
-    <div class="year-tag">{% now "Y" %}</div>
+    <div class="portal-container">
+        <div class="year-tag">{% now "Y" %}</div>
 
-    <header class="portal-header">
-      <h1>MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE</h1>
-      <p>PROGRAMME JEME (JEUNE, MÉTIER, EMPLOI) — PORTAIL OFFICIEL</p>
-      <p class="slogan">One Youth – One Trade – One Job</p>
-    </header>
+        <header class="portal-header">
+            <h1>MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE</h1>
+            <p>PROGRAMME JEME (JEUNE, MÉTIER, EMPLOI) — PORTAIL OFFICIEL</p>
+            <p class="slogan">One Youth – One Trade – One Job</p>
+        </header>
 
-    <div class="portal-content">
-      <canvas id="particles-js" aria-hidden="true"></canvas>
-      <div class="pattern-overlay"></div>
-
-      <div class="row">
-        {% comment %} Left column — institutions {% endcomment %}
-        <div class="col col-sm-2">
-          <ul class="institution-grid">
-            {% for partner in left_column %}
-            <li>{% include "core/_partner_card.html" %}</li>
-            {% endfor %}
-          </ul>
-        </div>
-
-        {% comment %} Centre column — the doors into the site {% endcomment %}
-        <div class="col col-sm-8" id="portal-doors">
-          <div class="portail">
+        <div class="portal-content">
+            <canvas id="particles-js" aria-hidden="true"></canvas>
             <div class="pattern-overlay"></div>
 
-            <div class="title-minjec">
-              <div class="logo">
-                <img src="{% static 'img/minefop-emblem.png' %}" width="90" height="101"
-                     alt="Armoiries de la République du Cameroun">
-              </div>
-              {% comment %}
-              The page's one <h1> is in the masthead above; the identity block
-              repeats it for the design, so these lines carry the same styling
-              through classes instead of stacking further headings.
-              {% endcomment %}
-              <div class="title-minjec-text">
-                <p class="tm-republic">République du Cameroun</p>
-                <p class="tm-name">MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE</p>
-                <p class="tm-programme">PROGRAMME JEME (JEUNE, MÉTIER, EMPLOI)</p>
-                <p class="tm-motto">One Youth – One Trade – One Job</p>
-                <p class="tm-republic" lang="en">Republic of Cameroon</p>
-                <p class="tm-name" lang="en">MINISTRY OF EMPLOYMENT AND VOCATIONAL TRAINING</p>
-                <p class="tm-programme" lang="en">JEME PROGRAM</p>
-              </div>
-              <div class="logo">
-                <img src="{% static 'img/minefop-logo.png' %}" width="70" height="90"
-                     alt="Logo du MINEFOP">
-              </div>
-            </div>
+            <div class="row">
+                {% comment %} Left column — institutions of the Republic {% endcomment %}
+                <div class="col col-sm-2">
+                    <div class="institution-grid">
+                        <!-- PRÉSIDENCE DE LA RÉPUBLIQUE -->
+                        <div class="bloc">
+                            <a target="_blank" href="https://www.prc.cm" rel="noopener noreferrer">
+                                <img src="https://www.minjec.gov.cm/portail/images/bloc/prc.png" alt="PRESIDENCE DE LA REPUBLIQUE">
+                                <div class="title" style="background: rgba(39, 174, 96, 0.9)">
+                                    <h2>PRÉSIDENCE DE LA RÉPUBLIQUE</h2>
+                                    <span>Consulter le site</span>
+                                </div>
+                            </a>
+                        </div>
 
-            <div class="after-title">
-              <div class="button-group">
-                <a class="btn-minefop" href="/fr/" data-door>
-                  <i class="bi bi-door-open" aria-hidden="true"></i>ACCÉDER AU PORTAIL
-                </a>
-                <a class="btn-minefop" href="/en/" data-door lang="en">
-                  <i class="bi bi-door-open" aria-hidden="true"></i>ACCESS THE PORTAL
-                </a>
-              </div>
-            </div>
+                        <!-- Services du PREMIER MINISTRE -->
+                        <div class="bloc">
+                            <a target="_blank" href="https://www.spm.gov.cm" rel="noopener noreferrer">
+                                <img src="https://www.minjec.gov.cm/portail/images/bloc/spm.jpg" alt="Services du PREMIER MINISTRE">
+                                <div class="title" style="background: rgba(231, 76, 60, 0.9)">
+                                    <h2>Services du PREMIER MINISTRE</h2>
+                                    <span>Consulter le site</span>
+                                </div>
+                            </a>
+                        </div>
 
-            <div class="but-portail">
-              <p>Portail Web du Ministère de l'Emploi et de la Formation Professionnelle — Emploi Jeunes</p>
-              <p>******</p>
-              <p lang="en">Web portal of the Ministry of Employment and Vocational Training — Youth Jobs</p>
-            </div>
+                        <!-- MINJEC -->
+                        <div class="bloc">
+                            <a target="_blank" href="https://minjec.gov.cm" rel="noopener noreferrer">
+                                <img src="https://minjec.gov.cm/site/wp-content/uploads/2022/10/logo.png" alt="MINJEC">
+                                <div class="title" style="background: rgba(231, 76, 60, 0.9)">
+                                    <h2>MINJEC</h2>
+                                    <span>Consulter le site</span>
+                                </div>
+                            </a>
+                        </div>
 
-            <div class="security-badge">
-              <span>
-                <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
-                Connexion sécurisée · Secure connection
-              </span>
+                        <!-- OBSERVATOIRE NATIONALE DE LA JEUNESSE -->
+                        <div class="bloc">
+                            <a target="_blank" href="https://www.onjcameroun.cm" rel="noopener noreferrer">
+                                <img src="https://www.minjec.gov.cm/portail/images/bloc/onj.png" alt="OBSERVATOIRE NATIONALE DE LA JEUNESSE">
+                                <div class="title" style="background: rgba(243, 156, 18, 0.9)">
+                                    <h2>OBSERVATOIRE NATIONALE DE LA JEUNESSE</h2>
+                                    <span>Consulter le site</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- CONSEIL NATIONAL DE LA JEUNESSE -->
+                        <div class="bloc">
+                            <a target="_blank" href="https://www.cnjcnyc.cm" rel="noopener noreferrer">
+                                <img src="https://raw.githubusercontent.com/forchag/SOME-PICS/refs/heads/main/new.jpeg" alt="CONSEIL NATIONAL DE LA JEUNESSE">
+                                <div class="title" style="background: rgba(52, 152, 219, 0.9)">
+                                    <h2>CONSEIL NATIONAL DE LA JEUNESSE</h2>
+                                    <span>Consulter le site</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- CNJCJOBHUB -->
+                        <div class="bloc">
+                            <a target="_blank" href="https://www.cnjcjobhub.cm" rel="noopener noreferrer">
+                                <img src="https://raw.githubusercontent.com/forchag/SOME-PICS/refs/heads/main/cnjcnycjoblogo.png" alt="CNJCJOBHUB">
+                                <div class="title" style="background: rgba(52, 152, 219, 0.9)">
+                                    <h2>CNJCJOBHUB</h2>
+                                    <span>Consulter le site</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %} Centre column — the doors into the site {% endcomment %}
+                <div class="col col-sm-8" id="portal-doors">
+                    <div class="portail">
+                        <div class="pattern-overlay"></div>
+
+                        <div class="title-minjec">
+                            <div class="logo">
+                                <img src="{% static 'img/minefop-emblem.png' %}" width="90" height="101"
+                                alt="Armoiries de la République du Cameroun">
+                            </div>
+                            {% comment %}
+                            The page's one <h1> is in the masthead above; the identity block
+                            repeats it for the design, so these lines carry the same styling
+                            through classes instead of stacking further headings.
+                            {% endcomment %}
+                            <div class="title-minjec-text">
+                                <p class="tm-republic">République du Cameroun</p>
+                                <p class="tm-name">MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE</p>
+                                <p class="tm-programme">PROGRAMME JEME (JEUNE, MÉTIER, EMPLOI)</p>
+                                <p class="tm-motto">One Youth – One Trade – One Job</p>
+                                <p class="tm-republic" lang="en">Republic of Cameroon</p>
+                                <p class="tm-name" lang="en">MINISTRY OF EMPLOYMENT AND VOCATIONAL TRAINING</p>
+                                <p class="tm-programme" lang="en">JEME PROGRAM</p>
+                            </div>
+                            <div class="logo">
+                                <img src="{% static 'img/minefop-logo.png' %}" width="70" height="90"
+                                alt="Logo du MINEFOP">
+                            </div>
+                        </div>
+
+                        <div class="after-title">
+                            <div class="button-group">
+                                <a class="btn-minefop" href="/fr/" data-door>
+                                    <i class="bi bi-door-open" aria-hidden="true"></i>ACCÉDER AU PORTAIL
+                                </a>
+                                <a class="btn-minefop" href="/en/" data-door lang="en">
+                                    <i class="bi bi-door-open" aria-hidden="true"></i>ACCESS THE PORTAL
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="but-portail">
+                            <p>Portail Web du Ministère de l'Emploi et de la Formation Professionnelle — Emploi Jeunes</p>
+                            <p>******</p>
+                            <p lang="en">Web portal of the Ministry of Employment and Vocational Training — Youth Jobs</p>
+                        </div>
+
+                        {% comment %} Security badge — image from index.html alongside the text version {% endcomment %}
+                        <div class="security-badge" style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+                            <span>
+                                <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
+                                Connexion sécurisée · Secure connection
+                            </span>
+                            <img src="https://www.positivessl.com/images/seals/positivessl_trust_seal_md_167x42.png"
+                            alt="SSL Secured"
+                            style="height: 42px; width: auto; transition: transform 0.3s ease;"
+                            onmouseover="this.style.transform='scale(1.05)'"
+                            onmouseout="this.style.transform='scale(1)'">
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %} Right column — bodies, programmes and online services {% endcomment %}
+                <div class="col col-sm-2">
+                    <div class="institution-grid">
+                        <!-- FONDS NATIONAL DE L'EMPLOI -->
+                        <div class="bloc">
+                            <a target="_blank" href="https://fnecm.org" rel="noopener noreferrer">
+                                <img src="https://fnecm.org/images/stories/lefne7questions/LogoFNEnu.png" alt="FONDS NATIONAL DE L'EMPLOI">
+                                <div class="title" style="background: rgba(22, 160, 133, 0.9)">
+                                    <h2>FONDS NATIONAL DE L'EMPLOI</h2>
+                                    <span>Consulter le site</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- ONEFOP -->
+                        <div class="bloc">
+                            <a target="_blank" href="https://onefop.cm" rel="noopener noreferrer">
+                                <img src="https://onefop.cm/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-07-at-07.43.13.jpeg" alt="ONEFOP">
+                                <div class="title" style="background: rgba(211, 84, 0, 0.9)">
+                                    <h2>ONEFOP</h2>
+                                    <span>Consulter le site</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- PIASSI -->
+                        <div class="bloc">
+                            <a target="_blank" href="#" rel="noopener noreferrer">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRdA0liNY2iPRS6czCI_QXUASXGhpUNWkm1wSlw2YE&s=10" alt="PIASSI">
+                                <div class="title" style="background: rgba(155, 89, 182, 0.9)">
+                                    <h2>PIASSI</h2>
+                                    <span>Consulter le site</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- CIOP -->
+                        <div class="bloc">
+                            <a href="/ciop/">
+                                <img src="http://www.orientation.cm/wp-content/uploads/2019/06/logo-cosup.png" alt="CIOP">
+                                <div class="title" style="background: rgba(52, 73, 94, 0.9)">
+                                    <h2>CIOP</h2>
+                                    <span>Consulter le site</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Centre National de Formation des Formateurs et de Développement des Programmes -->
+                        <div class="bloc">
+                            <a target="_blank" href="https://www.cnffdp.cm" rel="noopener noreferrer">
+                                <img src="https://raw.githubusercontent.com/forchag/SOME-PICS/refs/heads/main/Logo%20CNFFDP.png" alt="Centre National de Formation des Formateurs">
+                                <div class="title" style="background: rgba(52, 73, 94, 0.9)">
+                                    <h2>CNFFDP</h2>
+                                    <span>Consulter le site</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
 
-        {% comment %} Right column — bodies, programmes and online services {% endcomment %}
-        <div class="col col-sm-2">
-          <ul class="institution-grid">
-            {% for partner in right_column %}
-            <li>{% include "core/_partner_card.html" %}</li>
-            {% endfor %}
-          </ul>
+        <footer class="portal-footer">
+            <p>&copy; {% now "Y" %} MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE — PROJET YOUTH JOBS</p>
+            <ul>
+                <li><a href="/fr/">Site en français</a></li>
+                <li><a href="/en/" lang="en">English version</a></li>
+                <li><a href="/fr/contact/">Nous contacter</a></li>
+                <li><a href="/fr/mentions-legales/">Mentions légales</a></li>
+                <li><a href="/fr/accessibilite/">Accessibilité</a></li>
+            </ul>
+            <p>Tous droits réservés | All rights reserved</p>
+        </footer>
+    </div>
+
+    {% comment %} Elevator-style sliding door screen, shown while entering the site {% endcomment %}
+    <div class="door-wrapper" id="doorWrapper" aria-hidden="true">
+        <p class="door-opening-text">Accès au portail</p>
+        <div class="elevator-door-frame">
+            <div class="door-backdrop"></div>
+            <div class="portal-light"></div>
+            {% comment %}Transparent cut-out: this one sits on the dark door screen.{% endcomment %}
+            <img class="national-emblem" src="{% static 'img/minefop-emblem-transparent.png' %}" alt="">
+            <div class="door-panel door-left"><span class="door-handle left-handle"></span></div>
+            <div class="door-panel door-right"><span class="door-handle right-handle"></span></div>
         </div>
-      </div>
     </div>
 
-    <footer class="portal-footer">
-      <p>&copy; {% now "Y" %} MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE — PROJET YOUTH JOBS</p>
-      <ul>
-        <li><a href="/fr/">Site en français</a></li>
-        <li><a href="/en/" lang="en">English version</a></li>
-        <li><a href="/fr/contact/">Nous contacter</a></li>
-        <li><a href="/fr/mentions-legales/">Mentions légales</a></li>
-        <li><a href="/fr/accessibilite/">Accessibilité</a></li>
-      </ul>
-      <p>Tous droits réservés | All rights reserved</p>
-    </footer>
-  </div>
-
-  {% comment %} Elevator-style sliding door screen, shown while entering the site {% endcomment %}
-  <div class="door-wrapper" id="doorWrapper" aria-hidden="true">
-    <p class="door-opening-text">Accès au portail</p>
-    <div class="elevator-door-frame">
-      <div class="door-backdrop"></div>
-      <div class="portal-light"></div>
-      {% comment %}Transparent cut-out: this one sits on the dark door screen.{% endcomment %}
-      <img class="national-emblem" src="{% static 'img/minefop-emblem-transparent.png' %}" alt="">
-      <div class="door-panel door-left"><span class="door-handle left-handle"></span></div>
-      <div class="door-panel door-right"><span class="door-handle right-handle"></span></div>
-    </div>
-  </div>
-
-  <script src="{% static 'js/portal.js' %}"></script>
+    <script src="{% static 'js/portal.js' %}"></script>
 </body>
 </html>
