@@ -48,6 +48,15 @@
 
       <div class="col-md-6 col-lg-4">
         <div class="card-minefop p-4 h-100">
+          <h2 class="h6 fw-bold mb-3"><i class="bi bi-pencil-square me-2 text-success" aria-hidden="true"></i>{% trans "Blog" %}</h2>
+          <ul class="footer-list list-unstyled d-flex flex-column gap-2">
+            <li><a href="{% url 'blog:list' %}" class="text-decoration-none">{% trans "Tous les articles" %}</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card-minefop p-4 h-100">
           <h2 class="h6 fw-bold mb-3"><i class="bi bi-journal-text me-2 text-success" aria-hidden="true"></i>{% trans "Textes & documents" %}</h2>
           <ul class="footer-list list-unstyled d-flex flex-column gap-2">
             <li><a href="{% url 'documents:list' %}" class="text-decoration-none">{% trans "Tous les documents" %}</a></li>

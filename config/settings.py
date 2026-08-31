@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     # Local apps
     "apps.core",
     "apps.news",
+    "apps.blog",
     "apps.documents",
     "apps.structures",
     "apps.contact",
