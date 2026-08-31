@@ -1,11 +1,19 @@
 from django.core.paginator import Paginator
+from django.db.models import F
 from django.shortcuts import get_object_or_404, render
 
 from .models import Document, DocumentCategory
 
 
 def document_list(request):
-    documents = Document.objects.select_related("category")
+    # Dated official texts come first; the undated documentary holdings follow,
+    # grouped by collection (category, then the reference label naming the set).
+    documents = Document.objects.select_related("category").order_by(
+        F("published_date").desc(nulls_last=True),
+        "category__order",
+        "reference_number",
+        "title",
+    )
 
     category_slug = request.GET.get("categorie")
     active_category = None

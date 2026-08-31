@@ -18,6 +18,9 @@ Site institutionnel du Ministère de l'Emploi et de la Formation Professionnelle
   domaine du Ministère ; le site n'émet aucune requête vers un tiers
 - **i18n** : bilingue français / anglais via le framework de traduction Django
   (`{% trans %}` / `{% blocktrans %}`), URLs préfixées `/fr/` et `/en/`
+- **Portail d'entrée** : la racine du domaine (`/`) sert une page bilingue
+  autonome (`templates/core/portal.html`) qui ouvre les deux versions du site et
+  publie l'annuaire des sites institutionnels, partenaires et services en ligne
 
 ## Démarrage rapide
 
@@ -32,9 +35,20 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-Le site est servi sous `/fr/` et `/en/` (redirection automatique depuis `/`).
-L'administration Django (`/admin/`) permet de gérer tout le contenu : actualités,
-documents, centres de formation, délégations, mot du ministre, etc.
+La racine `/` affiche le portail d'entrée bilingue ; le site lui-même est servi
+sous `/fr/` et `/en/`. L'administration Django (`/admin/`) permet de gérer tout le
+contenu : actualités, documents, centres de formation, délégations, mot du
+ministre, organismes et programmes, sites partenaires du portail, etc.
+
+## Portail d'entrée et sites partenaires
+
+La page servie à la racine du domaine est alimentée par le modèle
+**Sites partenaires** (`apps.core.models.PartnerSite`), organisé en trois
+rubriques : *institutions de la République*, *organismes, projets et
+partenaires*, *services et plateformes en ligne*. Chaque entrée peut recevoir un
+logo téléversé ; à défaut, la vignette affiche l'icône de sa rubrique — aucune
+image n'est jamais chargée depuis un tiers. Une entrée sans adresse de site
+reste listée, sans lien, avec la mention « Site en cours de publication ».
 
 ### Tests
 
@@ -85,9 +99,23 @@ python manage.py compilemessages
 - Les pages « Mentions légales », « Déclaration d'accessibilité » et
   « Plan du site » sont accessibles depuis le pied de page
 
+## Fonds documentaire repris de l'ancien site
+
+Le catalogue des documents publiés sur le site précédent (référentiels de
+formation des quatre générations PADESCE, référentiels homologués avec l'appui de
+la coopération allemande, annuaires et rapports de l'ONEFOP, décisions,
+communiqués, appels à candidatures et formulaires) est décrit dans
+`apps/documents/legacy_library.py` et injecté par `seed_data`.
+
+Ces fichiers PDF restent hébergés à leur adresse d'origine : le modèle
+`Document` porte pour cela un champ `source_url` en plus de son champ `file`.
+La propriété `Document.download_url` sert le fichier téléversé lorsqu'il existe,
+et retombe sinon sur `source_url` — il suffit donc de téléverser un document
+dans l'administration pour que le site cesse de pointer vers l'ancien domaine.
+
 ## Contenu à personnaliser
 
 Les données injectées par `seed_data` (centres de formation, délégations,
-actualités, mot du ministre) sont à compléter avec le registre officiel complet
-du Ministère via l'espace d'administration. Les documents légaux (lois et
-décrets) sont en revanche les textes officiels réels.
+actualités, mot du ministre, sites partenaires) sont à compléter avec le registre
+officiel complet du Ministère via l'espace d'administration. Les documents
+légaux (lois et décrets) sont en revanche les textes officiels réels.

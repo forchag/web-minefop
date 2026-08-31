@@ -1,0 +1,425 @@
+/* ==========================================================================
+   MINEFOP — entry portal (served at the root of the domain)
+
+   The bilingual door into the site: State identification, the two language
+   entrances, and the directory of institutional, partner and online-service
+   websites. Self-contained on purpose — the portal loads only the national
+   typefaces, the icon font and this stylesheet, no site chrome.
+   ========================================================================== */
+
+:root {
+  --cm-green: #04502c;
+  --cm-red: #ce1126;
+  --cm-yellow: #fcd116;
+  --green-900: #012414;
+  --green-800: #023018;
+  --green-700: #04502c;
+  --green-600: #0a6b3c;
+  --green-100: #e4efe9;
+  --green-050: #f1f7f3;
+  --gold: #c8a951;
+  --gold-dark: #9b7f30;
+  --ink: #14231e;
+  --ink-soft: #40514a;
+  --muted: #66776f;
+  --rule: #d9e2dd;
+  --surface: #f4f7f5;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Source Serif 4", "Merriweather", Georgia, "Times New Roman", serif;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--surface);
+}
+
+img { max-width: 100%; height: auto; }
+
+a { color: var(--green-700); }
+
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.portal-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  color: var(--green-900);
+  padding: .6rem 1rem;
+  font-weight: 600;
+}
+
+.skip-link:focus { left: .5rem; top: .5rem; }
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* -------------------------------------------------------------- flag strip */
+.flag-strip {
+  display: flex;
+  height: 5px;
+}
+
+.flag-strip span { flex: 1; }
+.flag-strip span:nth-child(1) { background: var(--cm-green); }
+.flag-strip span:nth-child(2) { background: var(--cm-red); }
+.flag-strip span:nth-child(3) { background: var(--cm-yellow); }
+
+/* ---------------------------------------------------------------- masthead */
+.portal-masthead {
+  background: linear-gradient(160deg, var(--green-800), var(--green-700) 55%, var(--green-600));
+  color: #fff;
+  border-bottom: 4px solid var(--gold);
+}
+
+.portal-masthead .portal-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.portal-emblem {
+  flex: 0 0 auto;
+  width: 74px;
+}
+
+.portal-identity { flex: 1 1 auto; min-width: 0; }
+
+.portal-republic {
+  display: block;
+  font-size: .75rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--cm-yellow);
+  font-weight: 600;
+}
+
+.portal-ministry {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: .2rem 0;
+}
+
+.portal-ministry-en {
+  display: block;
+  font-size: .95rem;
+  color: #cfe2d7;
+}
+
+.portal-motto {
+  flex: 0 0 auto;
+  text-align: right;
+  font-size: .8rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #cfe2d7;
+}
+
+/* ------------------------------------------------------------------- doors */
+.portal-doors {
+  background: #fff;
+  border-bottom: 1px solid var(--rule);
+  padding: 3rem 0;
+}
+
+.portal-doors h1 {
+  font-size: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+  text-align: center;
+  color: var(--green-900);
+}
+
+.portal-doors .lede {
+  max-width: 46rem;
+  margin: 1rem auto 0;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+.portal-doors .lede + .lede {
+  margin-top: .35rem;
+  font-size: .95rem;
+  color: var(--muted);
+}
+
+.door-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.door-button {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  min-width: 16rem;
+  justify-content: center;
+  padding: .9rem 1.75rem;
+  background: var(--green-700);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  border: 2px solid var(--green-700);
+  border-radius: 4px;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.door-button:hover,
+.door-button:focus-visible {
+  background: var(--green-900);
+  border-color: var(--green-900);
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+.door-button .door-lang {
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  opacity: .85;
+  display: block;
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------- directory */
+.portal-section { padding: 2.75rem 0; }
+.portal-section + .portal-section { border-top: 1px solid var(--rule); }
+.portal-section.alt { background: var(--green-050); }
+
+.section-kicker {
+  font-size: .72rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--green-600);
+  font-weight: 700;
+}
+
+.portal-section h2 {
+  font-size: 1.4rem;
+  color: var(--green-900);
+  margin: .35rem 0 .25rem;
+}
+
+.portal-section .section-note {
+  color: var(--muted);
+  font-size: .95rem;
+  margin: 0 0 1.5rem;
+}
+
+.partner-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.partner-card {
+  display: flex;
+  gap: .9rem;
+  align-items: flex-start;
+  height: 100%;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--green-600);
+  border-radius: 4px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.partner-card:hover,
+.partner-card:focus-visible {
+  border-left-color: var(--gold);
+  box-shadow: 0 4px 16px rgba(1, 36, 20, .1);
+  transform: translateY(-2px);
+}
+
+.partner-logo {
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  background: var(--green-050);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  font-size: 1.25rem;
+  color: var(--green-600);
+  overflow: hidden;
+}
+
+.partner-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 3px;
+}
+
+.partner-body { min-width: 0; }
+
+.partner-name {
+  display: block;
+  font-weight: 600;
+  font-size: .95rem;
+  line-height: 1.35;
+  color: var(--green-900);
+}
+
+.partner-desc {
+  display: block;
+  font-size: .82rem;
+  color: var(--muted);
+  margin-top: .25rem;
+}
+
+.partner-visit {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  margin-top: .5rem;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--green-600);
+}
+
+.portal-empty {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--gold);
+  color: var(--ink-soft);
+  font-size: .95rem;
+}
+
+/* ------------------------------------------------------------------ footer */
+.portal-footer {
+  background: var(--green-900);
+  color: #cfe2d7;
+  padding: 2rem 0;
+  font-size: .88rem;
+}
+
+.portal-footer a { color: #fff; }
+
+.portal-footer p { margin: .25rem 0; }
+
+.portal-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+/* ------------------------------------------------------- door transition */
+.door-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  background: var(--green-900);
+}
+
+.door-overlay.is-open { display: block; }
+
+.door-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  background: linear-gradient(160deg, var(--green-800), var(--green-600));
+  transition: transform 1s cubic-bezier(.65, 0, .35, 1);
+}
+
+.door-panel.left { left: 0; border-right: 2px solid var(--gold); }
+.door-panel.right { right: 0; border-left: 2px solid var(--gold); }
+
+.door-overlay.is-parting .door-panel.left { transform: translateX(-100%); }
+.door-overlay.is-parting .door-panel.right { transform: translateX(100%); }
+
+.door-caption {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: .75rem;
+  text-align: center;
+  color: var(--cm-yellow);
+  font-family: var(--font-serif);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-size: .95rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .door-panel { transition: none; }
+  .door-button:hover,
+  .partner-card:hover { transform: none; }
+}
+
+/* ------------------------------------------------------------- responsive */
+@media (max-width: 767px) {
+  .portal-masthead .portal-wrap {
+    flex-direction: column;
+    text-align: center;
+    gap: .75rem;
+  }
+
+  .portal-motto { text-align: center; }
+  .portal-ministry { font-size: 1.1rem; }
+  .portal-doors { padding: 2rem 0; }
+  .door-button { width: 100%; min-width: 0; }
+  .partner-grid { grid-template-columns: 1fr; }
+}
+
+@media print {
+  .door-overlay, .door-buttons { display: none !important; }
+}
+
+/* A partner whose website is not published yet: same tile, no affordance. */
+.partner-card.is-offline {
+  border-left-color: var(--rule);
+  cursor: default;
+}
+
+.partner-card.is-offline:hover {
+  box-shadow: none;
+  transform: none;
+  border-left-color: var(--rule);
+}
+
+.partner-card.is-offline .partner-visit { color: var(--muted); font-weight: 500; }

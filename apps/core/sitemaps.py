@@ -12,7 +12,9 @@ class StaticViewSitemap(Sitemap):
 
     def items(self):
         return [
-            ("core:home", 1.0),
+            # The bilingual entry portal at the root of the domain.
+            ("portal", 1.0),
+            ("core:home", 0.9),
             ("core:mission", 0.8),
             ("core:minister", 0.8),
             ("core:history", 0.6),

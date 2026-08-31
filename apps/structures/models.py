@@ -138,17 +138,28 @@ class TrainingCenter(models.Model):
 
 
 class AttachedBody(models.Model):
-    """An organisation or project attached to the ministry (Titre VIII du décret)."""
+    """An organisation, programme or project attached to the ministry.
+
+    Covers both the bodies placed under the Ministry's supervision (Titre VIII
+    du décret n° 2012/644) and the programmes and projects it steers.
+    """
+
+    class Kind(models.TextChoices):
+        BODY = "body", _("Organisme rattaché")
+        PROGRAMME = "programme", _("Programme ou projet")
 
     name = models.CharField(_("nom"), max_length=250)
     acronym = models.CharField(_("sigle"), max_length=30, blank=True)
+    kind = models.CharField(
+        _("nature"), max_length=20, choices=Kind.choices, default=Kind.BODY
+    )
     description = models.TextField(_("description"), blank=True)
     website = models.URLField(_("site web"), blank=True)
     order = models.PositiveIntegerField(_("ordre"), default=0)
 
     class Meta:
-        verbose_name = _("organisme rattaché")
-        verbose_name_plural = _("organismes rattachés")
+        verbose_name = _("organisme, programme ou projet")
+        verbose_name_plural = _("organismes, programmes et projets")
         ordering = ["order", "name"]
 
     def __str__(self):

@@ -47,8 +47,8 @@
     <div class="row align-items-center g-4 g-lg-5 py-4">
       <div class="col-lg-7">
         <span class="hero-kicker">{% trans "République du Cameroun" %}</span>
-        <h1 class="mt-3 mb-3">{% trans "Former, qualifier et insérer la jeunesse camerounaise" %}</h1>
-        <p class="lead mb-4">{% trans "Le Ministère de l'Emploi et de la Formation Professionnelle conduit la politique du Gouvernement en matière d'emploi, de formation et d'insertion professionnelles sur l'ensemble du territoire national." %}</p>
+        <h1 class="mt-3 mb-3">{% trans "Se former, se qualifier, travailler — à tout âge" %}</h1>
+        <p class="lead mb-4">{% trans "Le Ministère de l'Emploi et de la Formation Professionnelle conduit la politique du Gouvernement en matière d'emploi, de formation et d'insertion professionnelles. Ses dispositifs sont ouverts à toute personne en recherche d'emploi, en reconversion ou en quête d'une qualification, sur l'ensemble du territoire national." %}</p>
         <div class="d-flex gap-2 flex-wrap">
           <a href="{% url 'structures:training_center_list' %}" class="btn btn-gold btn-lg">
             <i class="bi bi-geo-alt-fill me-2" aria-hidden="true"></i>{% trans "Trouver un centre de formation" %}
@@ -136,9 +136,9 @@
         </div>
         <div class="col-6 col-lg-3">
           <div class="key-figure">
-            <div class="icon-wrap"><i class="bi bi-cash-coin" aria-hidden="true"></i></div>
-            <div class="value">33,4 Mds</div>
-            <div class="label">{% trans "Budget 2026 Emploi & Formation Pro. (FCFA)" %}</div>
+            <div class="icon-wrap"><i class="bi bi-tools" aria-hidden="true"></i></div>
+            <div class="value">228</div>
+            <div class="label">{% trans "Spécialités professionnelles recensées" %}</div>
           </div>
         </div>
       {% endif %}
@@ -209,7 +209,7 @@
               {% if minister.message %}
                 {{ minister.message|truncatewords:55 }}
               {% else %}
-                {% trans "Le Ministère de l'Emploi et de la Formation Professionnelle œuvre chaque jour pour offrir à la jeunesse camerounaise les compétences et les opportunités nécessaires à une insertion professionnelle réussie, au service de l'émergence économique du Cameroun." %}
+                {% trans "Le Ministère de l'Emploi et de la Formation Professionnelle œuvre chaque jour pour offrir à toutes les Camerounaises et à tous les Camerounais les compétences et les opportunités nécessaires à une insertion professionnelle réussie, au service de l'émergence économique du Cameroun." %}
               {% endif %}
             </blockquote>
             <p class="minister-name">{{ minister.full_name|default:_("Le Ministre") }}</p>
@@ -284,8 +284,8 @@
             <h3 class="h6 fw-bold mb-1">{{ doc.title }}</h3>
             {% if doc.reference_number %}<div class="text-muted small">{{ doc.reference_number }}</div>{% endif %}
           </div>
-          {% if doc.file %}
-          <a href="{{ doc.file.url }}" class="btn btn-sm btn-outline-minefop doc-row-actions" target="_blank" rel="noopener">
+          {% if doc.download_url %}
+          <a href="{{ doc.download_url }}" class="btn btn-sm btn-outline-minefop doc-row-actions" target="_blank" rel="noopener">
             <i class="bi bi-download" aria-hidden="true"></i>
             <span class="visually-hidden">{% trans "Télécharger" %} — {{ doc.title }}</span>
           </a>
@@ -315,7 +315,7 @@
       </div>
       <div class="col-md-3 col-6">
         <a href="{% url 'structures:attached_bodies' %}" class="quick-tile">
-          <i class="bi bi-building-fill-check" aria-hidden="true"></i><span>{% trans "Organismes rattachés" %}</span>
+          <i class="bi bi-building-fill-check" aria-hidden="true"></i><span>{% trans "Organismes & programmes" %}</span>
         </a>
       </div>
       <div class="col-md-3 col-6">

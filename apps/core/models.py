@@ -93,3 +93,60 @@ class Timeline(models.Model):
 
     def __str__(self):
         return f"{self.year} — {self.title}"
+
+
+class PartnerSite(models.Model):
+    """An institutional website listed on the public entry portal.
+
+    The portal page that greets visitors at the root of the domain lists the
+    institutions of the Republic, the bodies and projects working alongside the
+    Ministry, and the online services citizens can reach directly.
+    """
+
+    class Group(models.TextChoices):
+        INSTITUTION = "institution", _("Institutions de la République")
+        PARTNER = "partner", _("Organismes, projets et partenaires")
+        SERVICE = "service", _("Services et plateformes en ligne")
+
+    name = models.CharField(_("nom"), max_length=250)
+    acronym = models.CharField(
+        _("sigle"),
+        max_length=30,
+        blank=True,
+        help_text=_("Affiché en vignette lorsque aucun logo n'est téléversé."),
+    )
+    group = models.CharField(
+        _("rubrique"), max_length=20, choices=Group.choices, default=Group.PARTNER
+    )
+    url = models.URLField(
+        _("adresse du site"),
+        max_length=300,
+        blank=True,
+        help_text=_("Laisser vide pour une structure dont le site n'est pas encore publié."),
+    )
+    description = models.CharField(_("description"), max_length=250, blank=True)
+    logo = models.ImageField(_("logo"), upload_to="partners/", blank=True, null=True)
+    order = models.PositiveIntegerField(_("ordre"), default=0)
+    is_active = models.BooleanField(_("affiché sur le portail"), default=True)
+
+    class Meta:
+        verbose_name = _("site partenaire")
+        verbose_name_plural = _("sites partenaires")
+        ordering = ["group", "order", "name"]
+
+    def __str__(self):
+        return f"{self.acronym} — {self.name}" if self.acronym else self.name
+
+    #: Icon standing in for a partner that has no logo uploaded yet. Letters
+    #: would clip or wrap for the longer acronyms, and the acronym already
+    #: appears in the tile's title, so the group's own symbol reads better.
+    GROUP_ICONS = {
+        Group.INSTITUTION: "bi-bank",
+        Group.PARTNER: "bi-building-fill-check",
+        Group.SERVICE: "bi-laptop",
+    }
+
+    @property
+    def icon(self):
+        """Bootstrap-icons class used when the partner has no uploaded logo."""
+        return self.GROUP_ICONS.get(self.group, "bi-globe2")

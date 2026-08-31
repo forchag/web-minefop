@@ -1,22 +1,28 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% trans "Organismes rattachés" %} — {{ SITE_NAME }}{% endblock %}
-{% block meta_description %}{% trans "Organismes, fonds et projets placés sous la tutelle ou rattachés au Ministère de l'Emploi et de la Formation Professionnelle." %}{% endblock %}
+{% block title %}{% trans "Organismes, programmes & projets" %} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{% trans "Organismes, fonds, programmes et projets placés sous la tutelle du Ministère de l'Emploi et de la Formation Professionnelle ou concourant à ses missions." %}{% endblock %}
 {% block content %}
-{% trans "Organismes rattachés" as page_title %}
-{% trans "Les structures placées sous la tutelle du Ministère ou concourant à ses missions." as page_subtitle %}
+{% trans "Organismes, programmes & projets" as page_title %}
+{% trans "Les structures placées sous la tutelle du Ministère et les programmes qu'il pilote." as page_subtitle %}
 {% include "partials/page_header.html" %}
 
 <section class="section">
   <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">{% trans "Titre VIII du décret n° 2012/644" %}</span>
+        <h2 class="section-title mt-2">{% trans "Organismes rattachés" %}</h2>
+      </div>
+    </div>
     <div class="row g-4">
       {% for body in bodies %}
       <div class="col-md-6 col-lg-4">
         <div class="mission-card h-100 d-flex flex-column">
           <div class="icon-wrap"><i class="bi bi-building-fill-check" aria-hidden="true"></i></div>
-          <h2 class="h6 fw-bold">
+          <h3 class="h6 fw-bold">
             {{ body.name }}{% if body.acronym %}<span class="text-muted fw-normal"> ({{ body.acronym }})</span>{% endif %}
-          </h2>
+          </h3>
           <p class="text-muted small">{{ body.description }}</p>
           {% if body.website %}
           <a href="{{ body.website }}" target="_blank" rel="noopener" class="small mt-auto text-decoration-none">
@@ -30,6 +36,43 @@
       <div class="col-12">
         <div class="alert alert-minefop">
           <i class="bi bi-info-circle me-2" aria-hidden="true"></i>{% trans "Aucun organisme rattaché n'est renseigné pour le moment." %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">{% trans "Mise en œuvre de la politique sectorielle" %}</span>
+        <h2 class="section-title mt-2">{% trans "Programmes & projets" %}</h2>
+      </div>
+    </div>
+    <p class="text-muted">{% blocktrans %}Les programmes et projets conduits par le Ministère s'adressent à toute personne souhaitant apprendre un métier, se requalifier ou accéder à un emploi, sans condition d'âge.{% endblocktrans %}</p>
+    <div class="row g-4 mt-1">
+      {% for programme in programmes %}
+      <div class="col-md-6 col-lg-4">
+        <div class="mission-card h-100 d-flex flex-column">
+          <div class="icon-wrap"><i class="bi bi-rocket-takeoff-fill" aria-hidden="true"></i></div>
+          <h3 class="h6 fw-bold">
+            {% if programme.acronym %}{{ programme.acronym }}<span class="text-muted fw-normal"> — {{ programme.name }}</span>{% else %}{{ programme.name }}{% endif %}
+          </h3>
+          <p class="text-muted small">{{ programme.description }}</p>
+          {% if programme.website %}
+          <a href="{{ programme.website }}" target="_blank" rel="noopener" class="small mt-auto text-decoration-none">
+            {% trans "En savoir plus" %} <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+            <span class="visually-hidden">({% trans "nouvelle fenêtre" %})</span>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-minefop">
+          <i class="bi bi-info-circle me-2" aria-hidden="true"></i>{% trans "Aucun programme n'est renseigné pour le moment." %}
         </div>
       </div>
       {% endfor %}

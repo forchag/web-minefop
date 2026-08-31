@@ -10,10 +10,13 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 
 from apps.core.sitemaps import SITEMAPS
-from apps.core.views import robots_txt
+from apps.core.views import portal, robots_txt
 
-# URLs that must NOT be language-prefixed (admin, language switcher, crawler files).
+# URLs that must NOT be language-prefixed: the bilingual entry portal (which is
+# the door to both language versions), the admin, the language switcher and the
+# crawler files.
 urlpatterns = [
+    path("", portal, name="portal"),
     path("admin/", admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
     path("robots.txt", robots_txt, name="robots_txt"),
