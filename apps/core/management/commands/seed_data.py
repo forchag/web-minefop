@@ -1,6 +1,7 @@
 from datetime import date, datetime
 from pathlib import Path
 
+from django.conf import settings
 from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.utils import timezone
@@ -169,8 +170,9 @@ class Command(BaseCommand):
              "https://www.cnjcjobhub.cm", "Plateforme de mise en relation entre offres d'emploi et candidats.", 3),
         ]
 
+        logo_dir = Path(settings.STATICFILES_DIRS[0]) / "img" / "partners"
         for group, name, acronym, url, description, order in data:
-            PartnerSite.objects.create(
+            partner = PartnerSite(
                 group=group,
                 name=name,
                 acronym=acronym,
@@ -178,6 +180,12 @@ class Command(BaseCommand):
                 description=description,
                 order=order,
             )
+            logo_name = PartnerSite.BUNDLED_LOGOS.get(acronym)
+            logo_path = logo_dir / logo_name if logo_name else None
+            if logo_path and logo_path.exists():
+                with logo_path.open("rb") as f:
+                    partner.logo.save(logo_name, File(f), save=False)
+            partner.save()
         self.stdout.write("Portal website directory created.")
 
     # ------------------------------------------------------------------

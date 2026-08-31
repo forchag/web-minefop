@@ -137,16 +137,11 @@ class PartnerSite(models.Model):
     def __str__(self):
         return f"{self.acronym} — {self.name}" if self.acronym else self.name
 
-    #: Icon standing in for a partner that has no logo uploaded yet. Letters
-    #: would clip or wrap for the longer acronyms, and the acronym already
-    #: appears in the tile's title, so the group's own symbol reads better.
-    GROUP_ICONS = {
-        Group.INSTITUTION: "bi-bank",
-        Group.PARTNER: "bi-building-fill-check",
-        Group.SERVICE: "bi-laptop",
+    #: Logos shipped with the project, keyed by acronym. `seed_data` attaches
+    #: them so a fresh install shows the real marks; anything uploaded through
+    #: the administration afterwards replaces them.
+    BUNDLED_LOGOS = {
+        "CNFFDP": "cnffdp.png",
+        "CNJC": "cnjc.png",
+        "JobHub": "cnjc-jobhub.png",
     }
-
-    @property
-    def icon(self):
-        """Bootstrap-icons class used when the partner has no uploaded logo."""
-        return self.GROUP_ICONS.get(self.group, "bi-globe2")

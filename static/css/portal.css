@@ -1,425 +1,815 @@
 /* ==========================================================================
    MINEFOP — entry portal (served at the root of the domain)
 
-   The bilingual door into the site: State identification, the two language
-   entrances, and the directory of institutional, partner and online-service
-   websites. Self-contained on purpose — the portal loads only the national
-   typefaces, the icon font and this stylesheet, no site chrome.
+   Reproduces the Ministry's portal design: a white card floating on the blue
+   national gradient, flanked by two columns of institution tiles, with the
+   bilingual doors into the site at its centre.
+
+   Self-contained on purpose. The portal loads only its own typefaces, the
+   vendored icon font and this stylesheet — the particle field and the sliding
+   doors are hand-written, so no third-party script or image is ever requested.
    ========================================================================== */
 
-:root {
-  --cm-green: #04502c;
-  --cm-red: #ce1126;
-  --cm-yellow: #fcd116;
-  --green-900: #012414;
-  --green-800: #023018;
-  --green-700: #04502c;
-  --green-600: #0a6b3c;
-  --green-100: #e4efe9;
-  --green-050: #f1f7f3;
-  --gold: #c8a951;
-  --gold-dark: #9b7f30;
-  --ink: #14231e;
-  --ink-soft: #40514a;
-  --muted: #66776f;
-  --rule: #d9e2dd;
-  --surface: #f4f7f5;
-  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-serif: "Source Serif 4", "Merriweather", Georgia, "Times New Roman", serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
-*,
-*::before,
-*::after { box-sizing: border-box; }
-
-html { -webkit-text-size-adjust: 100%; }
 
 body {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-size: 1rem;
+  font-family: 'Source Sans 3', 'Source Sans Pro', system-ui, sans-serif;
+  background: linear-gradient(135deg, #1a2980, #26d0ce);
+  color: #333;
   line-height: 1.6;
-  color: var(--ink);
-  background: var(--surface);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  overflow-x: hidden;
 }
 
-img { max-width: 100%; height: auto; }
-
-a { color: var(--green-700); }
-
-h1, h2, h3 {
-  font-family: var(--font-serif);
-  line-height: 1.25;
-  margin: 0;
-}
-
-.portal-wrap {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
+img { max-width: 100%; }
 
 .skip-link {
   position: absolute;
   left: -9999px;
   top: 0;
-  z-index: 100;
+  z-index: 10000;
   background: #fff;
-  color: var(--green-900);
-  padding: .6rem 1rem;
+  color: #003d82;
+  padding: 10px 16px;
   font-weight: 600;
+  border-radius: 4px;
 }
 
-.skip-link:focus { left: .5rem; top: .5rem; }
+.skip-link:focus { left: 12px; top: 12px; }
 
 :focus-visible {
-  outline: 3px solid var(--gold);
-  outline-offset: 2px;
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
 }
 
-/* -------------------------------------------------------------- flag strip */
-.flag-strip {
+/* --------------------------------------------------------------- container */
+.portal-container {
+  width: 90%;
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 15px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  position: relative;
+  margin: 20px auto;
+  transform: scale(0.95);
+  transform-origin: center;
+  animation: container-enter 1s ease-out forwards;
+}
+
+@keyframes container-enter {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.portal-header {
+  background: linear-gradient(135deg, #003d82, #0056b3);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 5px solid #ffcc00;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.portal-header h1 {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.portal-header p {
+  font-size: 16px;
+  opacity: 0.9;
+  margin-top: 5px;
+  font-weight: 300;
+}
+
+.portal-header .slogan {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 10px;
+  color: #ffcc00;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+.portal-content {
+  padding: 20px;
+  position: relative;
+}
+
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.row {
   display: flex;
-  height: 5px;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+  position: relative;
+  z-index: 2;
 }
 
-.flag-strip span { flex: 1; }
-.flag-strip span:nth-child(1) { background: var(--cm-green); }
-.flag-strip span:nth-child(2) { background: var(--cm-red); }
-.flag-strip span:nth-child(3) { background: var(--cm-yellow); }
+.col { padding: 10px; }
 
-/* ---------------------------------------------------------------- masthead */
-.portal-masthead {
-  background: linear-gradient(160deg, var(--green-800), var(--green-700) 55%, var(--green-600));
-  color: #fff;
-  border-bottom: 4px solid var(--gold);
+.col-sm-2 {
+  flex: 0 0 16.66667%;
+  max-width: 16.66667%;
 }
 
-.portal-masthead .portal-wrap {
+.col-sm-8 {
+  flex: 0 0 66.66667%;
+  max-width: 66.66667%;
+}
+
+@media (max-width: 992px) {
+  .col-sm-2 {
+    flex: 0 0 33.33333%;
+    max-width: 33.33333%;
+  }
+  .col-sm-8 {
+    flex: 0 0 66.66667%;
+    max-width: 66.66667%;
+  }
+}
+
+@media (max-width: 768px) {
+  .col {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* --------------------------------------------------------- institution tile */
+.institution-grid { list-style: none; }
+
+.bloc {
+  background: linear-gradient(135deg, #2ecc71 0%, #e74c3c 50%, #f1c40f 100%);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid #eef2f7;
+  height: 150px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.bloc:hover,
+.bloc:focus-within {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.bloc > a {
+  display: block;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.bloc img {
+  width: 100%;
+  height: 100px;
+  object-fit: contain;
+  padding: 15px;
+  transition: all 0.4s ease;
+}
+
+.bloc:hover img,
+.bloc:focus-within img { transform: scale(0.9); }
+
+/* Stand-in for a partner whose logo the Ministry has not supplied yet: the
+   acronym set on the same tricolour tile, so the grid stays even. */
+.bloc-acronym {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-}
-
-.portal-emblem {
-  flex: 0 0 auto;
-  width: 74px;
-}
-
-.portal-identity { flex: 1 1 auto; min-width: 0; }
-
-.portal-republic {
-  display: block;
-  font-size: .75rem;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--cm-yellow);
-  font-weight: 600;
-}
-
-.portal-ministry {
-  display: block;
-  font-family: var(--font-serif);
-  font-size: 1.35rem;
+  justify-content: center;
+  height: 100%;
+  padding: 15px;
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 22px;
   font-weight: 700;
-  margin: .2rem 0;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+  transition: transform 0.4s ease;
+  overflow-wrap: anywhere;
 }
 
-.portal-ministry-en {
+.bloc:hover .bloc-acronym,
+.bloc:focus-within .bloc-acronym { transform: scale(0.9); }
+
+.title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+  z-index: 2;
+}
+
+.bloc:hover .title,
+.bloc:focus-within .title { transform: translateY(0); }
+
+.title h2 {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 5px;
+  line-height: 1.3;
+}
+
+.title span {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
   display: block;
-  font-size: .95rem;
-  color: #cfe2d7;
 }
 
-.portal-motto {
-  flex: 0 0 auto;
-  text-align: right;
-  font-size: .8rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: #cfe2d7;
-}
-
-/* ------------------------------------------------------------------- doors */
-.portal-doors {
-  background: #fff;
-  border-bottom: 1px solid var(--rule);
-  padding: 3rem 0;
-}
-
-.portal-doors h1 {
-  font-size: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+/* --------------------------------------------------------------- centre card */
+.portail {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
   text-align: center;
-  color: var(--green-900);
+  border: 1px solid #e0e6ed;
+  position: relative;
+  overflow: hidden;
+  animation: portail-enter 1s ease-out;
 }
 
-.portal-doors .lede {
-  max-width: 46rem;
-  margin: 1rem auto 0;
-  text-align: center;
-  color: var(--ink-soft);
+@keyframes portail-enter {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
 }
 
-.portal-doors .lede + .lede {
-  margin-top: .35rem;
-  font-size: .95rem;
-  color: var(--muted);
+.title-minjec {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+  position: relative;
 }
 
-.door-buttons {
+.logo {
+  padding: 0 15px;
+  flex: 1;
+  z-index: 2;
+}
+
+.logo img {
+  max-height: 90px;
+  width: auto;
+  background: transparent;
+  transition: transform 0.3s ease;
+}
+
+.logo img:hover { transform: scale(1.05); }
+
+.title-minjec-text {
+  padding: 0 20px;
+  flex: 4;
+  z-index: 2;
+}
+
+.title-minjec-text h1 {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #0056b3;
+  margin: 10px 0;
+  line-height: 1.3;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.title-minjec-text h2 {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #e67e22;
+  margin: 8px 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.title-minjec-text h3 {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 8px 0;
+}
+
+.title-minjec-text p {
+  margin: 4px 0;
+  font-size: 18px;
+  color: #7f8c8d;
+}
+
+.after-title { margin: 25px 0; }
+
+.button-group {
   display: flex;
   justify-content: center;
+  gap: 20px;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 2rem;
 }
 
-.door-button {
+.btn-minefop {
+  font-family: 'Poppins', system-ui, sans-serif;
+  background: linear-gradient(135deg, #0056b3, #003d82);
+  color: white !important;
+  border: none;
+  padding: 14px 35px;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: .6rem;
-  min-width: 16rem;
-  justify-content: center;
-  padding: .9rem 1.75rem;
-  background: var(--green-700);
-  color: #fff;
-  font-weight: 600;
-  font-size: 1.05rem;
-  text-decoration: none;
-  border: 2px solid var(--green-700);
-  border-radius: 4px;
-  transition: background .2s ease, transform .2s ease;
+  box-shadow: 0 6px 15px rgba(0, 86, 179, 0.3);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
 }
 
-.door-button:hover,
-.door-button:focus-visible {
-  background: var(--green-900);
-  border-color: var(--green-900);
-  transform: translateY(-2px);
-  color: #fff;
+.btn-minefop:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #003d82, #0056b3);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
 }
 
-.door-button .door-lang {
-  font-size: .72rem;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  opacity: .85;
-  display: block;
+.btn-minefop:hover,
+.btn-minefop:focus-visible {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 86, 179, 0.5);
+}
+
+.btn-minefop:hover:before,
+.btn-minefop:focus-visible:before { opacity: 1; }
+
+.btn-minefop i {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.but-portail {
+  margin-top: 25px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  border: 1px solid #e0e6ed;
+  position: relative;
+  z-index: 2;
+}
+
+.but-portail p {
+  margin: 10px 0;
+  font-size: 17px;
+  color: #2c3e50;
   font-weight: 500;
 }
 
-/* --------------------------------------------------------------- directory */
-.portal-section { padding: 2.75rem 0; }
-.portal-section + .portal-section { border-top: 1px solid var(--rule); }
-.portal-section.alt { background: var(--green-050); }
-
-.section-kicker {
-  font-size: .72rem;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--green-600);
-  font-weight: 700;
+/* Locally drawn reassurance badge — the original trust seal was an image
+   fetched from a third party, which this site never does. */
+.security-badge {
+  margin-top: 20px;
+  text-align: center;
 }
 
-.portal-section h2 {
-  font-size: 1.4rem;
-  color: var(--green-900);
-  margin: .35rem 0 .25rem;
-}
-
-.portal-section .section-note {
-  color: var(--muted);
-  font-size: .95rem;
-  margin: 0 0 1.5rem;
-}
-
-.partner-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 1rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.partner-card {
-  display: flex;
-  gap: .9rem;
-  align-items: flex-start;
-  height: 100%;
-  padding: 1rem;
-  background: #fff;
-  border: 1px solid var(--rule);
-  border-left: 4px solid var(--green-600);
-  border-radius: 4px;
-  text-decoration: none;
-  color: inherit;
-  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
-}
-
-.partner-card:hover,
-.partner-card:focus-visible {
-  border-left-color: var(--gold);
-  box-shadow: 0 4px 16px rgba(1, 36, 20, .1);
-  transform: translateY(-2px);
-}
-
-.partner-logo {
-  flex: 0 0 48px;
-  width: 48px;
-  height: 48px;
-  display: grid;
-  place-items: center;
-  background: var(--green-050);
-  border: 1px solid var(--rule);
-  border-radius: 3px;
-  font-size: 1.25rem;
-  color: var(--green-600);
-  overflow: hidden;
-}
-
-.partner-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 3px;
-}
-
-.partner-body { min-width: 0; }
-
-.partner-name {
-  display: block;
-  font-weight: 600;
-  font-size: .95rem;
-  line-height: 1.35;
-  color: var(--green-900);
-}
-
-.partner-desc {
-  display: block;
-  font-size: .82rem;
-  color: var(--muted);
-  margin-top: .25rem;
-}
-
-.partner-visit {
+.security-badge span {
   display: inline-flex;
   align-items: center;
-  gap: .3rem;
-  margin-top: .5rem;
-  font-size: .78rem;
+  gap: 8px;
+  padding: 9px 18px;
+  border: 1px solid #cfe0d3;
+  border-radius: 6px;
+  background: #f2f8f4;
+  color: #1e6b43;
+  font-size: 13px;
   font-weight: 600;
-  color: var(--green-600);
+  letter-spacing: 0.02em;
 }
 
-.portal-empty {
-  margin: 0;
-  padding: 1rem 1.25rem;
-  background: #fff;
-  border: 1px solid var(--rule);
-  border-left: 4px solid var(--gold);
-  color: var(--ink-soft);
-  font-size: .95rem;
-}
+.security-badge i { font-size: 17px; }
 
-/* ------------------------------------------------------------------ footer */
+/* ------------------------------------------------------------------ chrome */
 .portal-footer {
-  background: var(--green-900);
-  color: #cfe2d7;
-  padding: 2rem 0;
-  font-size: .88rem;
+  background: linear-gradient(135deg, #003d82, #002c5f);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.portal-footer a { color: #fff; }
+.portal-footer p { margin: 5px 0; }
 
-.portal-footer p { margin: .25rem 0; }
+.portal-footer a {
+  color: #ffcc00;
+  text-decoration: none;
+}
 
-.portal-footer-links {
+.portal-footer a:hover,
+.portal-footer a:focus-visible { text-decoration: underline; }
+
+.portal-footer ul {
+  list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 1rem;
-  padding: 0;
-  list-style: none;
+  justify-content: center;
+  gap: 18px;
+  margin: 10px 0;
 }
 
-/* ------------------------------------------------------- door transition */
-.door-overlay {
+.year-tag {
+  position: absolute;
+  /* The card clips its overflow, so the badge sits just inside the top edge
+     rather than straddling it. */
+  top: 14px;
+  right: 30px;
+  background: linear-gradient(135deg, #ffcc00, #ffaa00);
+  color: #0056b3;
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-weight: bold;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 16px;
+  z-index: 10;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transform: rotate(3deg);
+}
+
+.pattern-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(0, 86, 179, 0.03) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(230, 126, 34, 0.03) 0%, transparent 20%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---------------------------------------------------------- mobile styles */
+@media (max-width: 1000px) {
+  body { padding: 0; align-items: flex-start; }
+
+  .portal-container {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    animation: none;
+    box-shadow: none;
+    transform: none;
+    opacity: 1;
+  }
+
+  .portal-header {
+    padding: 12px 15px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .portal-header h1 {
+    font-size: 16px;
+    margin-bottom: 3px;
+  }
+
+  .portal-header p { font-size: 12px; }
+  .portal-header .slogan { font-size: 13px; margin-top: 6px; }
+
+  .title-minjec {
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+  .title-minjec-text {
+    padding: 0;
+    text-align: center;
+    order: 2;
+    margin-top: 10px;
+  }
+
+  .title-minjec-text h1 {
+    font-size: 14px;
+    margin: 3px 0;
+    line-height: 1.3;
+  }
+
+  .title-minjec-text h2 { font-size: 13px; margin: 3px 0; }
+  .title-minjec-text h3 { font-size: 12px; margin: 3px 0; }
+  .title-minjec-text p { font-size: 11px; margin: 2px 0; }
+
+  .logo {
+    padding: 0;
+    text-align: center;
+    margin: 5px 0;
+  }
+
+  .logo img { max-height: 50px; }
+  .logo:first-child { order: 1; }
+  .logo:last-child { order: 3; }
+
+  .but-portail p { font-size: 12px; margin: 3px 0; }
+
+  .button-group {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+  }
+
+  .btn-minefop {
+    padding: 12px 15px;
+    font-size: 14px;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 3px 8px rgba(0, 86, 179, 0.3);
+  }
+
+  .row {
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .col-sm-2, .col-sm-8 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 5px;
+  }
+
+  .institution-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .bloc {
+    height: 120px;
+    margin-bottom: 0;
+  }
+
+  .bloc img {
+    height: 65px;
+    padding: 8px;
+    margin-top: 0;
+  }
+
+  .bloc-acronym { font-size: 16px; padding: 8px; }
+
+  /* Always show the name on mobile: there is no hover to reveal it. */
+  .title {
+    position: static;
+    transform: none;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.75);
+  }
+
+  .bloc > a {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .title h2 { font-size: 11px; }
+  .title span { font-size: 9px; }
+
+  .year-tag {
+    top: 8px;
+    right: 10px;
+    padding: 4px 12px;
+    font-size: 12px;
+  }
+
+  .portal-footer { padding: 12px; font-size: 12px; }
+  .portail { padding: 15px; }
+  .after-title { margin: 15px 0; }
+}
+
+@media (max-width: 480px) {
+  .institution-grid { grid-template-columns: repeat(2, 1fr); }
+  .portal-header h1 { font-size: 14px; }
+  .portal-header p { font-size: 11px; }
+  .btn-minefop { font-size: 13px; padding: 10px 12px; }
+  .title-minjec-text h1 { font-size: 12px; }
+  .title-minjec-text h2 { font-size: 11px; }
+  .title-minjec-text h3 { font-size: 11px; }
+  .bloc { height: 110px; }
+  .bloc img { height: 60px; }
+  .bloc-acronym { font-size: 14px; }
+  .title h2 { font-size: 10px; }
+}
+
+/* --------------------------------------- elevator-style sliding door screen */
+.door-wrapper {
   position: fixed;
-  inset: 0;
-  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: none;
-  background: var(--green-900);
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a0e1a, #001f3f);
+  z-index: 9999;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.5s ease;
 }
 
-.door-overlay.is-open { display: block; }
+.door-wrapper.is-open { display: flex; }
+.door-wrapper.is-fading { opacity: 0; }
+
+.elevator-door-frame {
+  position: relative;
+  width: 400px;
+  max-width: 86vw;
+  height: 500px;
+  max-height: 70vh;
+  border: 20px solid #b8860b;
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(184, 134, 11, 0.5);
+  overflow: hidden;
+  transition: transform 1s ease, opacity 1s ease;
+}
+
+.door-wrapper.is-leaving .elevator-door-frame {
+  transform: scale(1.2);
+  opacity: 0;
+}
+
+.door-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a237e, #0d47a1);
+  z-index: 1;
+}
 
 .door-panel {
   position: absolute;
   top: 0;
-  bottom: 0;
-  width: 50.5%;
-  background: linear-gradient(160deg, var(--green-800), var(--green-600));
-  transition: transform 1s cubic-bezier(.65, 0, .35, 1);
+  height: 100%;
+  width: 50%;
+  background: linear-gradient(135deg, #0056b3, #003d82);
+  z-index: 2;
+  border: 3px solid #ffcc00;
+  transition: transform 1.5s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-.door-panel.left { left: 0; border-right: 2px solid var(--gold); }
-.door-panel.right { right: 0; border-left: 2px solid var(--gold); }
+.door-left {
+  left: 0;
+  border-right: 1.5px solid #ffcc00;
+}
 
-.door-overlay.is-parting .door-panel.left { transform: translateX(-100%); }
-.door-overlay.is-parting .door-panel.right { transform: translateX(100%); }
+.door-right {
+  right: 0;
+  border-left: 1.5px solid #ffcc00;
+}
 
-.door-caption {
+.door-wrapper.is-parting .door-left { transform: translateX(-100%); }
+.door-wrapper.is-parting .door-right { transform: translateX(100%); }
+
+.door-handle {
   position: absolute;
-  inset: 0;
-  display: grid;
-  place-content: center;
-  gap: .75rem;
-  text-align: center;
-  color: var(--cm-yellow);
-  font-family: var(--font-serif);
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  font-size: .95rem;
+  top: 50%;
+  width: 20px;
+  height: 80px;
+  background: radial-gradient(circle, #ffcc00, #ff9800);
+  border-radius: 10px;
+  transform: translateY(-50%);
+  z-index: 3;
+  box-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
 }
+
+.left-handle { left: 20px; }
+.right-handle { right: 20px; }
+
+.portal-light {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  filter: blur(30px);
+  box-shadow: 0 0 200px 100px rgba(255, 255, 255, 0.7);
+  opacity: 0;
+  transition: width 1.5s ease-out, height 1.5s ease-out, opacity 1.5s ease-out;
+}
+
+.door-wrapper.is-parting .portal-light {
+  opacity: 1;
+  width: 500px;
+  height: 500px;
+}
+
+.door-opening-text {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: #ffcc00;
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  opacity: 0;
+  text-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+  z-index: 4;
+  transition: opacity 0.5s ease;
+}
+
+.door-wrapper.is-open .door-opening-text { opacity: 1; }
+
+.national-emblem {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  opacity: 0.8;
+  z-index: 3;
+  object-fit: contain;
+}
+
+body.no-scroll { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
-  .door-panel { transition: none; }
-  .door-button:hover,
-  .partner-card:hover { transform: none; }
-}
+  .portal-container,
+  .portail { animation: none; }
 
-/* ------------------------------------------------------------- responsive */
-@media (max-width: 767px) {
-  .portal-masthead .portal-wrap {
-    flex-direction: column;
-    text-align: center;
-    gap: .75rem;
-  }
+  .bloc,
+  .bloc img,
+  .bloc-acronym,
+  .btn-minefop,
+  .logo img,
+  .door-panel,
+  .portal-light,
+  .elevator-door-frame { transition: none; }
 
-  .portal-motto { text-align: center; }
-  .portal-ministry { font-size: 1.1rem; }
-  .portal-doors { padding: 2rem 0; }
-  .door-button { width: 100%; min-width: 0; }
-  .partner-grid { grid-template-columns: 1fr; }
+  .bloc:hover,
+  .bloc:focus-within,
+  .btn-minefop:hover,
+  .btn-minefop:focus-visible { transform: none; }
 }
 
 @media print {
-  .door-overlay, .door-buttons { display: none !important; }
+  body { background: #fff; }
+  .door-wrapper,
+  #particles-js,
+  .button-group { display: none !important; }
+  .portal-container { box-shadow: none; }
 }
-
-/* A partner whose website is not published yet: same tile, no affordance. */
-.partner-card.is-offline {
-  border-left-color: var(--rule);
-  cursor: default;
-}
-
-.partner-card.is-offline:hover {
-  box-shadow: none;
-  transform: none;
-  border-left-color: var(--rule);
-}
-
-.partner-card.is-offline .partner-visit { color: var(--muted); font-weight: 500; }
