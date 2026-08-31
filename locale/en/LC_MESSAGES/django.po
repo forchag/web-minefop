@@ -1414,9 +1414,6 @@ msgstr "No centre matches your search criteria."
 #~ msgid "Former, qualifier et insérer la jeunesse camerounaise"
 #~ msgstr "Training, qualifying and employing Cameroon's young people"
 
-#~ msgid "Budget 2026 Emploi & Formation Pro. (FCFA)"
-#~ msgstr "2026 Employment & Vocational Training Budget (FCFA)"
-
 #~ msgid "« Un Jeune, un Métier, un Emploi » : programme national doté de 17,72 milliards de FCFA, lancé en novembre 2025 pour former et insérer durablement les jeunes de 15 à 35 ans."
 #~ msgstr "\"One Youth, One Skill, One Job\": a national programme worth 17.72 billion FCFA, launched in November 2025 to durably train and integrate young people aged 15 to 35."
 
