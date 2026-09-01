@@ -37,23 +37,24 @@ class BlogAttachmentInline(admin.TabularInline):
 class BlogPostAdmin(admin.ModelAdmin):
     list_display = (
         "cover_thumbnail",
-        "title",
+        "title_fr",
         "author_name",
         "published_at",
         "is_published",
         "attachment_count",
     )
-    list_display_links = ("title",)
+    list_display_links = ("title_fr",)
     list_filter = ("is_published",)
     list_editable = ("is_published",)
-    search_fields = ("title", "author_name", "excerpt", "body")
-    prepopulated_fields = {"slug": ("title",)}
+    search_fields = ("title_fr", "title_en", "author_name", "excerpt_fr", "excerpt_en", "body_fr", "body_en")
+    prepopulated_fields = {"slug": ("title_fr",)}
     date_hierarchy = "published_at"
     inlines = [BlogAttachmentInline]
     readonly_fields = ("created_by", "created_at", "updated_at")
     fieldsets = (
-        (None, {"fields": ("title", "slug", "author_name")}),
-        (_("Contenu"), {"fields": ("excerpt", "body", "cover_image")}),
+        (None, {"fields": ("slug", "author_name", "cover_image")}),
+        (_("Français"), {"fields": ("title_fr", "excerpt_fr", "body_fr")}),
+        (_("English"), {"fields": ("title_en", "excerpt_en", "body_en")}),
         (_("Publication"), {"fields": ("is_published", "published_at")}),
         (
             _("Traçabilité"),

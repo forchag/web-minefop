@@ -1,0 +1,61 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% block title %}{% if is_new %}{% trans "Nouvelle actualité" %}{% else %}{% trans "Modifier l'actualité" %}{% endif %} — {% trans "Tableau de bord" %}{% endblock %}
+{% block content %}
+<h1 class="h4 fw-bold mb-4">
+  {% if is_new %}{% trans "Nouvelle actualité" %}{% else %}{% trans "Modifier l'actualité" %}{% endif %}
+</h1>
+
+<form method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+  <div class="dashboard-form-card mb-4">
+    <div class="row g-3">
+      <div class="col-md-8">
+        <label class="form-label" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+        {{ form.title }}
+        {% if form.title.errors %}<div class="text-danger small mt-1">{{ form.title.errors.0 }}</div>{% endif %}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="{{ form.category.id_for_label }}">{{ form.category.label }}</label>
+        {{ form.category }}
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="{{ form.excerpt.id_for_label }}">{{ form.excerpt.label }}</label>
+        {{ form.excerpt }}
+        {% if form.excerpt.errors %}<div class="text-danger small mt-1">{{ form.excerpt.errors.0 }}</div>{% endif %}
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="{{ form.body.id_for_label }}">{{ form.body.label }}</label>
+        {{ form.body }}
+        {% if form.body.errors %}<div class="text-danger small mt-1">{{ form.body.errors.0 }}</div>{% endif %}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.cover_image.id_for_label }}">{{ form.cover_image.label }}</label>
+        {{ form.cover_image }}
+        {% if article.cover_image %}<div class="form-text">{% trans "Image actuelle conservée si aucun nouveau fichier n'est choisi." %}</div>{% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-form-card mb-4">
+    <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Publication" %}</h2>
+    <div class="row g-3 align-items-center">
+      <div class="col-auto form-check">
+        {{ form.is_published }}
+        <label class="form-check-label" for="{{ form.is_published.id_for_label }}">{{ form.is_published.label }}</label>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="{{ form.published_at.id_for_label }}">{{ form.published_at.label }}</label>
+        {{ form.published_at }}
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-outline-minefop">
+      <i class="bi bi-check-lg me-1" aria-hidden="true"></i>{% trans "Enregistrer" %}
+    </button>
+    <a href="{% url 'dashboard:news_list' %}" class="btn btn-link text-decoration-none">{% trans "Annuler" %}</a>
+  </div>
+</form>
+{% endblock %}

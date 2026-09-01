@@ -1,6 +1,7 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
+from django.utils import translation
 from django.utils.html import escape
 
 from .models import MAX_ATTACHMENTS_PER_POST, BlogAttachment, BlogPost
@@ -19,19 +20,25 @@ def make_cover(name="cover.gif"):
 class BlogPostTests(TestCase):
     def setUp(self):
         self.published = BlogPost.objects.create(
-            title="Un article publié",
+            title_fr="Un article publié",
+            title_en="A published article",
             slug="un-article-publie",
             author_name="Cellule de communication",
-            excerpt="Un court résumé de l'article.",
-            body="Le contenu détaillé de l'article.",
+            excerpt_fr="Un court résumé de l'article.",
+            excerpt_en="A short summary of the article.",
+            body_fr="Le contenu détaillé de l'article.",
+            body_en="The detailed content of the article.",
             cover_image=make_cover(),
         )
         self.draft = BlogPost.objects.create(
-            title="Un brouillon",
+            title_fr="Un brouillon",
+            title_en="A draft",
             slug="un-brouillon",
             author_name="Cellule de communication",
-            excerpt="Résumé du brouillon.",
-            body="Contenu du brouillon.",
+            excerpt_fr="Résumé du brouillon.",
+            excerpt_en="Draft summary.",
+            body_fr="Contenu du brouillon.",
+            body_en="Draft content.",
             cover_image=make_cover("draft.gif"),
             is_published=False,
         )
@@ -39,8 +46,21 @@ class BlogPostTests(TestCase):
     def test_list_shows_only_published_posts(self):
         response = self.client.get(reverse("blog:list"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, self.published.title)
-        self.assertNotContains(response, self.draft.title)
+        self.assertContains(response, self.published.title_fr)
+        self.assertNotContains(response, self.draft.title_fr)
+
+    def test_title_follows_active_language(self):
+        self.assertEqual(self.published.title, self.published.title_fr)
+        with translation.override("en"):
+            self.assertEqual(self.published.title, self.published.title_en)
+            self.assertEqual(self.published.excerpt, self.published.excerpt_en)
+            self.assertEqual(self.published.body, self.published.body_en)
+
+    def test_detail_shows_english_content_under_english_prefix(self):
+        with translation.override("en"):
+            response = self.client.get(reverse("blog:detail", kwargs={"slug": self.published.slug}))
+        self.assertContains(response, self.published.title_en)
+        self.assertContains(response, escape(self.published.excerpt_en))
 
     def test_list_shows_author_name(self):
         response = self.client.get(reverse("blog:list"))
@@ -75,11 +95,14 @@ class BlogPostTests(TestCase):
 class BlogAttachmentModelTests(TestCase):
     def setUp(self):
         self.post = BlogPost.objects.create(
-            title="Article avec pièces jointes",
+            title_fr="Article avec pièces jointes",
+            title_en="Article with attachments",
             slug="article-pieces-jointes",
             author_name="Direction de la communication",
-            excerpt="Résumé.",
-            body="Contenu.",
+            excerpt_fr="Résumé.",
+            excerpt_en="Summary.",
+            body_fr="Contenu.",
+            body_en="Content.",
             cover_image=make_cover(),
         )
 

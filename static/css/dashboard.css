@@ -1,0 +1,206 @@
+/* ==========================================================================
+   MINEFOP dashboard — internal staff tool.
+
+   Reuses the public site's design tokens (colours, fonts, spacing) from
+   custom.css so the two feel like one product, but with its own compact
+   chrome: a slim top bar instead of the public masthead/navbar/footer.
+   ========================================================================== */
+
+body.dashboard-body {
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+}
+
+.dashboard-topbar {
+  background: var(--green-800);
+  color: #fff;
+  padding: .65rem 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard-brand {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.dashboard-nav {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  flex-wrap: wrap;
+}
+
+.dashboard-nav a {
+  color: #cfe2d7;
+  text-decoration: none;
+  padding: .4rem .75rem;
+  border-radius: var(--radius);
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+.dashboard-nav a:hover,
+.dashboard-nav a.active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.dashboard-logout-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  padding: .35rem .75rem;
+  border-radius: var(--radius);
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.dashboard-logout-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.dashboard-main {
+  padding: 1.75rem 1rem 3rem;
+}
+
+.dashboard-login-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, var(--green-900), var(--green-700));
+  padding: 1rem;
+}
+
+.dashboard-login-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.stat-card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  height: 100%;
+}
+
+.stat-card .stat-value {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--green-700);
+  line-height: 1;
+}
+
+.quick-action-card {
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem 1.25rem;
+  text-decoration: none;
+  color: var(--ink);
+  height: 100%;
+  transition: box-shadow .15s ease, border-color .15s ease;
+}
+
+.quick-action-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--green-600);
+  color: var(--ink);
+}
+
+.quick-action-card .icon {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--green-050);
+  color: var(--green-700);
+  font-size: 1.25rem;
+}
+
+.dashboard-table {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.dashboard-table table {
+  margin-bottom: 0;
+}
+
+.dashboard-table thead th {
+  background: var(--surface-alt);
+  border-bottom: 1px solid var(--rule);
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--muted);
+}
+
+.dashboard-table td,
+.dashboard-table th {
+  vertical-align: middle;
+  padding: .75rem 1rem;
+}
+
+.dashboard-form-card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+}
+
+.lang-tabs {
+  display: flex;
+  gap: .25rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 1.25rem;
+}
+
+.lang-tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: .5rem 1rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.lang-tab-btn.active {
+  color: var(--green-700);
+  border-bottom-color: var(--green-700);
+}
+
+.lang-panel[hidden] {
+  display: none;
+}
+
+.attachment-row {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: .75rem;
+  margin-bottom: .75rem;
+  background: var(--surface-alt);
+}

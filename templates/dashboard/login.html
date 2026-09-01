@@ -1,0 +1,32 @@
+{% extends "dashboard/base.html" %}
+{% load i18n static %}
+{% block title %}{% trans "Connexion" %} — {% trans "Tableau de bord" %} — MINEFOP{% endblock %}
+{% block content %}
+<div class="dashboard-login-wrap">
+  <div class="dashboard-login-card">
+    <div class="text-center mb-4">
+      <img src="{% static 'img/minefop-emblem.png' %}" width="52" height="58" alt="">
+      <h1 class="h5 fw-bold mt-3 mb-0">{% trans "Tableau de bord MINEFOP" %}</h1>
+      <p class="text-muted small mb-0">{% trans "Espace réservé aux agents autorisés" %}</p>
+    </div>
+
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger py-2">{{ form.non_field_errors.0 }}</div>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.GET.next }}">
+      <div class="mb-3">
+        <label class="form-label" for="{{ form.username.id_for_label }}">{% trans "Identifiant" %}</label>
+        {{ form.username }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="{{ form.password.id_for_label }}">{% trans "Mot de passe" %}</label>
+        {{ form.password }}
+      </div>
+      <button type="submit" class="btn btn-outline-minefop w-100">{% trans "Se connecter" %}</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

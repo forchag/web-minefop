@@ -1,0 +1,59 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Blog" %} — {% trans "Tableau de bord" %}{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+  <h1 class="h4 fw-bold mb-0">{% trans "Articles de blog" %}</h1>
+  <a href="{% url 'dashboard:blog_create' %}" class="btn btn-outline-minefop">
+    <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>{% trans "Nouvel article" %}
+  </a>
+</div>
+
+<div class="dashboard-table">
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>{% trans "Titre" %}</th>
+        <th>{% trans "Auteur" %}</th>
+        <th>{% trans "Date" %}</th>
+        <th>{% trans "Statut" %}</th>
+        <th class="text-end">{% trans "Actions" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in page_obj %}
+      <tr>
+        <td>
+          <a href="{% url 'dashboard:blog_edit' post.pk %}" class="fw-semibold text-decoration-none">{{ post.title_fr }}</a>
+          <span class="d-block text-muted small">{{ post.attachments.count }} {% trans "document(s) joint(s)" %}</span>
+        </td>
+        <td>{{ post.author_name }}</td>
+        <td>{{ post.published_at|date:"d/m/Y" }}</td>
+        <td>
+          <form method="post" action="{% url 'dashboard:blog_toggle_publish' post.pk %}" class="d-inline">
+            {% csrf_token %}
+            {% if post.is_published %}
+              <button type="submit" class="badge text-bg-success border-0">{% trans "Publié" %}</button>
+            {% else %}
+              <button type="submit" class="badge text-bg-secondary border-0">{% trans "Brouillon" %}</button>
+            {% endif %}
+          </form>
+        </td>
+        <td class="text-end">
+          <a href="{% url 'dashboard:blog_edit' post.pk %}" class="btn btn-sm btn-outline-minefop" title="{% trans 'Modifier' %}">
+            <i class="bi bi-pencil" aria-hidden="true"></i>
+          </a>
+          <a href="{% url 'dashboard:blog_delete' post.pk %}" class="btn btn-sm btn-outline-danger" title="{% trans 'Supprimer' %}">
+            <i class="bi bi-trash" aria-hidden="true"></i>
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" class="text-muted p-4">{% trans "Aucun article de blog pour le moment." %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% include "partials/pagination.html" %}
+{% endblock %}

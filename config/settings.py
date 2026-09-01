@@ -42,12 +42,14 @@ INSTALLED_APPS = [
     "apps.documents",
     "apps.structures",
     "apps.contact",
+    "apps.dashboard",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "apps.dashboard.middleware.ForceFrenchDashboardMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",

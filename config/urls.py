@@ -18,6 +18,7 @@ from apps.core.views import portal, robots_txt
 urlpatterns = [
     path("", portal, name="portal"),
     path("admin/", admin.site.urls),
+    path("dashboard/", include("apps.dashboard.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
     path("robots.txt", robots_txt, name="robots_txt"),
     path(
