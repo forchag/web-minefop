@@ -185,14 +185,29 @@ class GalleryPhotoForm(BootstrapFormMixin, forms.ModelForm):
 
 
 class DirectorateForm(BootstrapFormMixin, forms.ModelForm):
-    """Scoped on purpose: the org chart itself (name, hierarchy, legal
-    reference) is fixed by decree — only the page-content fields an editor
-    should be updating day to day (mission text and who to contact) are
-    exposed here."""
+    """Scoped on purpose: for the directorates and sub-directorates that
+    come from the decree (name, hierarchy, legal reference fixed by law),
+    only the page-content fields an editor should be updating day to day
+    (mission text and who to contact) are exposed here."""
 
     class Meta:
         model = OrgUnit
         fields = ["mission", "director_name", "director_email"]
+        widgets = {
+            "mission": forms.Textarea(attrs={"rows": 6}),
+        }
+
+
+class OrgUnitCreateForm(BootstrapFormMixin, forms.ModelForm):
+    """Used to add a directorate or sub-directorate that isn't part of the
+    original decree-derived org chart (e.g. one created by a later
+    reorganisation). Unlike DirectorateForm, the name and hierarchy fields
+    are open here since there is no decree text to keep them in sync with —
+    the view sets unit_type and parent itself."""
+
+    class Meta:
+        model = OrgUnit
+        fields = ["name", "head_title", "legal_reference", "mission", "director_name", "director_email", "order"]
         widgets = {
             "mission": forms.Textarea(attrs={"rows": 6}),
         }

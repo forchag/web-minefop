@@ -1,5 +1,5 @@
 {% load i18n static %}<!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ CURRENT_LANGUAGE_CODE }}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,6 +39,22 @@
       <a href="{% url 'dashboard:directorate_list' %}" class="{% if 'directorate' in request.resolver_match.url_name %}active{% endif %}">{% trans "Directions" %}</a>
       <a href="{% url 'dashboard:message_list' %}" class="{% if 'message' in request.resolver_match.url_name %}active{% endif %}">{% trans "Messages" %}</a>
       <a href="/" target="_blank" rel="noopener">{% trans "Voir le site" %} <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>
+      {% get_current_language as CURRENT_LANGUAGE %}
+      {% get_available_languages as AVAILABLE_LANGUAGES %}
+      <div class="lang-switch" role="group" aria-label="{% trans 'Choix de la langue' %}">
+        {% for lang_code, lang_name in AVAILABLE_LANGUAGES %}
+          <form action="{% url 'set_language' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.get_full_path }}">
+            <input name="language" type="hidden" value="{{ lang_code }}">
+            <button type="submit" lang="{{ lang_code }}"
+                    {% if lang_code == CURRENT_LANGUAGE %}aria-current="true"{% endif %}
+                    title="{{ lang_name }}">
+              {{ lang_code|upper }}<span class="visually-hidden"> — {{ lang_name }}</span>
+            </button>
+          </form>
+        {% endfor %}
+      </div>
       <form method="post" action="{% url 'dashboard:logout' %}" class="d-inline m-0">
         {% csrf_token %}
         <button type="submit" class="dashboard-logout-btn">{% trans "Déconnexion" %}</button>
