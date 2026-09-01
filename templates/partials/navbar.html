@@ -24,7 +24,7 @@
             <li><a class="dropdown-item {% if view_name == 'core:history' %}active{% endif %}" href="{% url 'core:history' %}">{% trans "Historique" %}</a></li>
             <li><hr class="dropdown-divider"></li>
             <li class="dropdown-submenu">
-              <a class="dropdown-item dropdown-toggle {% if 'directorate' in view_name %}active{% endif %}" href="#" role="button">{% trans "Directions" %}</a>
+              <a class="dropdown-item dropdown-toggle {% if 'directorate' in view_name %}active{% endif %}" href="{% url 'structures:directorate_list' %}">{% trans "Directions" %}</a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'structures:directorate_list' %}">{% trans "Toutes les directions" %}</a></li>
                 {% if directorates_nav %}<li><hr class="dropdown-divider"></li>{% endif %}
@@ -44,7 +44,7 @@
              data-bs-toggle="dropdown" aria-expanded="false">{% trans "Formation & Emploi" %}</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item {% if view_name == 'core:vocational_training' %}active{% endif %}" href="{% url 'core:vocational_training' %}">{% trans "Le dispositif national de formation" %}</a></li>
-            <li><a class="dropdown-item" href="{% url 'documents:list' %}?categorie=formation-professionnelle">{% trans "Textes régissant la formation" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'documents:list' %}?categorie=referentiels">{% trans "Textes régissant la formation" %}</a></li>
           </ul>
         </li>
 
@@ -64,10 +64,20 @@
              href="{% url 'structures:training_center_list' %}">{% trans "Centres de formation" %}</a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link {% if namespace == 'opportunities' %}active{% endif %}"
-             {% if namespace == 'opportunities' %}aria-current="page"{% endif %}
-             href="{% url 'opportunities:list' %}">{% trans "Opportunités & concours" %}</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if namespace == 'opportunities' %}active{% endif %}" href="#" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">{% trans "Opportunités & concours" %}</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item {% if namespace == 'opportunities' and not request.GET.type %}active{% endif %}" href="{% url 'opportunities:list' %}">{% trans "Toutes les opportunités" %}</a></li>
+            <li><a class="dropdown-item {% if request.GET.type == 'emploi' %}active{% endif %}" href="{% url 'opportunities:list' %}?type=emploi">{% trans "Offres d'emploi" %}</a></li>
+            <li><a class="dropdown-item {% if request.GET.type == 'concours' %}active{% endif %}" href="{% url 'opportunities:list' %}?type=concours">{% trans "Concours" %}</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item" href="https://emploijeune.cm/" target="_blank" rel="noopener noreferrer">
+                Emploi Jeune <i class="bi bi-box-arrow-up-right ms-1" aria-hidden="true" style="font-size:.75rem;"></i>
+              </a>
+            </li>
+          </ul>
         </li>
 
         <li class="nav-item dropdown">

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 from .models import HeroSlide, KeyFigure, MinisterMessage, PartnerSite, Timeline
 
@@ -20,6 +21,13 @@ class KeyFigureAdmin(admin.ModelAdmin):
 @admin.register(MinisterMessage)
 class MinisterMessageAdmin(admin.ModelAdmin):
     list_display = ("title", "full_name", "updated_at")
+    fieldsets = (
+        (None, {"fields": ("full_name", "title", "photo")}),
+        (_("Français"), {"fields": ("message_fr",)}),
+        (_("English"), {"fields": ("message_en",)}),
+        (None, {"fields": ("updated_at",)}),
+    )
+    readonly_fields = ("updated_at",)
 
     def has_add_permission(self, request):
         # Singleton: only one Minister's message record.

@@ -356,10 +356,11 @@ strong, b { font-weight: 600; }
   font-weight: 600;
 }
 
-/* Nested "Directions" flyout inside the Le Ministère dropdown. Bootstrap 5
-   has no built-in multi-level dropdown, so this is a small CSS/JS addition
-   (hover on desktop via .dropdown-submenu:hover, click-to-toggle on
-   mobile/collapsed nav via the .show class set in static/js/main.js). */
+/* Nested "Directions" flyout inside the Le Ministère dropdown: a pure-CSS
+   hover enhancement on desktop, layered over a toggle that is itself a real
+   link to the directorate list page — so it always works (click straight
+   through to the list) even where hover doesn't apply (touch, the
+   collapsed mobile nav) or JavaScript fails to run. No JS dependency. */
 .dropdown-submenu { position: relative; }
 .dropdown-submenu > .dropdown-toggle::after { transform: rotate(-90deg); }
 .dropdown-submenu > .dropdown-menu {
@@ -368,7 +369,6 @@ strong, b { font-weight: 600; }
   margin-top: 0;
   display: none;
 }
-.dropdown-submenu > .dropdown-menu.show { display: block; }
 @media (min-width: 992px) {
   .dropdown-submenu:hover > .dropdown-menu { display: block; }
 }
@@ -400,11 +400,6 @@ strong, b { font-weight: 600; }
   .main-navbar .dropdown-item:focus {
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
-  }
-  .dropdown-submenu > .dropdown-menu {
-    position: static;
-    left: 0;
-    padding-left: 1rem;
   }
 }
 
