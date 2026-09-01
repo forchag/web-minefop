@@ -2,7 +2,6 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import translation
-from django.utils.html import escape
 
 from .models import MAX_ATTACHMENTS_PER_POST, BlogAttachment, BlogPost
 
@@ -17,7 +16,7 @@ def make_cover(name="cover.gif"):
     return SimpleUploadedFile(name, TINY_GIF, content_type="image/gif")
 
 
-class BlogPostTests(TestCase):
+class BlogPostModelTests(TestCase):
     def setUp(self):
         self.published = BlogPost.objects.create(
             title_fr="Un article publié",
@@ -30,24 +29,6 @@ class BlogPostTests(TestCase):
             body_en="The detailed content of the article.",
             cover_image=make_cover(),
         )
-        self.draft = BlogPost.objects.create(
-            title_fr="Un brouillon",
-            title_en="A draft",
-            slug="un-brouillon",
-            author_name="Cellule de communication",
-            excerpt_fr="Résumé du brouillon.",
-            excerpt_en="Draft summary.",
-            body_fr="Contenu du brouillon.",
-            body_en="Draft content.",
-            cover_image=make_cover("draft.gif"),
-            is_published=False,
-        )
-
-    def test_list_shows_only_published_posts(self):
-        response = self.client.get(reverse("blog:list"))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, self.published.title_fr)
-        self.assertNotContains(response, self.draft.title_fr)
 
     def test_title_follows_active_language(self):
         self.assertEqual(self.published.title, self.published.title_fr)
@@ -56,40 +37,41 @@ class BlogPostTests(TestCase):
             self.assertEqual(self.published.excerpt, self.published.excerpt_en)
             self.assertEqual(self.published.body, self.published.body_en)
 
-    def test_detail_shows_english_content_under_english_prefix(self):
-        with translation.override("en"):
-            response = self.client.get(reverse("blog:detail", kwargs={"slug": self.published.slug}))
-        self.assertContains(response, self.published.title_en)
-        self.assertContains(response, escape(self.published.excerpt_en))
+    def test_get_absolute_url_points_at_the_merged_press_section(self):
+        self.assertEqual(self.published.get_absolute_url(), f"/fr/presse/{self.published.slug}/")
 
-    def test_list_shows_author_name(self):
-        response = self.client.get(reverse("blog:list"))
-        self.assertContains(response, "Cellule de communication")
 
-    def test_detail_shows_published_post(self):
-        response = self.client.get(reverse("blog:detail", kwargs={"slug": self.published.slug}))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, self.published.title)
-        self.assertContains(response, self.published.author_name)
-        self.assertContains(response, escape(self.published.excerpt))
+class OldBlogUrlsRedirectToPressTests(TestCase):
+    """Blog posts are now shown through apps.press; the old /blog/ routes
+    must keep working as permanent redirects for bookmarked/indexed links."""
 
-    def test_detail_404s_for_unpublished_post(self):
-        response = self.client.get(reverse("blog:detail", kwargs={"slug": self.draft.slug}))
-        self.assertEqual(response.status_code, 404)
-
-    def test_detail_404s_for_unknown_slug(self):
-        response = self.client.get(reverse("blog:detail", kwargs={"slug": "inconnu"}))
-        self.assertEqual(response.status_code, 404)
-
-    def test_detail_lists_attachments_with_download_links(self):
-        attachment = BlogAttachment.objects.create(
-            post=self.published,
-            file=SimpleUploadedFile("rapport.pdf", b"%PDF-1.4 fake", content_type="application/pdf"),
-            title="Rapport annuel",
+    def setUp(self):
+        self.post = BlogPost.objects.create(
+            title_fr="Un article publié",
+            title_en="A published article",
+            slug="un-article-publie",
+            author_name="Cellule de communication",
+            excerpt_fr="Résumé.",
+            excerpt_en="Summary.",
+            body_fr="Contenu.",
+            body_en="Content.",
+            cover_image=make_cover(),
         )
-        response = self.client.get(reverse("blog:detail", kwargs={"slug": self.published.slug}))
-        self.assertContains(response, "Rapport annuel")
-        self.assertContains(response, attachment.file.url)
+
+    def test_old_list_url_redirects_permanently_to_press(self):
+        response = self.client.get(reverse("blog:list"))
+        self.assertRedirects(
+            response, reverse("press:list"), status_code=301, fetch_redirect_response=False
+        )
+
+    def test_old_detail_url_redirects_permanently_to_press(self):
+        response = self.client.get(reverse("blog:detail", kwargs={"slug": self.post.slug}))
+        self.assertRedirects(
+            response,
+            reverse("press:detail", kwargs={"slug": self.post.slug}),
+            status_code=301,
+            fetch_redirect_response=False,
+        )
 
 
 class BlogAttachmentModelTests(TestCase):

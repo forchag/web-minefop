@@ -5,7 +5,11 @@ from django.urls import reverse
 
 from apps.blog.models import BlogPost
 from apps.contact.models import ContactMessage
+from apps.documents.models import Document, DocumentCategory
+from apps.media.models import Event, GalleryPhoto
 from apps.news.models import Article, NewsCategory
+from apps.opportunities.models import Opportunity
+from apps.structures.models import OrgUnit
 
 TINY_GIF = (
     b"GIF89a\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff!\xf9\x04"
@@ -217,3 +221,163 @@ class DashboardMessageInboxTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.message.refresh_from_db()
         self.assertTrue(self.message.is_read)
+
+
+class DashboardOpportunityCrudTests(TestCase):
+    def setUp(self):
+        self.staff_user = get_user_model().objects.create_user(
+            username="agent", password="s3cret-pass!", is_staff=True
+        )
+        self.client.force_login(self.staff_user)
+
+    def test_create_opportunity_in_one_submit(self):
+        response = self.client.post(
+            reverse("dashboard:opportunity_create"),
+            {
+                "title": "Concours d'entrée au CNFFDP",
+                "kind": "concours",
+                "organisme": "CNFFDP",
+                "summary": "Résumé.",
+                "description": "Description détaillée.",
+                "conditions": "",
+                "application_url": "",
+                "contact_email": "",
+                "is_published": "on",
+                "published_at": "2026-01-01T10:00",
+            },
+        )
+        self.assertRedirects(response, reverse("dashboard:opportunity_list"))
+        opportunity = Opportunity.objects.get(title="Concours d'entrée au CNFFDP")
+        self.assertEqual(opportunity.slug, "concours-dentree-au-cnffdp")
+
+    def test_toggle_publish(self):
+        opportunity = Opportunity.objects.create(
+            title="Offre", slug="offre", organisme="MINEFOP", summary="R.", description="D.",
+        )
+        self.client.post(reverse("dashboard:opportunity_toggle_publish", args=[opportunity.pk]))
+        opportunity.refresh_from_db()
+        self.assertFalse(opportunity.is_published)
+
+    def test_delete_requires_confirmation_then_post(self):
+        opportunity = Opportunity.objects.create(
+            title="À supprimer", slug="a-supprimer", organisme="MINEFOP", summary="R.", description="D.",
+        )
+        confirm = self.client.get(reverse("dashboard:opportunity_delete", args=[opportunity.pk]))
+        self.assertEqual(confirm.status_code, 200)
+        self.client.post(reverse("dashboard:opportunity_delete", args=[opportunity.pk]))
+        self.assertFalse(Opportunity.objects.filter(pk=opportunity.pk).exists())
+
+
+class DashboardDocumentCrudTests(TestCase):
+    def setUp(self):
+        self.staff_user = get_user_model().objects.create_user(
+            username="agent", password="s3cret-pass!", is_staff=True
+        )
+        self.client.force_login(self.staff_user)
+        self.category = DocumentCategory.objects.create(name="Lois", slug="lois")
+
+    def test_create_document_in_one_submit(self):
+        response = self.client.post(
+            reverse("dashboard:document_create"),
+            {
+                "title": "Loi n° 2018/010",
+                "category": self.category.pk,
+                "reference_number": "Loi n° 2018/010",
+                "description": "",
+                "source_url": "",
+                "published_date": "2018-07-11",
+            },
+        )
+        self.assertRedirects(response, reverse("dashboard:document_list"))
+        self.assertTrue(Document.objects.filter(title="Loi n° 2018/010").exists())
+
+    def test_delete_document(self):
+        document = Document.objects.create(title="À supprimer")
+        self.client.post(reverse("dashboard:document_delete", args=[document.pk]))
+        self.assertFalse(Document.objects.filter(pk=document.pk).exists())
+
+
+class DashboardEventCrudTests(TestCase):
+    def setUp(self):
+        self.staff_user = get_user_model().objects.create_user(
+            username="agent", password="s3cret-pass!", is_staff=True
+        )
+        self.client.force_login(self.staff_user)
+
+    def test_create_event_in_one_submit(self):
+        response = self.client.post(
+            reverse("dashboard:event_create"),
+            {
+                "title": "Forum de l'emploi",
+                "description": "Description.",
+                "location": "Yaoundé",
+                "start_at": "2026-03-01T09:00",
+                "end_at": "",
+                "is_published": "on",
+            },
+        )
+        self.assertRedirects(response, reverse("dashboard:event_list"))
+        event = Event.objects.get(title="Forum de l'emploi")
+        self.assertEqual(event.slug, "forum-de-lemploi")
+
+    def test_toggle_publish(self):
+        event = Event.objects.create(title="Événement", slug="evenement", description="D.")
+        self.client.post(reverse("dashboard:event_toggle_publish", args=[event.pk]))
+        event.refresh_from_db()
+        self.assertFalse(event.is_published)
+
+
+class DashboardPhotoCrudTests(TestCase):
+    def setUp(self):
+        self.staff_user = get_user_model().objects.create_user(
+            username="agent", password="s3cret-pass!", is_staff=True
+        )
+        self.client.force_login(self.staff_user)
+
+    def test_create_photo_in_one_submit(self):
+        response = self.client.post(
+            reverse("dashboard:photo_create"),
+            {"title": "Photo test", "image": make_image(), "order": 0, "is_published": "on"},
+        )
+        self.assertRedirects(response, reverse("dashboard:photo_list"))
+        self.assertTrue(GalleryPhoto.objects.filter(title="Photo test").exists())
+
+    def test_delete_photo(self):
+        photo = GalleryPhoto.objects.create(title="À supprimer", image=make_image())
+        self.client.post(reverse("dashboard:photo_delete", args=[photo.pk]))
+        self.assertFalse(GalleryPhoto.objects.filter(pk=photo.pk).exists())
+
+
+class DashboardDirectorateEditTests(TestCase):
+    def setUp(self):
+        self.staff_user = get_user_model().objects.create_user(
+            username="agent", password="s3cret-pass!", is_staff=True
+        )
+        self.client.force_login(self.staff_user)
+        self.directorate = OrgUnit.objects.create(
+            name="Direction des Affaires Générales",
+            unit_type=OrgUnit.UnitType.DIRECTION,
+            head_title="Directeur",
+        )
+
+    def test_directorate_gets_a_slug_on_save(self):
+        self.assertEqual(self.directorate.slug, "direction-des-affaires-generales")
+
+    def test_list_shows_directorate(self):
+        response = self.client.get(reverse("dashboard:directorate_list"))
+        self.assertContains(response, self.directorate.name)
+
+    def test_edit_updates_mission_and_contact_only(self):
+        response = self.client.post(
+            reverse("dashboard:directorate_edit", args=[self.directorate.pk]),
+            {
+                "mission": "Nouvelle mission.",
+                "director_name": "M. Jean Dupont",
+                "director_email": "jean.dupont@minefop.gov.cm",
+            },
+        )
+        self.assertRedirects(response, reverse("dashboard:directorate_list"))
+        self.directorate.refresh_from_db()
+        self.assertEqual(self.directorate.mission, "Nouvelle mission.")
+        self.assertEqual(self.directorate.director_name, "M. Jean Dupont")
+        self.assertEqual(self.directorate.name, "Direction des Affaires Générales")

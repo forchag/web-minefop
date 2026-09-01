@@ -4,7 +4,11 @@ from django.forms import inlineformset_factory
 from django.utils.translation import gettext_lazy as _
 
 from apps.blog.models import MAX_ATTACHMENTS_PER_POST, BlogAttachment, BlogPost
+from apps.documents.models import Document
+from apps.media.models import Event, GalleryPhoto
 from apps.news.models import Article
+from apps.opportunities.models import Opportunity
+from apps.structures.models import OrgUnit
 
 
 class BootstrapFormMixin:
@@ -100,3 +104,95 @@ class ArticleForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["published_at"].input_formats = ["%Y-%m-%dT%H:%M"]
+
+
+class OpportunityForm(BootstrapFormMixin, forms.ModelForm):
+    class Meta:
+        model = Opportunity
+        fields = [
+            "title",
+            "kind",
+            "organisme",
+            "summary",
+            "description",
+            "conditions",
+            "application_deadline",
+            "application_url",
+            "contact_email",
+            "document",
+            "is_published",
+            "published_at",
+        ]
+        widgets = {
+            "summary": forms.Textarea(attrs={"rows": 2}),
+            "description": forms.Textarea(attrs={"rows": 8}),
+            "conditions": forms.Textarea(attrs={"rows": 4}),
+            "application_deadline": forms.DateInput(attrs={"type": "date"}),
+            "published_at": forms.DateTimeInput(attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["published_at"].input_formats = ["%Y-%m-%dT%H:%M"]
+
+
+class DocumentForm(BootstrapFormMixin, forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = [
+            "title",
+            "category",
+            "reference_number",
+            "description",
+            "file",
+            "source_url",
+            "published_date",
+        ]
+        widgets = {
+            "description": forms.Textarea(attrs={"rows": 4}),
+            "published_date": forms.DateInput(attrs={"type": "date"}),
+        }
+
+
+class EventForm(BootstrapFormMixin, forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = [
+            "title",
+            "description",
+            "location",
+            "start_at",
+            "end_at",
+            "cover_image",
+            "is_published",
+        ]
+        widgets = {
+            "description": forms.Textarea(attrs={"rows": 6}),
+            "start_at": forms.DateTimeInput(attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"),
+            "end_at": forms.DateTimeInput(attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["start_at"].input_formats = ["%Y-%m-%dT%H:%M"]
+        self.fields["end_at"].input_formats = ["%Y-%m-%dT%H:%M"]
+
+
+class GalleryPhotoForm(BootstrapFormMixin, forms.ModelForm):
+    class Meta:
+        model = GalleryPhoto
+        fields = ["title", "image", "event", "order", "is_published"]
+
+
+class DirectorateForm(BootstrapFormMixin, forms.ModelForm):
+    """Scoped on purpose: the org chart itself (name, hierarchy, legal
+    reference) is fixed by decree — only the page-content fields an editor
+    should be updating day to day (mission text and who to contact) are
+    exposed here."""
+
+    class Meta:
+        model = OrgUnit
+        fields = ["mission", "director_name", "director_email"]
+        widgets = {
+            "mission": forms.Textarea(attrs={"rows": 6}),
+        }

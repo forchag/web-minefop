@@ -1,0 +1,52 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% block title %}{% if is_new %}{% trans "Nouvel événement" %}{% else %}{% trans "Modifier l'événement" %}{% endif %} — {% trans "Tableau de bord" %}{% endblock %}
+{% block content %}
+<h1 class="h4 fw-bold mb-4">
+  {% if is_new %}{% trans "Nouvel événement" %}{% else %}{% trans "Modifier l'événement" %}{% endif %}
+</h1>
+
+<form method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+  <div class="dashboard-form-card mb-4">
+    <div class="row g-3">
+      <div class="col-md-8">
+        <label class="form-label" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+        {{ form.title }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="{{ form.location.id_for_label }}">{{ form.location.label }}</label>
+        {{ form.location }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.start_at.id_for_label }}">{{ form.start_at.label }}</label>
+        {{ form.start_at }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.end_at.id_for_label }}">{{ form.end_at.label }}</label>
+        {{ form.end_at }}
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+        {{ form.description }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.cover_image.id_for_label }}">{{ form.cover_image.label }}</label>
+        {{ form.cover_image }}
+        {% if event.cover_image %}<div class="form-text">{% trans "Image actuelle conservée si aucun nouveau fichier n'est choisi." %}</div>{% endif %}
+      </div>
+      <div class="col-12 form-check">
+        {{ form.is_published }}
+        <label class="form-check-label" for="{{ form.is_published.id_for_label }}">{{ form.is_published.label }}</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-outline-minefop">
+      <i class="bi bi-check-lg me-1" aria-hidden="true"></i>{% trans "Enregistrer" %}
+    </button>
+    <a href="{% url 'dashboard:event_list' %}" class="btn btn-link text-decoration-none">{% trans "Annuler" %}</a>
+  </div>
+</form>
+{% endblock %}

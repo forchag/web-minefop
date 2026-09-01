@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Galerie photo" %} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{% trans "Photothèque des activités et événements du Ministère de l'Emploi et de la Formation Professionnelle." %}{% endblock %}
+{% block content %}
+{% trans "Galerie photo" as page_title %}
+{% trans "Photothèque des activités et événements du Ministère." as page_subtitle %}
+{% include "partials/page_header.html" %}
+
+<section class="section">
+  <div class="container">
+    {% if events %}
+    <nav class="d-flex flex-wrap gap-2 mb-4" aria-label="{% trans 'Filtrer par événement' %}">
+      <a href="{% url 'media:gallery_list' %}" class="filter-chip {% if not active_event_id %}active{% endif %}"
+         {% if not active_event_id %}aria-current="true"{% endif %}>{% trans "Toutes" %}</a>
+      {% for event in events %}
+      <a href="?evenement={{ event.pk }}" class="filter-chip {% if active_event_id == event.pk %}active{% endif %}"
+         {% if active_event_id == event.pk %}aria-current="true"{% endif %}>{{ event.title|truncatechars:40 }}</a>
+      {% endfor %}
+    </nav>
+    {% endif %}
+
+    <div class="row g-3">
+      {% for photo in page_obj %}
+      <div class="col-6 col-md-4 col-lg-3">
+        <figure class="mb-0">
+          <img src="{{ photo.image.url }}" class="img-fluid rounded" style="aspect-ratio:4/3;object-fit:cover;width:100%;" alt="{{ photo.title }}" loading="lazy">
+          {% if photo.title %}<figcaption class="text-muted small mt-1">{{ photo.title }}</figcaption>{% endif %}
+        </figure>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-minefop">
+          <i class="bi bi-info-circle me-2" aria-hidden="true"></i>{% trans "Aucune photo n'est publiée pour le moment." %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% include "partials/pagination.html" %}
+  </div>
+</section>
+{% endblock %}

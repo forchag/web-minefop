@@ -5,11 +5,12 @@ from .models import AttachedBody, Delegation, OrgUnit, Region, TrainingCenter
 
 @admin.register(OrgUnit)
 class OrgUnitAdmin(admin.ModelAdmin):
-    list_display = ("name", "unit_type", "parent", "order")
+    list_display = ("name", "unit_type", "parent", "director_name", "order")
     list_filter = ("unit_type",)
-    search_fields = ("name",)
+    search_fields = ("name", "director_name")
     ordering = ("order",)
     autocomplete_fields = ("parent",)
+    readonly_fields = ("slug",)
 
 
 @admin.register(Region)

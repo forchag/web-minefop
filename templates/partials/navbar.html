@@ -23,6 +23,16 @@
             <li><a class="dropdown-item {% if view_name == 'core:mission' %}active{% endif %}" href="{% url 'core:mission' %}">{% trans "Missions & attributions" %}</a></li>
             <li><a class="dropdown-item {% if view_name == 'core:history' %}active{% endif %}" href="{% url 'core:history' %}">{% trans "Historique" %}</a></li>
             <li><hr class="dropdown-divider"></li>
+            <li class="dropdown-submenu">
+              <a class="dropdown-item dropdown-toggle {% if 'directorate' in view_name %}active{% endif %}" href="#" role="button">{% trans "Directions" %}</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'structures:directorate_list' %}">{% trans "Toutes les directions" %}</a></li>
+                {% if directorates_nav %}<li><hr class="dropdown-divider"></li>{% endif %}
+                {% for directorate in directorates_nav %}
+                <li><a class="dropdown-item" href="{{ directorate.get_absolute_url }}">{{ directorate.name }}</a></li>
+                {% endfor %}
+              </ul>
+            </li>
             <li><a class="dropdown-item {% if view_name == 'structures:org_chart' %}active{% endif %}" href="{% url 'structures:org_chart' %}">{% trans "Organigramme" %}</a></li>
             <li><a class="dropdown-item {% if view_name == 'structures:attached_bodies' %}active{% endif %}" href="{% url 'structures:attached_bodies' %}">{% trans "Organismes, programmes & projets" %}</a></li>
             <li><a class="dropdown-item {% if view_name == 'structures:delegations' %}active{% endif %}" href="{% url 'structures:delegations' %}">{% trans "Délégations régionales" %}</a></li>
@@ -34,25 +44,40 @@
              data-bs-toggle="dropdown" aria-expanded="false">{% trans "Formation & Emploi" %}</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item {% if view_name == 'core:vocational_training' %}active{% endif %}" href="{% url 'core:vocational_training' %}">{% trans "Le dispositif national de formation" %}</a></li>
-            <li><a class="dropdown-item {% if 'training_center' in view_name %}active{% endif %}" href="{% url 'structures:training_center_list' %}">{% trans "Annuaire des centres de formation" %}</a></li>
             <li><a class="dropdown-item" href="{% url 'documents:list' %}?categorie=formation-professionnelle">{% trans "Textes régissant la formation" %}</a></li>
           </ul>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link {% if namespace == 'news' %}active{% endif %}"
-             {% if namespace == 'news' %}aria-current="page"{% endif %}
-             href="{% url 'news:list' %}">{% trans "Actualités" %}</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if namespace == 'press' %}active{% endif %}" href="#" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">{% trans "Communiqués de presse" %}</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item {% if namespace == 'press' and not request.GET.portee %}active{% endif %}" href="{% url 'press:list' %}">{% trans "Tous les communiqués" %}</a></li>
+            <li><a class="dropdown-item {% if request.GET.portee == 'national' %}active{% endif %}" href="{% url 'press:list' %}?portee=national">{% trans "National" %}</a></li>
+            <li><a class="dropdown-item {% if request.GET.portee == 'regional' %}active{% endif %}" href="{% url 'press:list' %}?portee=regional">{% trans "Régional" %}</a></li>
+          </ul>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link {% if namespace == 'blog' %}active{% endif %}"
-             {% if namespace == 'blog' %}aria-current="page"{% endif %}
-             href="{% url 'blog:list' %}">{% trans "Blog" %}</a>
+          <a class="nav-link {% if 'training_center' in view_name %}active{% endif %}"
+             {% if 'training_center' in view_name %}aria-current="page"{% endif %}
+             href="{% url 'structures:training_center_list' %}">{% trans "Centres de formation" %}</a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link {% if namespace == 'documents' %}active{% endif %}"
-             {% if namespace == 'documents' %}aria-current="page"{% endif %}
-             href="{% url 'documents:list' %}">{% trans "Textes & documents" %}</a>
+          <a class="nav-link {% if namespace == 'opportunities' %}active{% endif %}"
+             {% if namespace == 'opportunities' %}aria-current="page"{% endif %}
+             href="{% url 'opportunities:list' %}">{% trans "Opportunités & concours" %}</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if namespace == 'documents' or namespace == 'media' %}active{% endif %}" href="#" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">{% trans "Documents et médias" %}</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item {% if namespace == 'documents' %}active{% endif %}" href="{% url 'documents:list' %}">{% trans "Documents" %}</a></li>
+            <li><a class="dropdown-item {% if view_name == 'media:event_list' or view_name == 'media:event_detail' %}active{% endif %}" href="{% url 'media:event_list' %}">{% trans "Événements" %}</a></li>
+            <li><a class="dropdown-item {% if view_name == 'media:gallery_list' %}active{% endif %}" href="{% url 'media:gallery_list' %}">{% trans "Galerie photo" %}</a></li>
+          </ul>
         </li>
       </ul>
       <ul class="navbar-nav">

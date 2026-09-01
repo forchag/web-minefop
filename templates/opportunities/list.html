@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Opportunités & concours" %} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{% trans "Offres d'emploi et concours publiés par le Ministère de l'Emploi et de la Formation Professionnelle et ses structures rattachées." %}{% endblock %}
+{% block content %}
+{% trans "Opportunités & concours" as page_title %}
+{% trans "Offres d'emploi et concours publiés par le Ministère et ses structures rattachées." as page_subtitle %}
+{% include "partials/page_header.html" %}
+
+<section class="section">
+  <div class="container">
+    <nav class="d-flex flex-wrap gap-2 mb-4" aria-label="{% trans 'Filtrer par type' %}">
+      <a href="{% url 'opportunities:list' %}" class="filter-chip {% if not active_kind %}active{% endif %}"
+         {% if not active_kind %}aria-current="true"{% endif %}>{% trans "Toutes" %}</a>
+      <a href="?type=emploi" class="filter-chip {% if active_kind == 'emploi' %}active{% endif %}"
+         {% if active_kind == 'emploi' %}aria-current="true"{% endif %}>{% trans "Offres d'emploi" %}</a>
+      <a href="?type=concours" class="filter-chip {% if active_kind == 'concours' %}active{% endif %}"
+         {% if active_kind == 'concours' %}aria-current="true"{% endif %}>{% trans "Concours" %}</a>
+    </nav>
+
+    <div class="row g-4">
+      {% for opportunity in page_obj %}
+      <div class="col-md-6 col-lg-4">
+        <article class="card-minefop position-relative h-100">
+          <div class="p-3 p-lg-4">
+            <div class="d-flex flex-wrap gap-2">
+              <span class="badge-category">{{ opportunity.get_kind_display }}</span>
+              {% if opportunity.is_open %}
+                <span class="badge text-bg-success">{% trans "Ouvert" %}</span>
+              {% else %}
+                <span class="badge text-bg-secondary">{% trans "Clôturé" %}</span>
+              {% endif %}
+            </div>
+            <h2 class="h6 fw-bold mt-2 card-title">
+              <a href="{{ opportunity.get_absolute_url }}" class="stretched-link">{{ opportunity.title }}</a>
+            </h2>
+            <p class="text-muted small mb-1">{{ opportunity.organisme }}</p>
+            <p class="text-muted small">{{ opportunity.summary|truncatechars:110 }}</p>
+            {% if opportunity.application_deadline %}
+            <time class="badge-date" datetime="{{ opportunity.application_deadline|date:'Y-m-d' }}">
+              <i class="bi bi-calendar-x me-1" aria-hidden="true"></i>{% trans "Date limite" %} : {{ opportunity.application_deadline|date:"d/m/Y" }}
+            </time>
+            {% endif %}
+          </div>
+        </article>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-minefop">
+          <i class="bi bi-info-circle me-2" aria-hidden="true"></i>{% trans "Aucune opportunité n'est publiée dans cette rubrique pour le moment." %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% include "partials/pagination.html" %}
+  </div>
+</section>
+{% endblock %}

@@ -11,8 +11,8 @@ class NewsCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "published_at", "is_published")
-    list_filter = ("category", "is_published")
+    list_display = ("title", "category", "scope", "published_at", "is_published")
+    list_filter = ("category", "scope", "is_published")
     search_fields = ("title", "excerpt", "body")
     prepopulated_fields = {"slug": ("title",)}
     date_hierarchy = "published_at"

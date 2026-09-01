@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 
@@ -34,6 +35,17 @@ class OrgUnit(models.Model):
         _("référence légale"), max_length=100, blank=True, help_text=_("Ex : Article 25")
     )
     order = models.PositiveIntegerField(_("ordre"), default=0)
+    slug = models.SlugField(
+        _("slug"), max_length=270, unique=True, null=True, blank=True,
+        help_text=_("Généré automatiquement pour les directions ; sert à leur page dédiée."),
+    )
+    director_name = models.CharField(
+        _("nom du responsable actuel"),
+        max_length=150,
+        blank=True,
+        help_text=_("Nom de la personne occupant actuellement ce poste — à tenir à jour par le Ministère."),
+    )
+    director_email = models.EmailField(_("courriel du responsable"), blank=True)
 
     class Meta:
         verbose_name = _("unité organisationnelle")
@@ -42,6 +54,22 @@ class OrgUnit(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.unit_type == self.UnitType.DIRECTION and not self.slug:
+            base = slugify(self.name)[:260] or "direction"
+            slug = base
+            suffix = 2
+            while OrgUnit.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base}-{suffix}"
+                suffix += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        if self.unit_type == self.UnitType.DIRECTION and self.slug:
+            return reverse("structures:directorate_detail", kwargs={"slug": self.slug})
+        return reverse("structures:org_chart")
 
 
 class Region(models.Model):

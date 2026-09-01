@@ -7,7 +7,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from .validators import validate_file_size
+from apps.core.choices import PressScope
+from apps.core.validators import validate_file_size
 
 #: Kept narrow on purpose: supporting material for a post (reports, decisions,
 #: forms, photos of an event) rather than an open upload of any file type.
@@ -65,6 +66,9 @@ class BlogPost(models.Model):
         validators=[validate_file_size],
         help_text=_("Image mise en avant en tête d'article et dans la liste du blog."),
     )
+    scope = models.CharField(
+        _("portée"), max_length=10, choices=PressScope.choices, default=PressScope.NATIONAL
+    )
     published_at = models.DateTimeField(_("date de publication"), default=timezone.now)
     is_published = models.BooleanField(_("publié"), default=True)
     created_by = models.ForeignKey(
@@ -92,7 +96,7 @@ class BlogPost(models.Model):
         return self.title_fr
 
     def get_absolute_url(self):
-        return reverse("blog:detail", kwargs={"slug": self.slug})
+        return reverse("press:detail", kwargs={"slug": self.slug})
 
     def _localized(self, field_fr, field_en):
         from django.utils.translation import get_language

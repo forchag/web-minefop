@@ -3,6 +3,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from apps.core.choices import PressScope
+
 
 class NewsCategory(models.Model):
     name = models.CharField(_("nom"), max_length=100)
@@ -31,6 +33,9 @@ class Article(models.Model):
     excerpt = models.CharField(_("chapô"), max_length=300)
     body = models.TextField(_("contenu"))
     cover_image = models.ImageField(_("image de couverture"), upload_to="news/", blank=True, null=True)
+    scope = models.CharField(
+        _("portée"), max_length=10, choices=PressScope.choices, default=PressScope.NATIONAL
+    )
     published_at = models.DateTimeField(_("date de publication"), default=timezone.now)
     is_published = models.BooleanField(_("publié"), default=True)
 
@@ -43,4 +48,4 @@ class Article(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("news:detail", kwargs={"slug": self.slug})
+        return reverse("press:detail", kwargs={"slug": self.slug})

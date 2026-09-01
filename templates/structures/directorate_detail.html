@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ directorate.name }} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ directorate.mission|truncatewords:30 }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <nav aria-label="{% trans 'Fil d’Ariane' %}">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">{% trans "Accueil" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'structures:directorate_list' %}">{% trans "Directions" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ directorate.name|truncatechars:60 }}</li>
+      </ol>
+    </nav>
+    <h1>{{ directorate.name }}</h1>
+    {% if directorate.legal_reference %}
+    <p class="page-subtitle">{% trans "Décret n° 2012/644 du 28 décembre 2012" %} — {{ directorate.legal_reference }}</p>
+    {% endif %}
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="row g-4 g-lg-5">
+      <article class="col-lg-8">
+        <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Attributions" %}</h2>
+        {% if directorate.mission %}
+        <div class="article-body">{{ directorate.mission|linebreaks }}</div>
+        {% else %}
+        <p class="text-muted">{% trans "Les attributions détaillées de cette direction seront bientôt publiées." %}</p>
+        {% endif %}
+
+        {% if directorate.children.all %}
+        <div class="mt-5 pt-4" style="border-top:1px solid var(--rule);">
+          <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Sous-structures" %}</h2>
+          <ul class="footer-list list-unstyled d-flex flex-column gap-2">
+            {% for child in directorate.children.all %}
+            <li><i class="bi bi-dot me-1" aria-hidden="true"></i>{{ child.name }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        <div class="d-flex flex-wrap gap-2 mt-5 pt-4" style="border-top:1px solid var(--rule);">
+          <a href="{% url 'structures:directorate_list' %}" class="btn btn-outline-minefop">
+            <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>{% trans "Retour aux directions" %}
+          </a>
+          <a href="{% url 'structures:org_chart' %}" class="btn btn-outline-minefop">
+            {% trans "Voir l'organigramme complet" %}
+          </a>
+        </div>
+      </article>
+
+      <div class="col-lg-4">
+        <div class="card-minefop p-4">
+          <h2 class="h6 fw-bold mb-3">{% trans "Responsable" %}</h2>
+          <p class="fw-semibold mb-1">{{ directorate.head_title|default:_("Directeur") }}</p>
+          {% if directorate.director_name %}
+          <p class="text-muted small mb-2">{{ directorate.director_name }}</p>
+          {% else %}
+          <p class="text-muted small mb-2">{% trans "À renseigner par le Ministère." %}</p>
+          {% endif %}
+          {% if directorate.director_email %}
+          <a href="mailto:{{ directorate.director_email }}" class="btn btn-outline-minefop btn-sm">
+            <i class="bi bi-envelope me-1" aria-hidden="true"></i>{{ directorate.director_email }}
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

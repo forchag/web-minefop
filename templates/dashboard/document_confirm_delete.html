@@ -1,0 +1,16 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Supprimer le document" %} — {% trans "Tableau de bord" %}{% endblock %}
+{% block content %}
+<div class="dashboard-form-card mx-auto" style="max-width:520px;">
+  <h1 class="h5 fw-bold mb-3">{% trans "Supprimer ce document ?" %}</h1>
+  <p>
+    {% blocktrans with title=document.title %}Vous êtes sur le point de supprimer définitivement le document « {{ title }} ». Cette action est irréversible.{% endblocktrans %}
+  </p>
+  <form method="post" class="d-flex gap-2">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">{% trans "Supprimer définitivement" %}</button>
+    <a href="{% url 'dashboard:document_list' %}" class="btn btn-link text-decoration-none">{% trans "Annuler" %}</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Documents" %} — {% trans "Tableau de bord" %}{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+  <h1 class="h4 fw-bold mb-0">{% trans "Documents" %}</h1>
+  <a href="{% url 'dashboard:document_create' %}" class="btn btn-outline-minefop">
+    <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>{% trans "Nouveau document" %}
+  </a>
+</div>
+
+<div class="dashboard-table">
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>{% trans "Titre" %}</th>
+        <th>{% trans "Catégorie" %}</th>
+        <th>{% trans "Référence" %}</th>
+        <th>{% trans "Date" %}</th>
+        <th class="text-end">{% trans "Actions" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for document in page_obj %}
+      <tr>
+        <td><a href="{% url 'dashboard:document_edit' document.pk %}" class="fw-semibold text-decoration-none">{{ document.title }}</a></td>
+        <td>{{ document.category|default:"—" }}</td>
+        <td>{{ document.reference_number|default:"—" }}</td>
+        <td>{{ document.published_date|date:"d/m/Y"|default:"—" }}</td>
+        <td class="text-end">
+          <a href="{% url 'dashboard:document_edit' document.pk %}" class="btn btn-sm btn-outline-minefop" title="{% trans 'Modifier' %}">
+            <i class="bi bi-pencil" aria-hidden="true"></i>
+          </a>
+          <a href="{% url 'dashboard:document_delete' document.pk %}" class="btn btn-sm btn-outline-danger" title="{% trans 'Supprimer' %}">
+            <i class="bi bi-trash" aria-hidden="true"></i>
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" class="text-muted p-4">{% trans "Aucun document pour le moment." %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% include "partials/pagination.html" %}
+{% endblock %}

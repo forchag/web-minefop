@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ opportunity.title }} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ opportunity.summary }}{% endblock %}
+{% block og_title %}{{ opportunity.title }}{% endblock %}
+{% block og_description %}{{ opportunity.summary }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <nav aria-label="{% trans 'Fil d’Ariane' %}">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">{% trans "Accueil" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'opportunities:list' %}">{% trans "Opportunités & concours" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ opportunity.title|truncatechars:60 }}</li>
+      </ol>
+    </nav>
+    <h1>{{ opportunity.title }}</h1>
+    <p class="page-subtitle">
+      {{ opportunity.get_kind_display }}
+      <span class="mx-2">·</span>{{ opportunity.organisme }}
+      <span class="mx-2">·</span>
+      {% if opportunity.is_open %}{% trans "Ouvert" %}{% else %}{% trans "Clôturé" %}{% endif %}
+    </p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="row g-4 g-lg-5">
+      <article class="col-lg-8">
+        <p class="lead">{{ opportunity.summary }}</p>
+        <div class="article-body">{{ opportunity.description|linebreaks }}</div>
+
+        {% if opportunity.conditions %}
+        <div class="mt-4 pt-4" style="border-top:1px solid var(--rule);">
+          <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Conditions de candidature" %}</h2>
+          <div class="article-body">{{ opportunity.conditions|linebreaks }}</div>
+        </div>
+        {% endif %}
+
+        {% if opportunity.document %}
+        <div class="mt-4 pt-4" style="border-top:1px solid var(--rule);">
+          <div class="doc-row p-3 d-flex align-items-center gap-3">
+            <span class="doc-icon"><i class="bi bi-file-earmark-pdf" aria-hidden="true"></i></span>
+            <div class="doc-row-body flex-grow-1">
+              <span class="fw-semibold small">{% trans "Avis officiel" %}</span>
+              <span class="text-muted small d-block text-uppercase">PDF</span>
+            </div>
+            <a href="{{ opportunity.document.url }}" class="btn btn-sm btn-outline-minefop" target="_blank" rel="noopener">
+              <i class="bi bi-download me-1" aria-hidden="true"></i>{% trans "Télécharger" %}
+            </a>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="d-flex flex-wrap gap-2 mt-5 pt-4" style="border-top:1px solid var(--rule);">
+          <a href="{% url 'opportunities:list' %}" class="btn btn-outline-minefop">
+            <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>{% trans "Retour aux opportunités" %}
+          </a>
+          <button type="button" class="btn btn-outline-minefop" onclick="window.print()">
+            <i class="bi bi-printer me-1" aria-hidden="true"></i>{% trans "Imprimer" %}
+          </button>
+        </div>
+      </article>
+
+      <div class="col-lg-4">
+        <div class="card-minefop p-4">
+          <h2 class="h6 fw-bold mb-3">{% trans "Candidater" %}</h2>
+          {% if opportunity.application_deadline %}
+          <p class="text-muted small mb-2">
+            <i class="bi bi-calendar-x me-1" aria-hidden="true"></i>
+            {% trans "Date limite" %} : {{ opportunity.application_deadline|date:"d F Y" }}
+          </p>
+          {% endif %}
+          {% if opportunity.contact_email %}
+          <p class="text-muted small mb-2">
+            <i class="bi bi-envelope me-1" aria-hidden="true"></i>
+            <a href="mailto:{{ opportunity.contact_email }}">{{ opportunity.contact_email }}</a>
+          </p>
+          {% endif %}
+          {% if opportunity.application_url %}
+          <a href="{{ opportunity.application_url }}" class="btn btn-outline-minefop btn-sm mt-2" target="_blank" rel="noopener">
+            {% trans "Postuler en ligne" %}
+          </a>
+          {% endif %}
+        </div>
+
+        {% if related %}
+        <h2 class="h6 fw-bold text-uppercase text-muted mb-3 mt-4" style="letter-spacing:.06em;">{% trans "Autres opportunités" %}</h2>
+        <div class="d-flex flex-column gap-3">
+          {% for item in related %}
+          <a href="{{ item.get_absolute_url }}" class="doc-row p-3 d-flex gap-3 align-items-center text-decoration-none" style="color:var(--ink)">
+            <span class="doc-icon doc-icon-green"><i class="bi bi-briefcase" aria-hidden="true"></i></span>
+            <span>
+              <span class="d-block fw-semibold small">{{ item.title|truncatechars:70 }}</span>
+              <span class="badge-date">{{ item.get_kind_display }}</span>
+            </span>
+          </a>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

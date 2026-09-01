@@ -1,0 +1,44 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% block title %}{% if is_new %}{% trans "Ajouter une photo" %}{% else %}{% trans "Modifier la photo" %}{% endif %} — {% trans "Tableau de bord" %}{% endblock %}
+{% block content %}
+<h1 class="h4 fw-bold mb-4">
+  {% if is_new %}{% trans "Ajouter une photo" %}{% else %}{% trans "Modifier la photo" %}{% endif %}
+</h1>
+
+<form method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+  <div class="dashboard-form-card mb-4">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.image.id_for_label }}">{{ form.image.label }}</label>
+        {{ form.image }}
+        {% if photo.image %}<div class="form-text">{% trans "Photo actuelle conservée si aucun nouveau fichier n'est choisi." %}</div>{% endif %}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+        {{ form.title }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.event.id_for_label }}">{{ form.event.label }}</label>
+        {{ form.event }}
+      </div>
+      <div class="col-md-3">
+        <label class="form-label" for="{{ form.order.id_for_label }}">{{ form.order.label }}</label>
+        {{ form.order }}
+      </div>
+      <div class="col-md-3 d-flex align-items-end form-check">
+        {{ form.is_published }}
+        <label class="form-check-label ms-2" for="{{ form.is_published.id_for_label }}">{{ form.is_published.label }}</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-outline-minefop">
+      <i class="bi bi-check-lg me-1" aria-hidden="true"></i>{% trans "Enregistrer" %}
+    </button>
+    <a href="{% url 'dashboard:photo_list' %}" class="btn btn-link text-decoration-none">{% trans "Annuler" %}</a>
+  </div>
+</form>
+{% endblock %}

@@ -1,10 +1,16 @@
 from django.urls import path
-
-from . import views
+from django.views.generic import RedirectView
 
 app_name = "news"
 
+# News articles are now shown through the merged "Communiqués de presse"
+# section (apps.press) — these routes stay only as permanent redirects for
+# anyone with an old /actualites/ link bookmarked or indexed.
 urlpatterns = [
-    path("", views.article_list, name="list"),
-    path("<slug:slug>/", views.article_detail, name="detail"),
+    path("", RedirectView.as_view(pattern_name="press:list", permanent=True), name="list"),
+    path(
+        "<slug:slug>/",
+        RedirectView.as_view(pattern_name="press:detail", permanent=True),
+        name="detail",
+    ),
 ]

@@ -6,6 +6,8 @@ app_name = "structures"
 
 urlpatterns = [
     path("", views.org_chart, name="org_chart"),
+    path("directions/", views.directorate_list, name="directorate_list"),
+    path("directions/<slug:slug>/", views.directorate_detail, name="directorate_detail"),
     path("organismes-rattaches/", views.attached_bodies, name="attached_bodies"),
     path("delegations/", views.delegations, name="delegations"),
     path("centres-de-formation/", views.training_center_list, name="training_center_list"),

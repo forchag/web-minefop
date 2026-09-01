@@ -1,0 +1,52 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% block title %}{% if is_new %}{% trans "Nouveau document" %}{% else %}{% trans "Modifier le document" %}{% endif %} — {% trans "Tableau de bord" %}{% endblock %}
+{% block content %}
+<h1 class="h4 fw-bold mb-4">
+  {% if is_new %}{% trans "Nouveau document" %}{% else %}{% trans "Modifier le document" %}{% endif %}
+</h1>
+
+<form method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+  <div class="dashboard-form-card mb-4">
+    <div class="row g-3">
+      <div class="col-md-8">
+        <label class="form-label" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+        {{ form.title }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="{{ form.category.id_for_label }}">{{ form.category.label }}</label>
+        {{ form.category }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.reference_number.id_for_label }}">{{ form.reference_number.label }}</label>
+        {{ form.reference_number }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.published_date.id_for_label }}">{{ form.published_date.label }}</label>
+        {{ form.published_date }}
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+        {{ form.description }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.file.id_for_label }}">{{ form.file.label }}</label>
+        {{ form.file }}
+        {% if document.file %}<div class="form-text">{% trans "Fichier actuel conservé si aucun nouveau fichier n'est choisi." %}</div>{% endif %}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.source_url.id_for_label }}">{{ form.source_url.label }}</label>
+        {{ form.source_url }}
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-outline-minefop">
+      <i class="bi bi-check-lg me-1" aria-hidden="true"></i>{% trans "Enregistrer" %}
+    </button>
+    <a href="{% url 'dashboard:document_list' %}" class="btn btn-link text-decoration-none">{% trans "Annuler" %}</a>
+  </div>
+</form>
+{% endblock %}

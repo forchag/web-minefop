@@ -25,11 +25,15 @@ class PublicPagesTests(TestCase):
         "core:accessibility",
         "core:sitemap_page",
         "structures:org_chart",
+        "structures:directorate_list",
         "structures:attached_bodies",
         "structures:delegations",
         "structures:training_center_list",
         "documents:list",
-        "news:list",
+        "media:event_list",
+        "media:gallery_list",
+        "press:list",
+        "opportunities:list",
         "contact:contact",
     ]
 
