@@ -305,7 +305,7 @@ class Command(BaseCommand):
 
         # Administration Centrale (Article 8)
         sg = create(
-            "Secrétariat Général", "direction", parent=minister,
+            "Secrétariat Général", "secretariat_general", parent=minister,
             head_title="Secrétaire Général", order=5, legal_reference="Article 9",
             mission="Coordination de l'action des services centraux et déconcentrés, codification des procédures internes.",
         )

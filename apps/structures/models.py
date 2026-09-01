@@ -10,6 +10,7 @@ class OrgUnit(models.Model):
     class UnitType(models.TextChoices):
         CABINET = "cabinet", _("Cabinet du Ministre")
         INSPECTION = "inspection", _("Inspection Générale")
+        SECRETARIAT_GENERAL = "secretariat_general", _("Secrétariat Général")
         DIVISION = "division", _("Division")
         DIRECTION = "direction", _("Direction")
         SOUS_DIRECTION = "sous_direction", _("Sous-direction")

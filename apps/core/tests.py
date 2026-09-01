@@ -405,3 +405,56 @@ class MinisterMessageTranslationTests(TestCase):
         with translation.override("en"):
             response = self.client.get(reverse("core:minister"))
         self.assertContains(response, self.minister.message_en)
+
+
+class RetranslateStaleMinisterMessageMigrationTests(TestCase):
+    """0009 only translated message_en for one exact known French string, so
+    a database seeded with older wording (still mentioning the budget figures
+    and youth-only phrasing since replaced) kept showing French on the
+    English page. 0010's migration is meant to catch that any time
+    message_en still equals message_fr and it's recognisably the ministry's
+    standard message, regardless of exactly which historical wording it
+    carries."""
+
+    def setUp(self):
+        import importlib
+
+        self.minister = MinisterMessage.load()
+        self.migration_module = importlib.import_module(
+            "apps.core.migrations.0010_retranslate_stale_minister_message"
+        )
+
+    def test_a_stale_untranslated_message_with_older_wording_gets_fixed(self):
+        older_french_wording = (
+            "Chères concitoyennes, chers concitoyens,\n\n"
+            "le Ministère a lancé le 19 novembre 2025 le programme « Un Jeune, un "
+            "Métier, un Emploi » (JEME), doté d'une enveloppe de 17,72 milliards de "
+            "FCFA, afin de former, insérer et autonomiser durablement les jeunes des "
+            "zones rurales, péri-urbaines et urbaines."
+        )
+        self.minister.message_fr = older_french_wording
+        self.minister.message_en = older_french_wording
+        self.minister.save()
+
+        self.migration_module.retranslate_if_stale(apps=self._real_apps(), schema_editor=None)
+
+        self.minister.refresh_from_db()
+        self.assertEqual(self.minister.message_fr, self.migration_module.CURRENT_FRENCH)
+        self.assertEqual(self.minister.message_en, self.migration_module.CURRENT_ENGLISH)
+        self.assertNotEqual(self.minister.message_en, self.minister.message_fr)
+
+    def test_a_message_an_editor_has_already_customised_is_left_untouched(self):
+        self.minister.message_fr = "Un message personnalisé sans rapport avec le JEME."
+        self.minister.message_en = "Un message personnalisé sans rapport avec le JEME."
+        self.minister.save()
+
+        self.migration_module.retranslate_if_stale(apps=self._real_apps(), schema_editor=None)
+
+        self.minister.refresh_from_db()
+        self.assertEqual(self.minister.message_fr, "Un message personnalisé sans rapport avec le JEME.")
+
+    @staticmethod
+    def _real_apps():
+        from django.apps import apps
+
+        return apps
