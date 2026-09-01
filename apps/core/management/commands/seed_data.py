@@ -98,11 +98,11 @@ class Command(BaseCommand):
 
     def seed_minister(self):
         minister = MinisterMessage.load()
-        if minister.message:
+        if minister.message_fr:
             return
         minister.full_name = "Mounouna Foutsou"
         minister.title = "Ministre de l'Emploi et de la Formation Professionnelle (par intérim)"
-        minister.message = (
+        minister.message_fr = (
             "Chères concitoyennes, chers concitoyens,\n\n"
             "Ingénieur de formation et ancien Secrétaire d'État à l'Enseignement Secondaire, "
             "j'assure depuis juin 2025 l'intérim à la tête de ce Département ministériel, en "
@@ -132,6 +132,33 @@ class Command(BaseCommand):
             "Ce site se veut un espace d'information transparent sur nos missions, notre "
             "organisation, nos centres de formation, nos référentiels de métiers et les textes qui "
             "encadrent notre action. Je vous souhaite une excellente navigation."
+        )
+        minister.message_en = (
+            "Dear fellow citizens,\n\n"
+            "A trained engineer and former Secretary of State for Secondary Education, I have "
+            "served as Acting Minister at the head of this Department since June 2025, alongside "
+            "the Ministry of Youth Affairs and Civic Education. It is a mission I carry out with a "
+            "strong sense of duty, in the service of the employability of our fellow Cameroonians.\n\n"
+            "Unemployment and underemployment do not strike a single age group: they affect both "
+            "the person leaving a training centre and the worker whose trade is changing or "
+            "disappearing. That is why our training, retraining and placement schemes are open to "
+            "everyone looking for work, changing career or seeking a qualification, with no age "
+            "condition — Law n° 2018/010 of 11 July 2018 guarantees equal access to training, in "
+            "both official languages, to anyone who meets the required conditions.\n\n"
+            "In line with the direction set by the Head of State, His Excellency Paul BIYA, in his "
+            "inaugural address of 6 November 2025 — that everyone should be able to learn a trade, "
+            "find a job or start their own activity wherever they live — the Ministry launched the "
+            "« Un Jeune, un Métier, un Emploi » (JEME) programme on 19 November 2025, completing a "
+            "national scheme covering rural, peri-urban and urban areas.\n\n"
+            "This ambition rests on the continuous modernisation of our system: the Inserjeune "
+            "digital platform, which tracks more than 15,000 graduates of vocational training; the "
+            "D-CLIC project run with the International Organisation of La Francophonie to train "
+            "people in digital trades; work-linked training carried by FORMPRO 237; and the "
+            "strengthening of our trainers' pedagogical skills through the National Centre for "
+            "Trainer Training and Curriculum Development (CNFFDP).\n\n"
+            "This site is intended as a transparent source of information on our missions, our "
+            "organisation, our training centres, our occupational standards and the texts that "
+            "govern our work. I wish you a pleasant visit."
         )
         minister.save()
         self.stdout.write("Minister's message created.")

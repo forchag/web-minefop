@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.db.models import F
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 
 from .models import Document, DocumentCategory
 
@@ -18,8 +18,12 @@ def document_list(request):
     category_slug = request.GET.get("categorie")
     active_category = None
     if category_slug:
-        active_category = get_object_or_404(DocumentCategory, slug=category_slug)
-        documents = documents.filter(category=active_category)
+        # An unrecognised slug (a stale link, a typo) falls back to showing
+        # every document rather than erroring — the category filter is a
+        # refinement, not a hard requirement for the page to work.
+        active_category = DocumentCategory.objects.filter(slug=category_slug).first()
+        if active_category:
+            documents = documents.filter(category=active_category)
 
     paginator = Paginator(documents, 12)
     page_obj = paginator.get_page(request.GET.get("page"))

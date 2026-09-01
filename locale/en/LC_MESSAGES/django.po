@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-01 09:30+0100\n"
+"POT-Creation-Date: 2026-09-01 21:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -261,11 +261,17 @@ msgstr "Minister of Employment and Vocational Training"
 msgid "photo"
 msgstr "photo"
 
-msgid "mot du ministre"
-msgstr "Minister's message"
+msgid "mot du ministre (français)"
+msgstr "Minister's message (French)"
+
+msgid "mot du ministre (anglais)"
+msgstr "Minister's message (English)"
 
 msgid "dernière mise à jour"
 msgstr "last updated"
+
+msgid "mot du ministre"
+msgstr "Minister's message"
 
 msgid "année"
 msgstr "year"

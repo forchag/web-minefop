@@ -4,8 +4,9 @@ import re
 
 from django.test import TestCase
 from django.urls import reverse
+from django.utils import translation
 
-from apps.core.models import PartnerSite
+from apps.core.models import MinisterMessage, PartnerSite
 from apps.documents.models import Document, DocumentCategory
 from apps.news.models import Article
 from apps.structures.models import AttachedBody, Region, TrainingCenter
@@ -304,6 +305,17 @@ class DocumentDownloadTests(TestCase):
         response = self.client.get(reverse("documents:list"))
         self.assertContains(response, document.source_url)
 
+    def test_an_unknown_category_slug_shows_every_document_instead_of_404ing(self):
+        document = Document.objects.create(
+            title="Référentiel de formation — Soudeur",
+            category=self.category,
+            source_url="https://minefop.cm/images/soudeur.pdf",
+        )
+        response = self.client.get(reverse("documents:list"), {"categorie": "not-a-real-category"})
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNone(response.context["active_category"])
+        self.assertContains(response, document.title)
+
 
 class LegacyLibraryTests(TestCase):
     """The catalogue carried over from the previous site must stay well-formed."""
@@ -355,3 +367,41 @@ class AttachedBodyPageTests(TestCase):
         self.assertEqual(list(response.context["programmes"]), [self.programme])
         self.assertContains(response, "ONEFOP")
         self.assertContains(response, "PADESCE")
+
+
+class NavbarLinksTests(TestCase):
+    """Regression coverage for links embedded directly in the navbar
+    template, which aren't exercised by simply visiting every named view."""
+
+    def test_training_texts_link_points_at_a_real_category(self):
+        response = self.client.get(reverse("core:home"))
+        self.assertContains(response, "?categorie=referentiels")
+
+    def test_opportunities_dropdown_links_to_emploi_jeune(self):
+        response = self.client.get(reverse("core:home"))
+        self.assertContains(response, "https://emploijeune.cm/")
+        self.assertContains(response, "Emploi Jeune")
+
+
+class MinisterMessageTranslationTests(TestCase):
+    def setUp(self):
+        self.minister = MinisterMessage.load()
+        self.minister.message_fr = "Message en français."
+        self.minister.message_en = "Message in English."
+        self.minister.save()
+
+    def test_message_follows_active_language(self):
+        self.assertEqual(self.minister.message, self.minister.message_fr)
+        with translation.override("en"):
+            self.assertEqual(self.minister.message, self.minister.message_en)
+
+    def test_message_falls_back_to_french_when_untranslated(self):
+        self.minister.message_en = ""
+        self.minister.save(update_fields=["message_en"])
+        with translation.override("en"):
+            self.assertEqual(self.minister.message, self.minister.message_fr)
+
+    def test_minister_page_shows_english_message_under_english_prefix(self):
+        with translation.override("en"):
+            response = self.client.get(reverse("core:minister"))
+        self.assertContains(response, self.minister.message_en)

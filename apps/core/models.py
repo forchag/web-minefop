@@ -59,7 +59,8 @@ class MinisterMessage(models.Model):
         default=_("Ministre de l'Emploi et de la Formation Professionnelle"),
     )
     photo = models.ImageField(_("photo"), upload_to="cabinet/", blank=True, null=True)
-    message = models.TextField(_("mot du ministre"))
+    message_fr = models.TextField(_("mot du ministre (français)"))
+    message_en = models.TextField(_("mot du ministre (anglais)"), blank=True)
     updated_at = models.DateTimeField(_("dernière mise à jour"), auto_now=True)
 
     class Meta:
@@ -68,6 +69,18 @@ class MinisterMessage(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+    @property
+    def message(self):
+        """The message in the currently active site language (fr/en),
+        falling back to French if no English translation has been entered
+        yet."""
+        from django.utils.translation import get_language
+
+        language = get_language() or ""
+        if language.startswith("en") and self.message_en:
+            return self.message_en
+        return self.message_fr
 
     def save(self, *args, **kwargs):
         self.pk = 1

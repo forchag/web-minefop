@@ -135,6 +135,26 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# Content-hashed filenames (e.g. main.a1b2c3.js) so that every deploy's
+# `collectstatic` produces new URLs for changed files — visitors and any
+# intermediate cache always fetch the current CSS/JS instead of a stale,
+# previously cached copy served under the same unchanged filename. Only
+# used when DEBUG is off: it requires collectstatic to have been run and
+# would otherwise break `manage.py runserver`/tests, which serve static
+# files without ever running that command.
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": (
+            "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+            if not DEBUG
+            else "django.contrib.staticfiles.storage.StaticFilesStorage"
+        ),
+    },
+}
+
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
