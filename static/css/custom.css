@@ -178,36 +178,6 @@ strong, b { font-weight: 600; }
 .tricolor-bar .bar-red { background-color: var(--cm-red); }
 .tricolor-bar .bar-yellow { background-color: var(--cm-yellow); }
 
-/* Government-identification strip, in the manner of an official state portal. */
-.gov-banner {
-  background-color: var(--surface-alt);
-  border-bottom: 1px solid var(--rule);
-  font-size: 0.8125rem;
-  color: var(--ink-soft);
-}
-.gov-banner .gov-banner-flag {
-  width: 22px;
-  height: 15px;
-  flex-shrink: 0;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  display: inline-flex;
-}
-.gov-banner .gov-banner-flag span { flex: 1 1 0; }
-.gov-banner button.gov-banner-toggle {
-  background: none;
-  border: 0;
-  padding: 0;
-  color: var(--green-700);
-  font-weight: 600;
-  font-size: 0.8125rem;
-  text-decoration: underline;
-}
-.gov-banner .gov-banner-details {
-  border-top: 1px solid var(--rule);
-  background: #fff;
-  font-size: 0.8125rem;
-}
-
 /* --------------------------------------------------------------------------
    4. Utility top bar
    -------------------------------------------------------------------------- */
@@ -1116,7 +1086,6 @@ strong, b { font-weight: 600; }
 }
 
 @media print {
-  .gov-banner,
   .topbar,
   .main-navbar,
   .site-footer,

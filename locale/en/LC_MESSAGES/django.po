@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-31 23:57+0100\n"
+"POT-Creation-Date: 2026-09-01 08:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1553,24 +1553,6 @@ msgstr "Republic of Cameroon. All rights reserved."
 msgid "Contact"
 msgstr "Contact"
 
-msgid "Un site officiel du Gouvernement de la République du Cameroun"
-msgstr "An official site of the Government of the Republic of Cameroon"
-
-msgid "Comment le vérifier"
-msgstr "How to verify this"
-
-msgid "Les adresses officielles se terminent par .cm"
-msgstr "Official addresses end in .cm"
-
-msgid "Ce site est publié par le Ministère de l'Emploi et de la Formation Professionnelle. Vérifiez toujours le nom de domaine avant de transmettre une information."
-msgstr "This site is published by the Ministry of Employment and Vocational Training. Always check the domain name before sending any information."
-
-msgid "Connexion sécurisée (HTTPS)"
-msgstr "Secure connection (HTTPS)"
-
-msgid "Le cadenas affiché par votre navigateur indique que la connexion est chiffrée. Le Ministère ne demande jamais de paiement en ligne pour l'accès à ses services."
-msgstr "The padlock shown by your browser means the connection is encrypted. The Ministry never asks for online payment to access its services."
-
 msgid "Rechercher sur le site"
 msgstr "Search the site"
 
@@ -1588,9 +1570,6 @@ msgstr "Texts governing training"
 
 msgid "Pagination"
 msgstr "Pagination"
-
-msgid "Portail & sites partenaires"
-msgstr "Portal & partner websites"
 
 msgid "Espace agent"
 msgstr "Staff area"
@@ -1732,6 +1711,27 @@ msgstr[1] "%(counter)s centres listed."
 
 msgid "Aucun centre ne correspond à vos critères de recherche."
 msgstr "No centre matches your search criteria."
+
+#~ msgid "Un site officiel du Gouvernement de la République du Cameroun"
+#~ msgstr "An official site of the Government of the Republic of Cameroon"
+
+#~ msgid "Comment le vérifier"
+#~ msgstr "How to verify this"
+
+#~ msgid "Les adresses officielles se terminent par .cm"
+#~ msgstr "Official addresses end in .cm"
+
+#~ msgid "Ce site est publié par le Ministère de l'Emploi et de la Formation Professionnelle. Vérifiez toujours le nom de domaine avant de transmettre une information."
+#~ msgstr "This site is published by the Ministry of Employment and Vocational Training. Always check the domain name before sending any information."
+
+#~ msgid "Connexion sécurisée (HTTPS)"
+#~ msgstr "Secure connection (HTTPS)"
+
+#~ msgid "Le cadenas affiché par votre navigateur indique que la connexion est chiffrée. Le Ministère ne demande jamais de paiement en ligne pour l'accès à ses services."
+#~ msgstr "The padlock shown by your browser means the connection is encrypted. The Ministry never asks for online payment to access its services."
+
+#~ msgid "Portail & sites partenaires"
+#~ msgstr "Portal & partner websites"
 
 #~ msgid "Contenu"
 #~ msgstr "Content"
