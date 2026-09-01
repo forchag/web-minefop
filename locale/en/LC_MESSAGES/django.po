@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-01 21:43+0100\n"
+"POT-Creation-Date: 2026-09-01 22:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -405,8 +405,20 @@ msgid "Photo supprimée."
 msgstr "Photo deleted."
 
 #, python-format
+msgid "Direction « %(name)s » créée."
+msgstr "Directorate “%(name)s” created."
+
+#, python-format
 msgid "Direction « %(name)s » mise à jour."
 msgstr "Directorate “%(name)s” updated."
+
+#, python-format
+msgid "Sous-direction « %(name)s » créée."
+msgstr "Sub-directorate “%(name)s” created."
+
+#, python-format
+msgid "Sous-direction « %(name)s » mise à jour."
+msgstr "Sub-directorate “%(name)s” updated."
 
 msgid "catégorie de document"
 msgstr "document category"
@@ -533,6 +545,9 @@ msgstr "Minister's Office"
 
 msgid "Inspection Générale"
 msgstr "Inspectorate General"
+
+msgid "Secrétariat Général"
+msgstr "Secrétariat Général"
 
 msgid "Division"
 msgstr "Division"
@@ -1438,6 +1453,9 @@ msgstr "Messages"
 msgid "Voir le site"
 msgstr "View site"
 
+msgid "Choix de la langue"
+msgstr "Language selection"
+
 msgid "Déconnexion"
 msgstr "Log out"
 
@@ -1520,11 +1538,29 @@ msgstr "Delete"
 msgid "Aucun article de blog pour le moment."
 msgstr "No blog article yet."
 
-msgid "Les directions elles-mêmes sont fixées par décret : seuls les attributions et le contact du responsable peuvent être mis à jour ici."
-msgstr "The directorates themselves are fixed by decree: only the mission and the head's contact details can be updated here."
+msgid "Ajouter une direction"
+msgstr "Add a directorate"
+
+msgid "À utiliser pour une direction qui ne figure pas dans le décret n° 2012/644 — par exemple une direction créée par une réorganisation ultérieure du Ministère."
+msgstr "Use this for a directorate that isn't in decree n° 2012/644 — for example one created by a later reorganisation of the Ministry."
+
+msgid "Créer"
+msgstr "Create"
+
+msgid "Sous-directions"
+msgstr "Sub-directorates"
+
+msgid "Ajouter une sous-direction"
+msgstr "Add a sub-directorate"
 
 msgid "Responsable"
 msgstr "Head"
+
+msgid "Aucune sous-direction pour le moment."
+msgstr "No sub-directorate yet."
+
+msgid "Les directions issues du décret ne peuvent pas être renommées ici : seuls les attributions et le contact du responsable peuvent être mis à jour. Vous pouvez ajouter de nouvelles directions et leurs sous-directions."
+msgstr "The directorates from the decree cannot be renamed here: only the mission and the head's contact can be updated. You can add new directorates and their sub-directorates."
 
 msgid "Aucune direction pour le moment."
 msgstr "No directorate yet."
@@ -1719,6 +1755,10 @@ msgstr "Current photo kept if no new file is chosen."
 msgid "Aucune photo pour le moment."
 msgstr "No photo yet."
 
+#, python-format
+msgid "Sous-direction de : %(name)s"
+msgstr "Sub-directorate of: %(name)s"
+
 msgid "Textes légaux & documents"
 msgstr "Legal texts & documents"
 
@@ -1881,17 +1921,23 @@ msgstr "Show or hide the menu"
 msgid "Toutes les directions"
 msgstr "All directorates"
 
+msgid "Services déconcentrés"
+msgstr "Decentralised services"
+
 msgid "Textes régissant la formation"
 msgstr "Texts governing training"
+
+msgid "Fonds National de l'Emploi"
+msgstr "Fonds National de l'Emploi (National Employment Fund)"
+
+msgid "Observatoire National de l'Emploi et de la Formation Professionnelle"
+msgstr "Observatoire National de l'Emploi et de la Formation Professionnelle (National Employment and Vocational Training Observatory)"
 
 msgid "Pagination"
 msgstr "Pagination"
 
 msgid "Espace agent"
 msgstr "Staff area"
-
-msgid "Choix de la langue"
-msgstr "Language selection"
 
 msgid "Retour aux communiqués"
 msgstr "Back to press releases"
@@ -2012,9 +2058,6 @@ msgstr "The Ministry of Employment and Vocational Training has a Private Secreta
 
 msgid "L'organigramme sera bientôt disponible."
 msgstr "The organisation chart will be available soon."
-
-msgid "Services déconcentrés"
-msgstr "Decentralised services"
 
 msgid "Délégations Régionales, Délégations Départementales et structures publiques de formation professionnelle."
 msgstr "Regional Delegations, Divisional Delegations and public vocational training institutions."

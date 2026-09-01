@@ -48,7 +48,18 @@ urlpatterns = [
     path("galerie/<int:pk>/supprimer/", views.photo_delete, name="photo_delete"),
 
     path("directions/", views.directorate_list, name="directorate_list"),
+    path("directions/nouveau/", views.directorate_create, name="directorate_create"),
     path("directions/<int:pk>/modifier/", views.directorate_edit, name="directorate_edit"),
+    path(
+        "directions/<int:pk>/sous-directions/nouveau/",
+        views.sous_direction_create,
+        name="sous_direction_create",
+    ),
+    path(
+        "sous-directions/<int:pk>/modifier/",
+        views.sous_direction_edit,
+        name="sous_direction_edit",
+    ),
 
     path("messages/", views.message_list, name="message_list"),
     path("messages/<int:pk>/", views.message_detail, name="message_detail"),

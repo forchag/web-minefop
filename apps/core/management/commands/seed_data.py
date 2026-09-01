@@ -19,6 +19,91 @@ from apps.structures.models import AttachedBody, Delegation, OrgUnit, Region, Tr
 
 SOURCE_PDF_DIR = Path("/root/.claude/uploads/c7a73db5-06c7-58e1-9148-9e5a48db3149")
 
+#: Cameroon's 58 administrative divisions ("départements"), grouped by
+#: region, each with its chef-lieu (main town) — used to seed the
+#: departmental-level delegations shown when a region is selected on the
+#: "Services déconcentrés" page.
+DIVISIONS_BY_REGION = {
+    "Adamaoua": [
+        ("Djérem", "Tibati"),
+        ("Faro-et-Déo", "Tignère"),
+        ("Mayo-Banyo", "Banyo"),
+        ("Mbéré", "Meiganga"),
+        ("Vina", "Ngaoundéré"),
+    ],
+    "Centre": [
+        ("Haute-Sanaga", "Nanga-Eboko"),
+        ("Lekié", "Monatélé"),
+        ("Mbam-et-Inoubou", "Bafia"),
+        ("Mbam-et-Kim", "Ntui"),
+        ("Méfou-et-Afamba", "Mfou"),
+        ("Méfou-et-Akono", "Ngoumou"),
+        ("Mfoundi", "Yaoundé"),
+        ("Nyong-et-Kéllé", "Éséka"),
+        ("Nyong-et-Mfoumou", "Akonolinga"),
+        ("Nyong-et-So'o", "Mbalmayo"),
+    ],
+    "Est": [
+        ("Boumba-et-Ngoko", "Yokadouma"),
+        ("Haut-Nyong", "Abong-Mbang"),
+        ("Kadey", "Batouri"),
+        ("Lom-et-Djérem", "Bertoua"),
+    ],
+    "Extrême-Nord": [
+        ("Diamaré", "Maroua"),
+        ("Logone-et-Chari", "Kousséri"),
+        ("Mayo-Danay", "Yagoua"),
+        ("Mayo-Kani", "Kaélé"),
+        ("Mayo-Sava", "Mora"),
+        ("Mayo-Tsanaga", "Mokolo"),
+    ],
+    "Littoral": [
+        ("Moungo", "Nkongsamba"),
+        ("Nkam", "Yabassi"),
+        ("Sanaga-Maritime", "Édéa"),
+        ("Wouri", "Douala"),
+    ],
+    "Nord": [
+        ("Bénoué", "Garoua"),
+        ("Faro", "Poli"),
+        ("Mayo-Louti", "Guider"),
+        ("Mayo-Rey", "Tcholliré"),
+    ],
+    "Nord-Ouest": [
+        ("Boyo", "Fundong"),
+        ("Bui", "Kumbo"),
+        ("Donga-Mantung", "Nkambe"),
+        ("Menchum", "Wum"),
+        ("Mezam", "Bamenda"),
+        ("Momo", "Mbengwi"),
+        ("Ngo-Ketunjia", "Ndop"),
+    ],
+    "Ouest": [
+        ("Bamboutos", "Mbouda"),
+        ("Haut-Nkam", "Bafang"),
+        ("Hauts-Plateaux", "Baham"),
+        ("Koung-Khi", "Bandjoun"),
+        ("Menoua", "Dschang"),
+        ("Mifi", "Bafoussam"),
+        ("Ndé", "Bangangté"),
+        ("Noun", "Foumban"),
+    ],
+    "Sud": [
+        ("Dja-et-Lobo", "Sangmélima"),
+        ("Mvila", "Ebolowa"),
+        ("Océan", "Kribi"),
+        ("Vallée-du-Ntem", "Ambam"),
+    ],
+    "Sud-Ouest": [
+        ("Fako", "Limbé"),
+        ("Koupé-Manengouba", "Bangem"),
+        ("Lebialem", "Menji"),
+        ("Manyu", "Mamfe"),
+        ("Meme", "Kumba"),
+        ("Ndian", "Mundemba"),
+    ],
+}
+
 #: Logo addresses supplied for the portal, keyed by acronym. They are used
 #: until the image is mirrored onto this domain — see the management command
 #: "fetch_partner_logos".
@@ -461,7 +546,14 @@ class Command(BaseCommand):
                     region=region,
                     town=region.capital,
                 )
-            self.stdout.write("Regions and regional delegations created.")
+                for department_name, chef_lieu in DIVISIONS_BY_REGION.get(name, []):
+                    Delegation.objects.create(
+                        level=Delegation.Level.DEPARTMENTAL,
+                        region=region,
+                        department_name=department_name,
+                        town=chef_lieu,
+                    )
+            self.stdout.write("Regions, regional delegations and divisions created.")
 
     def seed_training_centers(self):
         if TrainingCenter.objects.exists():

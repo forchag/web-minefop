@@ -30,4 +30,43 @@
     <a href="{% url 'dashboard:directorate_list' %}" class="btn btn-link text-decoration-none">{% trans "Annuler" %}</a>
   </div>
 </form>
+
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-5 mb-3">
+  <h2 class="h6 fw-bold mb-0">{% trans "Sous-directions" %}</h2>
+  <a href="{% url 'dashboard:sous_direction_create' directorate.pk %}" class="btn btn-sm btn-outline-minefop">
+    <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>{% trans "Ajouter une sous-direction" %}
+  </a>
+</div>
+<div class="dashboard-table">
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>{% trans "Sous-direction" %}</th>
+        <th>{% trans "Responsable" %}</th>
+        <th>{% trans "Courriel" %}</th>
+        <th class="text-end">{% trans "Actions" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sous_direction in sous_directions %}
+      <tr>
+        <td>
+          <a href="{% url 'dashboard:sous_direction_edit' sous_direction.pk %}" class="fw-semibold text-decoration-none">
+            {{ sous_direction.name }}
+          </a>
+        </td>
+        <td>{{ sous_direction.director_name|default:"—" }}</td>
+        <td>{{ sous_direction.director_email|default:"—" }}</td>
+        <td class="text-end">
+          <a href="{% url 'dashboard:sous_direction_edit' sous_direction.pk %}" class="btn btn-sm btn-outline-minefop" title="{% trans 'Modifier' %}">
+            <i class="bi bi-pencil" aria-hidden="true"></i>
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4" class="text-muted p-4">{% trans "Aucune sous-direction pour le moment." %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

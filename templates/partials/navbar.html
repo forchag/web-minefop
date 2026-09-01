@@ -35,7 +35,7 @@
             </li>
             <li><a class="dropdown-item {% if view_name == 'structures:org_chart' %}active{% endif %}" href="{% url 'structures:org_chart' %}">{% trans "Organigramme" %}</a></li>
             <li><a class="dropdown-item {% if view_name == 'structures:attached_bodies' %}active{% endif %}" href="{% url 'structures:attached_bodies' %}">{% trans "Organismes, programmes & projets" %}</a></li>
-            <li><a class="dropdown-item {% if view_name == 'structures:delegations' %}active{% endif %}" href="{% url 'structures:delegations' %}">{% trans "Délégations régionales" %}</a></li>
+            <li><a class="dropdown-item {% if view_name == 'structures:delegations' %}active{% endif %}" href="{% url 'structures:delegations' %}">{% trans "Services déconcentrés" %}</a></li>
           </ul>
         </li>
 
@@ -75,6 +75,21 @@
             <li>
               <a class="dropdown-item" href="https://emploijeune.cm/" target="_blank" rel="noopener noreferrer">
                 Emploi Jeune <i class="bi bi-box-arrow-up-right ms-1" aria-hidden="true" style="font-size:.75rem;"></i>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="https://fnecm.org/" target="_blank" rel="noopener noreferrer" title="{% trans "Fonds National de l'Emploi" %}">
+                FNE <i class="bi bi-box-arrow-up-right ms-1" aria-hidden="true" style="font-size:.75rem;"></i>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="https://onefop.cm/" target="_blank" rel="noopener noreferrer" title="{% trans "Observatoire National de l'Emploi et de la Formation Professionnelle" %}">
+                ONEFOP <i class="bi bi-box-arrow-up-right ms-1" aria-hidden="true" style="font-size:.75rem;"></i>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="https://www.cnffdp.cm/" target="_blank" rel="noopener noreferrer" title="{% trans "Centre National de Formation des Formateurs et de Développement des Programmes" %}">
+                CNFFDP <i class="bi bi-box-arrow-up-right ms-1" aria-hidden="true" style="font-size:.75rem;"></i>
               </a>
             </li>
           </ul>

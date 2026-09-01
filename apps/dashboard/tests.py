@@ -381,3 +381,77 @@ class DashboardDirectorateEditTests(TestCase):
         self.assertEqual(self.directorate.mission, "Nouvelle mission.")
         self.assertEqual(self.directorate.director_name, "M. Jean Dupont")
         self.assertEqual(self.directorate.name, "Direction des Affaires Générales")
+
+    def test_create_a_new_directorate(self):
+        response = self.client.post(
+            reverse("dashboard:directorate_create"),
+            {
+                "name": "Direction du Numérique",
+                "head_title": "Directeur",
+                "legal_reference": "",
+                "mission": "Numérisation des services du Ministère.",
+                "director_name": "",
+                "director_email": "",
+                "order": 20,
+            },
+        )
+        created = OrgUnit.objects.get(name="Direction du Numérique")
+        self.assertRedirects(response, reverse("dashboard:directorate_edit", args=[created.pk]))
+        self.assertEqual(created.unit_type, OrgUnit.UnitType.DIRECTION)
+        self.assertTrue(created.slug)
+
+    def test_add_and_edit_a_sous_direction(self):
+        create_response = self.client.post(
+            reverse("dashboard:sous_direction_create", args=[self.directorate.pk]),
+            {
+                "name": "Sous-direction des Systèmes d'Information",
+                "head_title": "Sous-directeur",
+                "legal_reference": "",
+                "mission": "Exploitation des systèmes d'information du Ministère.",
+                "director_name": "",
+                "director_email": "",
+                "order": 1,
+            },
+        )
+        self.assertRedirects(create_response, reverse("dashboard:directorate_edit", args=[self.directorate.pk]))
+        sous_direction = OrgUnit.objects.get(name="Sous-direction des Systèmes d'Information")
+        self.assertEqual(sous_direction.unit_type, OrgUnit.UnitType.SOUS_DIRECTION)
+        self.assertEqual(sous_direction.parent, self.directorate)
+
+        edit_response = self.client.post(
+            reverse("dashboard:sous_direction_edit", args=[sous_direction.pk]),
+            {
+                "mission": "Mission mise à jour.",
+                "director_name": "Mme Ada",
+                "director_email": "ada@minefop.gov.cm",
+            },
+        )
+        self.assertRedirects(edit_response, reverse("dashboard:directorate_edit", args=[self.directorate.pk]))
+        sous_direction.refresh_from_db()
+        self.assertEqual(sous_direction.mission, "Mission mise à jour.")
+        self.assertEqual(sous_direction.director_name, "Mme Ada")
+
+    def test_directorate_edit_page_lists_its_sous_directions(self):
+        OrgUnit.objects.create(
+            name="Sous-direction du Budget",
+            unit_type=OrgUnit.UnitType.SOUS_DIRECTION,
+            parent=self.directorate,
+        )
+        response = self.client.get(reverse("dashboard:directorate_edit", args=[self.directorate.pk]))
+        self.assertContains(response, "Sous-direction du Budget")
+
+
+class DashboardLanguageSwitchTests(TestCase):
+    def setUp(self):
+        self.staff_user = get_user_model().objects.create_user(
+            username="agent", password="s3cret-pass!", is_staff=True
+        )
+        self.client.force_login(self.staff_user)
+
+    def test_switching_to_english_via_the_dashboard_switcher_sticks(self):
+        self.client.post(
+            reverse("set_language"),
+            {"language": "en", "next": reverse("dashboard:blog_list")},
+        )
+        response = self.client.get(reverse("dashboard:blog_list"))
+        self.assertContains(response, "Blog articles")

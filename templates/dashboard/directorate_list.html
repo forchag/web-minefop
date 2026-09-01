@@ -2,8 +2,13 @@
 {% load i18n %}
 {% block title %}{% trans "Directions" %} — {% trans "Tableau de bord" %}{% endblock %}
 {% block content %}
-<h1 class="h4 fw-bold mb-2">{% trans "Directions" %}</h1>
-<p class="text-muted mb-4">{% trans "Les directions elles-mêmes sont fixées par décret : seuls les attributions et le contact du responsable peuvent être mis à jour ici." %}</p>
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+  <h1 class="h4 fw-bold mb-0">{% trans "Directions" %}</h1>
+  <a href="{% url 'dashboard:directorate_create' %}" class="btn btn-sm btn-outline-minefop">
+    <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>{% trans "Ajouter une direction" %}
+  </a>
+</div>
+<p class="text-muted mb-4">{% trans "Les directions issues du décret ne peuvent pas être renommées ici : seuls les attributions et le contact du responsable peuvent être mis à jour. Vous pouvez ajouter de nouvelles directions et leurs sous-directions." %}</p>
 
 <div class="dashboard-table">
   <table class="table mb-0">

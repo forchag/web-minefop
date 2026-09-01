@@ -27,6 +27,7 @@ from .forms import (
     EventForm,
     GalleryPhotoForm,
     OpportunityForm,
+    OrgUnitCreateForm,
 )
 from .utils import unique_slug
 
@@ -418,14 +419,37 @@ def photo_delete(request, pk):
 
 
 # ---------------------------------------------------------------------------
-# Directorates (mission text & responsible contact only — the org chart
-# structure itself is fixed by decree and stays out of the dashboard).
+# Directorates & sub-directorates. For the decree-derived org chart, only
+# mission text and the responsible contact are editable here (name and
+# hierarchy are fixed by law); brand-new directorates/sub-directorates added
+# through the dashboard get full fields since there's no decree text to stay
+# in sync with.
 # ---------------------------------------------------------------------------
 
 @staff_required
 def directorate_list(request):
     directorates = OrgUnit.objects.filter(unit_type=OrgUnit.UnitType.DIRECTION).order_by("order")
     return render(request, "dashboard/directorate_list.html", {"directorates": directorates})
+
+
+@staff_required
+def directorate_create(request):
+    if request.method == "POST":
+        form = OrgUnitCreateForm(request.POST)
+        if form.is_valid():
+            minister = OrgUnit.objects.filter(unit_type=OrgUnit.UnitType.CABINET).first()
+            directorate = form.save(commit=False)
+            directorate.unit_type = OrgUnit.UnitType.DIRECTION
+            directorate.parent = minister
+            directorate.save()
+            messages.success(
+                request, _("Direction « %(name)s » créée.") % {"name": directorate.name}
+            )
+            return redirect("dashboard:directorate_edit", directorate.pk)
+    else:
+        form = OrgUnitCreateForm()
+
+    return render(request, "dashboard/directorate_create_form.html", {"form": form})
 
 
 @staff_required
@@ -443,6 +467,67 @@ def directorate_edit(request, pk):
     else:
         form = DirectorateForm(instance=directorate)
 
+    sous_directions = directorate.children.filter(
+        unit_type=OrgUnit.UnitType.SOUS_DIRECTION
+    ).order_by("order")
+
     return render(
-        request, "dashboard/directorate_form.html", {"form": form, "directorate": directorate}
+        request,
+        "dashboard/directorate_form.html",
+        {"form": form, "directorate": directorate, "sous_directions": sous_directions},
+    )
+
+
+@staff_required
+def sous_direction_create(request, pk):
+    directorate = get_object_or_404(OrgUnit, pk=pk, unit_type=OrgUnit.UnitType.DIRECTION)
+
+    if request.method == "POST":
+        form = OrgUnitCreateForm(request.POST)
+        if form.is_valid():
+            sous_direction = form.save(commit=False)
+            sous_direction.unit_type = OrgUnit.UnitType.SOUS_DIRECTION
+            sous_direction.parent = directorate
+            sous_direction.save()
+            messages.success(
+                request,
+                _("Sous-direction « %(name)s » créée.") % {"name": sous_direction.name},
+            )
+            return redirect("dashboard:directorate_edit", directorate.pk)
+    else:
+        form = OrgUnitCreateForm()
+
+    return render(
+        request,
+        "dashboard/sous_direction_form.html",
+        {"form": form, "directorate": directorate, "is_new": True},
+    )
+
+
+@staff_required
+def sous_direction_edit(request, pk):
+    sous_direction = get_object_or_404(OrgUnit, pk=pk, unit_type=OrgUnit.UnitType.SOUS_DIRECTION)
+    directorate = sous_direction.parent
+
+    if request.method == "POST":
+        form = DirectorateForm(request.POST, instance=sous_direction)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request,
+                _("Sous-direction « %(name)s » mise à jour.") % {"name": sous_direction.name},
+            )
+            return redirect("dashboard:directorate_edit", directorate.pk)
+    else:
+        form = DirectorateForm(instance=sous_direction)
+
+    return render(
+        request,
+        "dashboard/sous_direction_form.html",
+        {
+            "form": form,
+            "directorate": directorate,
+            "sous_direction": sous_direction,
+            "is_new": False,
+        },
     )

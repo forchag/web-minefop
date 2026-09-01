@@ -382,6 +382,19 @@ class NavbarLinksTests(TestCase):
         self.assertContains(response, "https://emploijeune.cm/")
         self.assertContains(response, "Emploi Jeune")
 
+    def test_opportunities_dropdown_links_to_the_attached_bodies(self):
+        response = self.client.get(reverse("core:home"))
+        self.assertContains(response, "https://fnecm.org/")
+        self.assertContains(response, "FNE")
+        self.assertContains(response, "https://onefop.cm/")
+        self.assertContains(response, "ONEFOP")
+        self.assertContains(response, "https://www.cnffdp.cm/")
+        self.assertContains(response, "CNFFDP")
+
+    def test_the_delegations_link_is_now_labelled_deconcentrated_services(self):
+        response = self.client.get(reverse("core:home"))
+        self.assertContains(response, "Services déconcentrés")
+
 
 class MinisterMessageTranslationTests(TestCase):
     def setUp(self):
