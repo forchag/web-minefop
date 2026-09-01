@@ -8,10 +8,13 @@ from django.utils import timezone
 from django.utils.text import slugify
 
 from apps.contact.models import ContactInfo
+from apps.core.choices import PressScope
 from apps.core.models import HeroSlide, KeyFigure, MinisterMessage, PartnerSite, Timeline
 from apps.documents.legacy_library import LEGACY, OTHER_DOCUMENTS, REFERENTIALS
 from apps.documents.models import Document, DocumentCategory
+from apps.media.models import Event, GalleryPhoto
 from apps.news.models import Article, NewsCategory
+from apps.opportunities.models import Opportunity
 from apps.structures.models import AttachedBody, Delegation, OrgUnit, Region, TrainingCenter
 
 SOURCE_PDF_DIR = Path("/root/.claude/uploads/c7a73db5-06c7-58e1-9148-9e5a48db3149")
@@ -56,6 +59,8 @@ class Command(BaseCommand):
         self.seed_training_centers()
         self.seed_documents()
         self.seed_news()
+        self.seed_opportunities()
+        self.seed_events_and_gallery()
         self.stdout.write(self.style.SUCCESS("MINEFOP seed data created successfully."))
 
     # ------------------------------------------------------------------
@@ -703,6 +708,14 @@ class Command(BaseCommand):
             ),
         ]
 
+        # Coverage tied to a specific locality reads as regional; the rest
+        # (ministry-wide programmes, national statistics, national campaigns)
+        # is national.
+        regional_titles = {
+            "Synopsis des Centres Sectoriels de Formation Professionnelle de Douala et d'Edéa",
+            "Travailleurs étrangers en situation irrégulière : on passe à l'offensive",
+        }
+
         for title, category, excerpt, body, published_date in articles:
             Article.objects.create(
                 title=title,
@@ -710,11 +723,136 @@ class Command(BaseCommand):
                 category=category,
                 excerpt=excerpt,
                 body=body,
+                scope=PressScope.REGIONAL if title in regional_titles else PressScope.NATIONAL,
                 published_at=timezone.make_aware(datetime.combine(published_date, datetime.min.time())),
             )
         self.stdout.write(
             self.style.SUCCESS(
                 f"News articles created ({Article.objects.count()}), including those "
                 "carried over from the Ministry's previous website."
+            )
+        )
+
+    # ------------------------------------------------------------------
+    def seed_opportunities(self):
+        if Opportunity.objects.exists():
+            return
+
+        opportunities = [
+            (
+                "Recrutement de 265 formateurs et encadreurs au CNFFDP",
+                Opportunity.Kind.JOB,
+                "CNFFDP",
+                "Le CNFFDP recrute 265 formateurs et encadreurs pour renforcer l'offre nationale de formation professionnelle.",
+                "Le Centre National de Formation des Formateurs et de Développement des Programmes (CNFFDP) ouvre une "
+                "campagne de recrutement et de formation certifiante pour 265 formateurs et encadreurs de la formation "
+                "professionnelle, dans le cadre du renforcement de la qualité de l'apprentissage technique et professionnel.",
+                "Être titulaire d'un diplôme dans le domaine technique ou professionnel concerné. "
+                "Justifier d'une expérience pertinente dans la formation ou l'encadrement pédagogique.",
+                date(2026, 3, 27),
+            ),
+            (
+                "Concours d'entrée aux Centres de Formation Professionnelle Rapide",
+                Opportunity.Kind.CONCOURS,
+                "MINEFOP",
+                "Concours national d'accès aux Centres Publics de Formation Professionnelle Rapide (CPFPR), toutes régions confondues.",
+                "Le Ministère de l'Emploi et de la Formation Professionnelle organise un concours national d'accès aux "
+                "Centres Publics de Formation Professionnelle Rapide (CPFPR), ouvert à toute personne en recherche d'une "
+                "qualification professionnelle, sans condition d'âge.",
+                "Résider dans la région du centre de formation choisi. Aptitude physique confirmée par un certificat médical. "
+                "Aucun diplôme préalable n'est exigé pour la plupart des filières.",
+                date(2026, 4, 15),
+            ),
+            (
+                "Concours d'entrée en formation au CNFFDP",
+                Opportunity.Kind.CONCOURS,
+                "CNFFDP",
+                "Concours d'accès aux filières de formation de formateurs du Centre National de Formation des Formateurs et de Développement des Programmes.",
+                "Le CNFFDP organise son concours d'entrée annuel pour les candidats souhaitant se former aux métiers de "
+                "formateur et de développeur de programmes de formation professionnelle.",
+                "Être titulaire d'un diplôme de l'enseignement technique ou général de niveau requis pour la filière visée. "
+                "Se rapprocher du CNFFDP ou des délégations régionales du Ministère pour le dossier de candidature.",
+                None,
+            ),
+        ]
+
+        for title, kind, organisme, summary, description, conditions, deadline in opportunities:
+            Opportunity.objects.create(
+                title=title,
+                slug=slugify(title)[:250],
+                kind=kind,
+                organisme=organisme,
+                summary=summary,
+                description=description,
+                conditions=conditions,
+                application_deadline=deadline,
+                contact_email="contact@minefop.gov.cm",
+            )
+        self.stdout.write(self.style.SUCCESS(f"Opportunities created ({Opportunity.objects.count()})."))
+
+    # ------------------------------------------------------------------
+    def seed_events_and_gallery(self):
+        if Event.objects.exists() or GalleryPhoto.objects.exists():
+            return
+
+        gallery_dir = Path(settings.STATICFILES_DIRS[0]) / "img" / "gallery"
+
+        def attach_image(field, filename):
+            path = gallery_dir / filename
+            if path.exists():
+                with path.open("rb") as f:
+                    field.save(filename, File(f), save=False)
+
+        events_definitions = [
+            (
+                "Mission de supervision de l'AFD sur les projets C2D Formation Professionnelle",
+                "Restitution des constats et observations d'une mission de supervision de l'Agence Française de Développement, en présence du Ministre par intérim.",
+                "Yaoundé",
+                date(2025, 7, 8),
+                "audience-delegation-partenaire.jpg",
+            ),
+            (
+                "Réception de la délégation du groupe CFAO Mobility",
+                "Audience autour des possibilités de création de centres de formation professionnelle spécialisés dans les métiers de la mécanique automobile.",
+                "Yaoundé",
+                date(2025, 7, 7),
+                "accueil-delegation.jpg",
+            ),
+            (
+                "Réunion de gouvernance des Centres Sectoriels de Formation Professionnelle",
+                "Mise en place des instances de gouvernance des Centres Sectoriels de Formation Professionnelle (CFPS) de Douala et d'Edéa.",
+                "Douala",
+                date(2025, 7, 3),
+                "reunion-gouvernance-cfps.jpg",
+            ),
+        ]
+
+        events = []
+        for title, description, location, start_date, image_filename in events_definitions:
+            event = Event(
+                title=title,
+                slug=slugify(title)[:250],
+                description=description,
+                location=location,
+                start_at=timezone.make_aware(datetime.combine(start_date, datetime(2025, 1, 1, 10, 0).time())),
+            )
+            attach_image(event.cover_image, image_filename)
+            event.save()
+            events.append(event)
+
+        gallery_definitions = [
+            ("Séance de travail au Cabinet du Ministre", "declaration-ministre.jpg", None),
+            ("Audience avec une délégation partenaire", "audience-cabinet-1.jpg", events[1]),
+            ("MINEFOP News — inauguration du CNFFDP", "minefop-news-cnffdp.jpg", None),
+        ]
+        for order, (title, filename, event) in enumerate(gallery_definitions):
+            photo = GalleryPhoto(title=title, event=event, order=order)
+            attach_image(photo.image, filename)
+            if photo.image:
+                photo.save()
+
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Events created ({Event.objects.count()}), gallery photos created ({GalleryPhoto.objects.count()})."
             )
         )

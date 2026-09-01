@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ event.title }} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ event.description|truncatewords:30 }}{% endblock %}
+{% block og_title %}{{ event.title }}{% endblock %}
+{% block og_image %}{% if event.cover_image %}{{ request.scheme }}://{{ request.get_host }}{{ event.cover_image.url }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <nav aria-label="{% trans 'Fil d’Ariane' %}">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">{% trans "Accueil" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'media:event_list' %}">{% trans "Événements" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ event.title|truncatechars:60 }}</li>
+      </ol>
+    </nav>
+    <h1>{{ event.title }}</h1>
+    <p class="page-subtitle">
+      <i class="bi bi-calendar3 me-1" aria-hidden="true"></i>{{ event.start_at|date:"d F Y, H:i" }}
+      {% if event.location %}<span class="mx-2">·</span><i class="bi bi-geo-alt me-1" aria-hidden="true"></i>{{ event.location }}{% endif %}
+    </p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="row g-4 g-lg-5">
+      <article class="col-lg-8">
+        {% if event.cover_image %}
+        <figure class="mb-4">
+          <img src="{{ event.cover_image.url }}" class="img-fluid rounded w-100" style="border:1px solid var(--rule);" alt="">
+        </figure>
+        {% endif %}
+        <div class="article-body">{{ event.description|linebreaks }}</div>
+
+        {% if photos %}
+        <div class="mt-5 pt-4" style="border-top:1px solid var(--rule);">
+          <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Photos de l'événement" %}</h2>
+          <div class="row g-3">
+            {% for photo in photos %}
+            <div class="col-6 col-md-4">
+              <img src="{{ photo.image.url }}" class="img-fluid rounded" style="aspect-ratio:4/3;object-fit:cover;width:100%;" alt="{{ photo.title }}">
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="d-flex flex-wrap gap-2 mt-5 pt-4" style="border-top:1px solid var(--rule);">
+          <a href="{% url 'media:event_list' %}" class="btn btn-outline-minefop">
+            <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>{% trans "Retour aux événements" %}
+          </a>
+        </div>
+      </article>
+
+      <div class="col-lg-4">
+        <div class="card-minefop p-4">
+          <h2 class="h6 fw-bold mb-2">{% trans "Galerie photo" %}</h2>
+          <p class="text-muted small">{% trans "Retrouvez toutes les photos des événements du Ministère." %}</p>
+          <a href="{% url 'media:gallery_list' %}?evenement={{ event.pk }}" class="btn btn-outline-minefop btn-sm">{% trans "Voir la galerie" %}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-01 08:50+0100\n"
+"POT-Creation-Date: 2026-09-01 09:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,6 +75,9 @@ msgstr "cover image"
 msgid "Image mise en avant en tête d'article et dans la liste du blog."
 msgstr "Featured image shown at the top of the article and in the blog list."
 
+msgid "portée"
+msgstr "scope"
+
 msgid "date de publication"
 msgstr "publication date"
 
@@ -119,10 +122,6 @@ msgstr "attached document"
 
 msgid "documents joints"
 msgstr "attached documents"
-
-#, python-format
-msgid "Ce fichier (%(size)s) dépasse la taille maximale autorisée de %(max)s."
-msgstr "This file (%(size)s) exceeds the maximum allowed size of %(max)s."
 
 msgid "Votre nom"
 msgstr "Your name"
@@ -204,6 +203,12 @@ msgstr "contact messages"
 
 msgid "Votre message a bien été envoyé. Nous vous répondrons dans les meilleurs délais."
 msgstr "Your message has been sent. We will get back to you as soon as possible."
+
+msgid "National"
+msgstr "National"
+
+msgid "Régional"
+msgstr "Regional"
 
 msgid "titre"
 msgstr "title"
@@ -340,6 +345,10 @@ msgstr "partner website"
 msgid "sites partenaires"
 msgstr "partner websites"
 
+#, python-format
+msgid "Ce fichier (%(size)s) dépasse la taille maximale autorisée de %(max)s."
+msgstr "This file (%(size)s) exceeds the maximum allowed size of %(max)s."
+
 msgid "Identifiant ou mot de passe incorrect, ou compte non autorisé à accéder au tableau de bord."
 msgstr "Incorrect username or password, or account not authorised to access the dashboard."
 
@@ -358,6 +367,40 @@ msgstr "News item “%(title)s” saved."
 #, python-format
 msgid "Actualité « %(title)s » supprimée."
 msgstr "News item “%(title)s” deleted."
+
+#, python-format
+msgid "Opportunité « %(title)s » enregistrée."
+msgstr "Opportunity “%(title)s” saved."
+
+#, python-format
+msgid "Opportunité « %(title)s » supprimée."
+msgstr "Opportunity “%(title)s” deleted."
+
+#, python-format
+msgid "Document « %(title)s » enregistré."
+msgstr "Document “%(title)s” saved."
+
+#, python-format
+msgid "Document « %(title)s » supprimé."
+msgstr "Document “%(title)s” deleted."
+
+#, python-format
+msgid "Événement « %(title)s » enregistré."
+msgstr "Event “%(title)s” saved."
+
+#, python-format
+msgid "Événement « %(title)s » supprimé."
+msgstr "Event “%(title)s” deleted."
+
+msgid "Photo enregistrée."
+msgstr "Photo saved."
+
+msgid "Photo supprimée."
+msgstr "Photo deleted."
+
+#, python-format
+msgid "Direction « %(name)s » mise à jour."
+msgstr "Directorate “%(name)s” updated."
 
 msgid "catégorie de document"
 msgstr "document category"
@@ -386,6 +429,30 @@ msgstr "Use this when the document has not been uploaded yet and is still hosted
 msgid "date de signature/publication"
 msgstr "signature/publication date"
 
+msgid "lieu"
+msgstr "location"
+
+msgid "date et heure de début"
+msgstr "start date and time"
+
+msgid "date et heure de fin"
+msgstr "end date and time"
+
+msgid "événement"
+msgstr "event"
+
+msgid "événements"
+msgstr "events"
+
+msgid "légende"
+msgstr "caption"
+
+msgid "ajoutée le"
+msgstr "added on"
+
+msgid "galerie photo"
+msgstr "photo gallery"
+
 msgid "catégorie d'actualité"
 msgstr "news category"
 
@@ -400,6 +467,60 @@ msgstr "content"
 
 msgid "actualités"
 msgstr "news"
+
+msgid "Contenu"
+msgstr "Content"
+
+msgid "Candidature"
+msgstr "Application"
+
+msgid "Offre d'emploi"
+msgstr "Job opening"
+
+msgid "Concours"
+msgstr "Competitive exam"
+
+msgid "type"
+msgstr "type"
+
+msgid "organisme"
+msgstr "organisation"
+
+msgid "Structure qui recrute ou organise le concours (ex. MINEFOP, CNFFDP, une délégation régionale)."
+msgstr "Body recruiting or organising the exam (e.g. MINEFOP, CNFFDP, a regional delegation)."
+
+msgid "résumé"
+msgstr "summary"
+
+msgid "conditions de candidature"
+msgstr "application conditions"
+
+msgid "Diplômes, âge, expérience ou autres critères d'éligibilité."
+msgstr "Diplomas, age, experience or other eligibility criteria."
+
+msgid "date limite de candidature"
+msgstr "application deadline"
+
+msgid "Laisser vide si l'offre reste ouverte jusqu'à nouvel ordre."
+msgstr "Leave empty if the opening stays open until further notice."
+
+msgid "lien de candidature"
+msgstr "application link"
+
+msgid "courriel de contact"
+msgstr "contact email"
+
+msgid "avis officiel (PDF)"
+msgstr "official notice (PDF)"
+
+msgid "Avis de concours ou fiche de poste, au format PDF."
+msgstr "Competitive exam notice or job description, in PDF format."
+
+msgid "opportunité"
+msgstr "opportunity"
+
+msgid "opportunités & concours"
+msgstr "opportunities & competitive exams"
 
 msgid "Cabinet du Ministre"
 msgstr "Minister's Office"
@@ -425,9 +546,6 @@ msgstr "Department"
 msgid "Bureau"
 msgstr "Office"
 
-msgid "type"
-msgstr "type"
-
 msgid "unité parente"
 msgstr "parent unit"
 
@@ -445,6 +563,18 @@ msgstr "legal reference"
 
 msgid "Ex : Article 25"
 msgstr "E.g.: Article 25"
+
+msgid "Généré automatiquement pour les directions ; sert à leur page dédiée."
+msgstr "Generated automatically for directorates; used for their dedicated page."
+
+msgid "nom du responsable actuel"
+msgstr "current head's name"
+
+msgid "Nom de la personne occupant actuellement ce poste — à tenir à jour par le Ministère."
+msgstr "Name of the person currently holding this position — to be kept up to date by the Ministry."
+
+msgid "courriel du responsable"
+msgstr "head's email"
 
 msgid "unité organisationnelle"
 msgstr "organisational unit"
@@ -568,48 +698,6 @@ msgstr "Skip to main content"
 
 msgid "Fermer"
 msgstr "Close"
-
-msgid "Fil d’Ariane"
-msgstr "Breadcrumb"
-
-msgid "Accueil"
-msgstr "Home"
-
-msgid "Blog"
-msgstr "Blog"
-
-msgid "Documents joints"
-msgstr "Attached documents"
-
-msgid "Télécharger"
-msgstr "Download"
-
-msgid "Retour au blog"
-msgstr "Back to blog"
-
-msgid "Imprimer"
-msgstr "Print"
-
-msgid "À lire aussi"
-msgstr "Also read"
-
-msgid "Rester informé"
-msgstr "Stay informed"
-
-msgid "Retrouvez l'ensemble des communiqués et des textes publiés par le Ministère."
-msgstr "Browse all the press releases and texts published by the Ministry."
-
-msgid "Actualités"
-msgstr "News"
-
-msgid "Regards, entretiens et prises de parole du Ministère de l'Emploi et de la Formation Professionnelle."
-msgstr "Insights, interviews and statements from the Ministry of Employment and Vocational Training."
-
-msgid "Regards, entretiens et prises de parole du Ministère."
-msgstr "Insights, interviews and statements from the Ministry."
-
-msgid "Aucun article de blog n'est publié pour le moment."
-msgstr "No blog article is published at the moment."
 
 msgid "Nous contacter"
 msgstr "Contact us"
@@ -891,17 +979,26 @@ msgstr "Read the full message"
 msgid "Communication du Ministère"
 msgstr "Ministry communications"
 
-msgid "Toutes les actualités"
-msgstr "All news"
+msgid "Communiqués de presse"
+msgstr "Press releases"
 
-msgid "Aucune actualité publiée pour le moment."
-msgstr "No news published at the moment."
+msgid "Tous les communiqués"
+msgstr "All press releases"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Aucun communiqué publié pour le moment."
+msgstr "No press release published at the moment."
 
 msgid "Derniers textes publiés"
 msgstr "Latest published texts"
 
 msgid "Tous les textes"
 msgstr "All texts"
+
+msgid "Télécharger"
+msgstr "Download"
 
 msgid "Accès rapides"
 msgstr "Quick links"
@@ -1143,6 +1240,9 @@ msgstr "The Ministry"
 msgid "Missions & attributions"
 msgstr "Missions & responsibilities"
 
+msgid "Directions"
+msgstr "Directorates"
+
 msgid "Organismes, programmes & projets"
 msgstr "Bodies, programmes & projects"
 
@@ -1158,14 +1258,26 @@ msgstr "The national training system"
 msgid "Annuaire des centres de formation"
 msgstr "Training centre directory"
 
-msgid "Tous les articles"
-msgstr "All articles"
+msgid "Opportunités & concours"
+msgstr "Opportunities & competitive exams"
 
-msgid "Textes & documents"
-msgstr "Texts & documents"
+msgid "Toutes les opportunités"
+msgstr "All opportunities"
+
+msgid "Offres d'emploi"
+msgstr "Job openings"
+
+msgid "Documents et médias"
+msgstr "Documents and media"
 
 msgid "Tous les documents"
 msgstr "All documents"
+
+msgid "Événements"
+msgstr "Events"
+
+msgid "Galerie photo"
+msgstr "Photo gallery"
 
 msgid "Services aux usagers"
 msgstr "Services for the public"
@@ -1299,6 +1411,21 @@ msgstr "MINEFOP Dashboard"
 msgid "Navigation du tableau de bord"
 msgstr "Dashboard navigation"
 
+msgid "Accueil"
+msgstr "Home"
+
+msgid "Actualités"
+msgstr "News"
+
+msgid "Opportunités"
+msgstr "Opportunities"
+
+msgid "Documents"
+msgstr "Documents"
+
+msgid "Galerie"
+msgstr "Gallery"
+
 msgid "Messages"
 msgstr "Messages"
 
@@ -1335,6 +1462,9 @@ msgstr "New blog article"
 
 msgid "Image actuelle conservée si aucun nouveau fichier n'est choisi."
 msgstr "Current image kept if no new file is chosen."
+
+msgid "Documents joints"
+msgstr "Attached documents"
 
 msgid "10 maximum"
 msgstr "10 maximum"
@@ -1384,6 +1514,65 @@ msgstr "Delete"
 msgid "Aucun article de blog pour le moment."
 msgstr "No blog article yet."
 
+msgid "Les directions elles-mêmes sont fixées par décret : seuls les attributions et le contact du responsable peuvent être mis à jour ici."
+msgstr "The directorates themselves are fixed by decree: only the mission and the head's contact details can be updated here."
+
+msgid "Responsable"
+msgstr "Head"
+
+msgid "Aucune direction pour le moment."
+msgstr "No directorate yet."
+
+msgid "Supprimer le document"
+msgstr "Delete the document"
+
+msgid "Supprimer ce document ?"
+msgstr "Delete this document?"
+
+#, python-format
+msgid "Vous êtes sur le point de supprimer définitivement le document « %(title)s ». Cette action est irréversible."
+msgstr "You are about to permanently delete the document “%(title)s”. This action cannot be undone."
+
+msgid "Nouveau document"
+msgstr "New document"
+
+msgid "Modifier le document"
+msgstr "Edit the document"
+
+msgid "Fichier actuel conservé si aucun nouveau fichier n'est choisi."
+msgstr "Current file kept if no new file is chosen."
+
+msgid "Catégorie"
+msgstr "Category"
+
+msgid "Référence"
+msgstr "Reference"
+
+msgid "Aucun document pour le moment."
+msgstr "No document yet."
+
+msgid "Supprimer l'événement"
+msgstr "Delete the event"
+
+msgid "Supprimer cet événement ?"
+msgstr "Delete this event?"
+
+#, python-format
+msgid "Vous êtes sur le point de supprimer définitivement l'événement « %(title)s ». Cette action est irréversible."
+msgstr "You are about to permanently delete the event “%(title)s”. This action cannot be undone."
+
+msgid "Nouvel événement"
+msgstr "New event"
+
+msgid "Modifier l'événement"
+msgstr "Edit the event"
+
+msgid "Lieu"
+msgstr "Location"
+
+msgid "Aucun événement pour le moment."
+msgstr "No event yet."
+
 msgid "Bienvenue"
 msgstr "Welcome"
 
@@ -1393,6 +1582,15 @@ msgstr "Published blog articles"
 msgid "Actualités publiées"
 msgstr "Published news"
 
+msgid "Opportunités publiées"
+msgstr "Published opportunities"
+
+msgid "Événements publiés"
+msgstr "Published events"
+
+msgid "Photos en galerie"
+msgstr "Photos in gallery"
+
 msgid "Messages non lus"
 msgstr "Unread messages"
 
@@ -1401,6 +1599,12 @@ msgstr "Quick actions"
 
 msgid "Nouvelle actualité"
 msgstr "New news item"
+
+msgid "Nouvelle opportunité"
+msgstr "New opportunity"
+
+msgid "Ajouter une photo"
+msgstr "Add a photo"
 
 msgid "Gérer le blog"
 msgstr "Manage the blog"
@@ -1463,11 +1667,51 @@ msgstr "You are about to permanently delete the news item “%(title)s”. This 
 msgid "Modifier l'actualité"
 msgstr "Edit the news item"
 
-msgid "Catégorie"
-msgstr "Category"
-
 msgid "Aucune actualité pour le moment."
 msgstr "No news at the moment."
+
+msgid "Supprimer l'opportunité"
+msgstr "Delete the opportunity"
+
+msgid "Supprimer cette opportunité ?"
+msgstr "Delete this opportunity?"
+
+#, python-format
+msgid "Vous êtes sur le point de supprimer définitivement l'opportunité « %(title)s ». Cette action est irréversible."
+msgstr "You are about to permanently delete the opportunity “%(title)s”. This action cannot be undone."
+
+msgid "Modifier l'opportunité"
+msgstr "Edit the opportunity"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Organisme"
+msgstr "Organisation"
+
+msgid "Date limite"
+msgstr "Deadline"
+
+msgid "Aucune opportunité pour le moment."
+msgstr "No opportunity yet."
+
+msgid "Supprimer la photo"
+msgstr "Delete the photo"
+
+msgid "Supprimer cette photo ?"
+msgstr "Delete this photo?"
+
+msgid "Cette action est irréversible."
+msgstr "This action cannot be undone."
+
+msgid "Modifier la photo"
+msgstr "Edit the photo"
+
+msgid "Photo actuelle conservée si aucun nouveau fichier n'est choisi."
+msgstr "Current photo kept if no new file is chosen."
+
+msgid "Aucune photo pour le moment."
+msgstr "No photo yet."
 
 msgid "Textes légaux & documents"
 msgstr "Legal texts & documents"
@@ -1511,23 +1755,86 @@ msgstr "A technical error has occurred"
 msgid "Nos services sont momentanément indisponibles. Les équipes techniques du Ministère ont été informées. Merci de réessayer dans quelques instants."
 msgstr "Our services are temporarily unavailable. The Ministry's technical teams have been notified. Please try again in a few moments."
 
-msgid "Retour aux actualités"
-msgstr "Back to news"
+msgid "Fil d’Ariane"
+msgstr "Breadcrumb"
 
-msgid "Communiqués, événements et informations officielles du Ministère de l'Emploi et de la Formation Professionnelle."
-msgstr "Press releases, events and official information from the Ministry of Employment and Vocational Training."
+msgid "Photos de l'événement"
+msgstr "Event photos"
 
-msgid "Communiqués, événements et informations officielles du Ministère."
-msgstr "Press releases, events and official information from the Ministry."
+msgid "Retour aux événements"
+msgstr "Back to events"
 
-msgid "Filtrer par catégorie"
-msgstr "Filter by category"
+msgid "Retrouvez toutes les photos des événements du Ministère."
+msgstr "Browse all the photos from the Ministry's events."
+
+msgid "Voir la galerie"
+msgstr "View the gallery"
+
+msgid "Cérémonies, lancements et événements organisés par le Ministère de l'Emploi et de la Formation Professionnelle."
+msgstr "Ceremonies, launches and events organised by the Ministry of Employment and Vocational Training."
+
+msgid "Cérémonies, lancements et événements organisés par le Ministère."
+msgstr "Ceremonies, launches and events organised by the Ministry."
+
+msgid "À venir"
+msgstr "Upcoming"
+
+msgid "Aucun événement n'est publié pour le moment."
+msgstr "No event is published at the moment."
+
+msgid "Photothèque des activités et événements du Ministère de l'Emploi et de la Formation Professionnelle."
+msgstr "Photo library of the Ministry of Employment and Vocational Training's activities and events."
+
+msgid "Photothèque des activités et événements du Ministère."
+msgstr "Photo library of the Ministry's activities and events."
+
+msgid "Filtrer par événement"
+msgstr "Filter by event"
 
 msgid "Toutes"
 msgstr "All"
 
-msgid "Aucune actualité n'est publiée dans cette rubrique pour le moment."
-msgstr "No news has been published in this section yet."
+msgid "Aucune photo n'est publiée pour le moment."
+msgstr "No photo is published at the moment."
+
+msgid "Ouvert"
+msgstr "Open"
+
+msgid "Clôturé"
+msgstr "Closed"
+
+msgid "Conditions de candidature"
+msgstr "Application conditions"
+
+msgid "Avis officiel"
+msgstr "Official notice"
+
+msgid "Retour aux opportunités"
+msgstr "Back to opportunities"
+
+msgid "Imprimer"
+msgstr "Print"
+
+msgid "Candidater"
+msgstr "Apply"
+
+msgid "Postuler en ligne"
+msgstr "Apply online"
+
+msgid "Autres opportunités"
+msgstr "Other opportunities"
+
+msgid "Offres d'emploi et concours publiés par le Ministère de l'Emploi et de la Formation Professionnelle et ses structures rattachées."
+msgstr "Job openings and competitive exams published by the Ministry of Employment and Vocational Training and its attached bodies."
+
+msgid "Offres d'emploi et concours publiés par le Ministère et ses structures rattachées."
+msgstr "Job openings and competitive exams published by the Ministry and its attached bodies."
+
+msgid "Filtrer par type"
+msgstr "Filter by type"
+
+msgid "Aucune opportunité n'est publiée dans cette rubrique pour le moment."
+msgstr "No opportunity has been published in this section yet."
 
 msgid "Paix – Travail – Patrie"
 msgstr "Peace – Work – Fatherland"
@@ -1565,6 +1872,9 @@ msgstr "Main navigation"
 msgid "Afficher ou masquer le menu"
 msgstr "Show or hide the menu"
 
+msgid "Toutes les directions"
+msgstr "All directorates"
+
 msgid "Textes régissant la formation"
 msgstr "Texts governing training"
 
@@ -1576,6 +1886,36 @@ msgstr "Staff area"
 
 msgid "Choix de la langue"
 msgstr "Language selection"
+
+msgid "Retour aux communiqués"
+msgstr "Back to press releases"
+
+msgid "À lire aussi"
+msgstr "Also read"
+
+msgid "Rester informé"
+msgstr "Stay informed"
+
+msgid "Retrouvez l'ensemble des communiqués et des textes publiés par le Ministère."
+msgstr "Browse all the press releases and texts published by the Ministry."
+
+msgid "Textes & documents"
+msgstr "Texts & documents"
+
+msgid "Communiqués, actualités et prises de parole du Ministère de l'Emploi et de la Formation Professionnelle, au niveau national et régional."
+msgstr "Press releases, news and statements from the Ministry of Employment and Vocational Training, at national and regional level."
+
+msgid "Communiqués, actualités et prises de parole du Ministère, au niveau national et régional."
+msgstr "Press releases, news and statements from the Ministry, at national and regional level."
+
+msgid "Filtrer par portée"
+msgstr "Filter by scope"
+
+msgid "Tous"
+msgstr "All"
+
+msgid "Aucun communiqué n'est publié dans cette rubrique pour le moment."
+msgstr "No press release is published in this section yet."
 
 msgid "Organismes, fonds, programmes et projets placés sous la tutelle du Ministère de l'Emploi et de la Formation Professionnelle ou concourant à ses missions."
 msgstr "Bodies, funds, programmes and projects placed under the supervision of the Ministry of Employment and Vocational Training or contributing to its missions."
@@ -1630,6 +1970,33 @@ msgstr "Delegate to be confirmed"
 
 msgid "Aucune délégation renseignée pour cette région."
 msgstr "No delegation listed for this region."
+
+msgid "Attributions"
+msgstr "Responsibilities"
+
+msgid "Les attributions détaillées de cette direction seront bientôt publiées."
+msgstr "The detailed responsibilities of this directorate will be published soon."
+
+msgid "Sous-structures"
+msgstr "Sub-units"
+
+msgid "Retour aux directions"
+msgstr "Back to directorates"
+
+msgid "Voir l'organigramme complet"
+msgstr "View the full organisation chart"
+
+msgid "Directeur"
+msgstr "Director"
+
+msgid "Les directions de l'administration centrale du Ministère, leurs attributions et leurs responsables."
+msgstr "The Ministry's central-administration directorates, their responsibilities and their heads."
+
+msgid "Voir la direction"
+msgstr "View the directorate"
+
+msgid "Les directions seront bientôt disponibles."
+msgstr "The directorates will be available soon."
 
 msgid "Organisation du Ministère selon le décret n° 2012/644 du 28 décembre 2012."
 msgstr "Organisation of the Ministry under Decree n° 2012/644 of 28 December 2012."
@@ -1712,6 +2079,21 @@ msgstr[1] "%(counter)s centres listed."
 msgid "Aucun centre ne correspond à vos critères de recherche."
 msgstr "No centre matches your search criteria."
 
+#~ msgid "Retour au blog"
+#~ msgstr "Back to blog"
+
+#~ msgid "Regards, entretiens et prises de parole du Ministère."
+#~ msgstr "Insights, interviews and statements from the Ministry."
+
+#~ msgid "Tous les articles"
+#~ msgstr "All articles"
+
+#~ msgid "Communiqués, événements et informations officielles du Ministère de l'Emploi et de la Formation Professionnelle."
+#~ msgstr "Press releases, events and official information from the Ministry of Employment and Vocational Training."
+
+#~ msgid "Communiqués, événements et informations officielles du Ministère."
+#~ msgstr "Press releases, events and official information from the Ministry."
+
 #~ msgid "Un site officiel du Gouvernement de la République du Cameroun"
 #~ msgstr "An official site of the Government of the Republic of Cameroon"
 
@@ -1732,9 +2114,6 @@ msgstr "No centre matches your search criteria."
 
 #~ msgid "Portail & sites partenaires"
 #~ msgstr "Portal & partner websites"
-
-#~ msgid "Contenu"
-#~ msgstr "Content"
 
 #~ msgid "organisme rattaché"
 #~ msgstr "affiliated body"

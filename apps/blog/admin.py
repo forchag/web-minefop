@@ -39,12 +39,13 @@ class BlogPostAdmin(admin.ModelAdmin):
         "cover_thumbnail",
         "title_fr",
         "author_name",
+        "scope",
         "published_at",
         "is_published",
         "attachment_count",
     )
     list_display_links = ("title_fr",)
-    list_filter = ("is_published",)
+    list_filter = ("is_published", "scope")
     list_editable = ("is_published",)
     search_fields = ("title_fr", "title_en", "author_name", "excerpt_fr", "excerpt_en", "body_fr", "body_en")
     prepopulated_fields = {"slug": ("title_fr",)}
@@ -55,7 +56,7 @@ class BlogPostAdmin(admin.ModelAdmin):
         (None, {"fields": ("slug", "author_name", "cover_image")}),
         (_("Français"), {"fields": ("title_fr", "excerpt_fr", "body_fr")}),
         (_("English"), {"fields": ("title_en", "excerpt_en", "body_en")}),
-        (_("Publication"), {"fields": ("is_published", "published_at")}),
+        (_("Publication"), {"fields": ("scope", "is_published", "published_at")}),
         (
             _("Traçabilité"),
             {"classes": ("collapse",), "fields": ("created_by", "created_at", "updated_at")},

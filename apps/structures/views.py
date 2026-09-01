@@ -13,6 +13,16 @@ def org_chart(request):
     return render(request, "structures/org_chart.html", context)
 
 
+def directorate_list(request):
+    directorates = OrgUnit.objects.filter(unit_type=OrgUnit.UnitType.DIRECTION).order_by("order")
+    return render(request, "structures/directorate_list.html", {"directorates": directorates})
+
+
+def directorate_detail(request, slug):
+    directorate = get_object_or_404(OrgUnit, slug=slug, unit_type=OrgUnit.UnitType.DIRECTION)
+    return render(request, "structures/directorate_detail.html", {"directorate": directorate})
+
+
 def attached_bodies(request):
     """Bodies under the Ministry's supervision, then the programmes it steers."""
     context = {

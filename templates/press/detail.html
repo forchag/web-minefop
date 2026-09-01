@@ -1,25 +1,29 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{{ post.title }} — {{ SITE_NAME }}{% endblock %}
-{% block meta_description %}{{ post.excerpt }}{% endblock %}
-{% block og_title %}{{ post.title }}{% endblock %}
-{% block og_description %}{{ post.excerpt }}{% endblock %}
-{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{{ post.cover_image.url }}{% endblock %}
+{% block title %}{{ item.title }} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ item.excerpt }}{% endblock %}
+{% block og_title %}{{ item.title }}{% endblock %}
+{% block og_description %}{{ item.excerpt }}{% endblock %}
+{% block og_image %}{% if item.cover_image %}{{ request.scheme }}://{{ request.get_host }}{{ item.cover_image.url }}{% else %}{{ block.super }}{% endif %}{% endblock %}
 {% block content %}
 <div class="page-header">
   <div class="container">
     <nav aria-label="{% trans 'Fil d’Ariane' %}">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'core:home' %}">{% trans "Accueil" %}</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'blog:list' %}">{% trans "Blog" %}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ post.title|truncatechars:60 }}</li>
+        <li class="breadcrumb-item"><a href="{% url 'press:list' %}">{% trans "Communiqués de presse" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ item.title|truncatechars:60 }}</li>
       </ol>
     </nav>
-    <h1>{{ post.title }}</h1>
+    <h1>{{ item.title }}</h1>
     <p class="page-subtitle">
-      <i class="bi bi-person-fill me-1" aria-hidden="true"></i>{{ post.author_name }}
+      {% if item.press_kind == 'blog' %}
+      <i class="bi bi-person-fill me-1" aria-hidden="true"></i>{{ item.author_name }}
       <span class="mx-2">·</span>
-      <time datetime="{{ post.published_at|date:'Y-m-d' }}"><i class="bi bi-calendar3 me-1" aria-hidden="true"></i>{{ post.published_at|date:"d F Y" }}</time>
+      {% endif %}
+      <time datetime="{{ item.published_at|date:'Y-m-d' }}"><i class="bi bi-calendar3 me-1" aria-hidden="true"></i>{{ item.published_at|date:"d F Y" }}</time>
+      {% if item.press_kind == 'news' and item.category %} · {{ item.category.name }}{% endif %}
+      <span class="mx-2">·</span>{{ item.get_scope_display }}
     </p>
   </div>
 </div>
@@ -28,19 +32,21 @@
   <div class="container">
     <div class="row g-4 g-lg-5">
       <article class="col-lg-8">
+        {% if item.cover_image %}
         <figure class="mb-4">
-          <img src="{{ post.cover_image.url }}" class="img-fluid rounded w-100" style="border:1px solid var(--rule);" alt="">
+          <img src="{{ item.cover_image.url }}" class="img-fluid rounded w-100" style="border:1px solid var(--rule);" alt="">
         </figure>
-        <p class="lead">{{ post.excerpt }}</p>
-        <div class="article-body">{{ post.body|linebreaks }}</div>
+        {% endif %}
+        <p class="lead">{{ item.excerpt }}</p>
+        <div class="article-body">{{ item.body|linebreaks }}</div>
 
-        {% if post.attachments.all %}
+        {% if item.press_kind == 'blog' and item.attachments.all %}
         <div class="mt-5 pt-4" style="border-top:1px solid var(--rule);">
           <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">
             {% trans "Documents joints" %}
           </h2>
           <div class="d-flex flex-column gap-2">
-            {% for attachment in post.attachments.all %}
+            {% for attachment in item.attachments.all %}
             <div class="doc-row p-3 d-flex align-items-center gap-3">
               <span class="doc-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span>
               <div class="doc-row-body flex-grow-1">
@@ -58,8 +64,8 @@
         {% endif %}
 
         <div class="d-flex flex-wrap gap-2 mt-5 pt-4" style="border-top:1px solid var(--rule);">
-          <a href="{% url 'blog:list' %}" class="btn btn-outline-minefop">
-            <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>{% trans "Retour au blog" %}
+          <a href="{% url 'press:list' %}" class="btn btn-outline-minefop">
+            <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>{% trans "Retour aux communiqués" %}
           </a>
           <button type="button" class="btn btn-outline-minefop" onclick="window.print()">
             <i class="bi bi-printer me-1" aria-hidden="true"></i>{% trans "Imprimer" %}
@@ -71,12 +77,12 @@
         {% if related %}
         <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "À lire aussi" %}</h2>
         <div class="d-flex flex-column gap-3">
-          {% for item in related %}
-          <a href="{{ item.get_absolute_url }}" class="doc-row p-3 d-flex gap-3 align-items-center text-decoration-none" style="color:var(--ink)">
-            <span class="doc-icon doc-icon-green"><i class="bi bi-pencil-square" aria-hidden="true"></i></span>
+          {% for related_item in related %}
+          <a href="{{ related_item.get_absolute_url }}" class="doc-row p-3 d-flex gap-3 align-items-center text-decoration-none" style="color:var(--ink)">
+            <span class="doc-icon doc-icon-green"><i class="bi bi-newspaper" aria-hidden="true"></i></span>
             <span>
-              <span class="d-block fw-semibold small">{{ item.title|truncatechars:70 }}</span>
-              <span class="badge-date">{{ item.published_at|date:"d/m/Y" }}</span>
+              <span class="d-block fw-semibold small">{{ related_item.title|truncatechars:70 }}</span>
+              <span class="badge-date">{{ related_item.published_at|date:"d/m/Y" }}</span>
             </span>
           </a>
           {% endfor %}
@@ -86,7 +92,7 @@
         <div class="card-minefop p-4 mt-4">
           <h2 class="h6 fw-bold mb-2">{% trans "Rester informé" %}</h2>
           <p class="text-muted small">{% trans "Retrouvez l'ensemble des communiqués et des textes publiés par le Ministère." %}</p>
-          <a href="{% url 'news:list' %}" class="btn btn-outline-minefop btn-sm">{% trans "Actualités" %}</a>
+          <a href="{% url 'documents:list' %}" class="btn btn-outline-minefop btn-sm">{% trans "Textes & documents" %}</a>
         </div>
       </div>
     </div>

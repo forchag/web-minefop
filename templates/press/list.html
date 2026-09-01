@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Communiqués de presse" %} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{% trans "Communiqués, actualités et prises de parole du Ministère de l'Emploi et de la Formation Professionnelle, au niveau national et régional." %}{% endblock %}
+{% block content %}
+{% trans "Communiqués de presse" as page_title %}
+{% trans "Communiqués, actualités et prises de parole du Ministère, au niveau national et régional." as page_subtitle %}
+{% include "partials/page_header.html" %}
+
+<section class="section">
+  <div class="container">
+    <nav class="d-flex flex-wrap gap-2 mb-4" aria-label="{% trans 'Filtrer par portée' %}">
+      <a href="{% url 'press:list' %}" class="filter-chip {% if not active_scope %}active{% endif %}"
+         {% if not active_scope %}aria-current="true"{% endif %}>{% trans "Tous" %}</a>
+      <a href="?portee=national" class="filter-chip {% if active_scope == 'national' %}active{% endif %}"
+         {% if active_scope == 'national' %}aria-current="true"{% endif %}>{% trans "National" %}</a>
+      <a href="?portee=regional" class="filter-chip {% if active_scope == 'regional' %}active{% endif %}"
+         {% if active_scope == 'regional' %}aria-current="true"{% endif %}>{% trans "Régional" %}</a>
+    </nav>
+
+    <div class="row g-4">
+      {% for item in page_obj %}
+      <div class="col-md-6 col-lg-4">
+        <article class="card-minefop position-relative h-100">
+          {% if item.cover_image %}
+          <img src="{{ item.cover_image.url }}" class="card-img-top" alt="" loading="lazy">
+          {% else %}
+          <div class="card-img-top d-flex align-items-center justify-content-center">
+            <i class="bi bi-newspaper" style="font-size:2.25rem;color:var(--green-600)" aria-hidden="true"></i>
+          </div>
+          {% endif %}
+          <div class="p-3 p-lg-4">
+            <div class="d-flex flex-wrap gap-2">
+              {% if item.press_kind == 'news' and item.category %}<span class="badge-category">{{ item.category.name }}</span>{% endif %}
+              {% if item.press_kind == 'blog' %}<span class="badge-category">{% trans "Blog" %}</span>{% endif %}
+              <span class="badge-category">{{ item.get_scope_display }}</span>
+            </div>
+            <h2 class="h6 fw-bold mt-2 card-title">
+              <a href="{{ item.get_absolute_url }}" class="stretched-link">{{ item.title }}</a>
+            </h2>
+            <p class="text-muted small">{{ item.excerpt|truncatechars:120 }}</p>
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+              {% if item.press_kind == 'blog' %}
+              <span class="small fw-semibold text-muted">
+                <i class="bi bi-person-fill me-1" aria-hidden="true"></i>{{ item.author_name }}
+              </span>
+              {% else %}<span></span>{% endif %}
+              <time class="badge-date" datetime="{{ item.published_at|date:'Y-m-d' }}">
+                <i class="bi bi-calendar3 me-1" aria-hidden="true"></i>{{ item.published_at|date:"d/m/Y" }}
+              </time>
+            </div>
+          </div>
+        </article>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-minefop">
+          <i class="bi bi-info-circle me-2" aria-hidden="true"></i>{% trans "Aucun communiqué n'est publié dans cette rubrique pour le moment." %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% include "partials/pagination.html" %}
+  </div>
+</section>
+{% endblock %}

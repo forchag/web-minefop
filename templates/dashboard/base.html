@@ -32,6 +32,11 @@
       <a href="{% url 'dashboard:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">{% trans "Accueil" %}</a>
       <a href="{% url 'dashboard:blog_list' %}" class="{% if 'blog' in request.resolver_match.url_name %}active{% endif %}">{% trans "Blog" %}</a>
       <a href="{% url 'dashboard:news_list' %}" class="{% if 'news' in request.resolver_match.url_name %}active{% endif %}">{% trans "Actualités" %}</a>
+      <a href="{% url 'dashboard:opportunity_list' %}" class="{% if 'opportunity' in request.resolver_match.url_name %}active{% endif %}">{% trans "Opportunités" %}</a>
+      <a href="{% url 'dashboard:document_list' %}" class="{% if 'document' in request.resolver_match.url_name %}active{% endif %}">{% trans "Documents" %}</a>
+      <a href="{% url 'dashboard:event_list' %}" class="{% if 'event' in request.resolver_match.url_name %}active{% endif %}">{% trans "Événements" %}</a>
+      <a href="{% url 'dashboard:photo_list' %}" class="{% if 'photo' in request.resolver_match.url_name %}active{% endif %}">{% trans "Galerie" %}</a>
+      <a href="{% url 'dashboard:directorate_list' %}" class="{% if 'directorate' in request.resolver_match.url_name %}active{% endif %}">{% trans "Directions" %}</a>
       <a href="{% url 'dashboard:message_list' %}" class="{% if 'message' in request.resolver_match.url_name %}active{% endif %}">{% trans "Messages" %}</a>
       <a href="/" target="_blank" rel="noopener">{% trans "Voir le site" %} <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>
       <form method="post" action="{% url 'dashboard:logout' %}" class="d-inline m-0">

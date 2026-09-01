@@ -1,0 +1,33 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% block title %}{{ directorate.name }} — {% trans "Tableau de bord" %}{% endblock %}
+{% block content %}
+<h1 class="h4 fw-bold mb-4">{{ directorate.name }}</h1>
+
+<form method="post" novalidate>
+  {% csrf_token %}
+  <div class="dashboard-form-card mb-4">
+    <div class="row g-3">
+      <div class="col-12">
+        <label class="form-label" for="{{ form.mission.id_for_label }}">{{ form.mission.label }}</label>
+        {{ form.mission }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.director_name.id_for_label }}">{{ form.director_name.label }}</label>
+        {{ form.director_name }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.director_email.id_for_label }}">{{ form.director_email.label }}</label>
+        {{ form.director_email }}
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-outline-minefop">
+      <i class="bi bi-check-lg me-1" aria-hidden="true"></i>{% trans "Enregistrer" %}
+    </button>
+    <a href="{% url 'dashboard:directorate_list' %}" class="btn btn-link text-decoration-none">{% trans "Annuler" %}</a>
+  </div>
+</form>
+{% endblock %}

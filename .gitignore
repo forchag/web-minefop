@@ -7,6 +7,6 @@ venv/
 env/
 node_modules/
 staticfiles/
-media/
+/media/
 .DS_Store
 *.log

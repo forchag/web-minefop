@@ -7,20 +7,21 @@ MINISTRY_VIEWS = (
     "core:mission",
     "core:history",
     "structures:org_chart",
+    "structures:directorate_list",
+    "structures:directorate_detail",
     "structures:attached_bodies",
     "structures:delegations",
 )
 
 TRAINING_VIEWS = (
     "core:vocational_training",
-    "structures:training_center_list",
-    "structures:training_center_detail",
 )
 
 
 def site_context(request):
     """Global template context available on every page."""
     from apps.contact.models import ContactInfo
+    from apps.structures.models import OrgUnit
 
     return {
         "SITE_NAME": settings.SITE_NAME,
@@ -29,4 +30,7 @@ def site_context(request):
         "site_contact_info": ContactInfo.load(),
         "ministry_views": MINISTRY_VIEWS,
         "training_views": TRAINING_VIEWS,
+        "directorates_nav": OrgUnit.objects.filter(
+            unit_type=OrgUnit.UnitType.DIRECTION, slug__isnull=False
+        ).order_by("order"),
     }

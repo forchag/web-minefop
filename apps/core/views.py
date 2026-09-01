@@ -23,16 +23,27 @@ def portal(request):
 
 
 def home(request):
-    from apps.news.models import Article
+    from itertools import chain
+
+    from apps.blog.models import BlogPost
     from apps.documents.models import Document
+    from apps.news.models import Article
+
+    articles = Article.objects.filter(is_published=True).select_related("category")
+    posts = BlogPost.objects.filter(is_published=True)
+    for article in articles:
+        article.press_kind = "news"
+    for post in posts:
+        post.press_kind = "blog"
+    latest_press = sorted(
+        chain(articles, posts), key=lambda item: item.published_at, reverse=True
+    )[:3]
 
     context = {
         "slides": HeroSlide.objects.filter(is_active=True),
         "key_figures": KeyFigure.objects.all(),
         "minister": MinisterMessage.objects.first(),
-        "latest_articles": Article.objects.filter(is_published=True).order_by(
-            "-published_at"
-        )[:3],
+        "latest_press": latest_press,
         "latest_documents": Document.objects.order_by(
             F("published_date").desc(nulls_last=True), "title"
         )[:4],
@@ -60,7 +71,8 @@ def vocational_training(request):
 
 
 def search(request):
-    """Site-wide search across news, official texts and training centres."""
+    """Site-wide search across press releases, official texts and training centres."""
+    from apps.blog.models import BlogPost
     from apps.documents.models import Document
     from apps.news.models import Article
     from apps.structures.models import TrainingCenter
@@ -81,6 +93,24 @@ def search(request):
                     "summary": article.excerpt,
                     "url": article.get_absolute_url(),
                     "date": article.published_at,
+                }
+            )
+
+        for post in BlogPost.objects.filter(is_published=True).filter(
+            Q(title_fr__icontains=query)
+            | Q(title_en__icontains=query)
+            | Q(excerpt_fr__icontains=query)
+            | Q(excerpt_en__icontains=query)
+            | Q(body_fr__icontains=query)
+            | Q(body_en__icontains=query)
+        )[:40]:
+            results.append(
+                {
+                    "kind": "news",
+                    "title": post.title,
+                    "summary": post.excerpt,
+                    "url": post.get_absolute_url(),
+                    "date": post.published_at,
                 }
             )
 
@@ -134,10 +164,8 @@ def accessibility(request):
 def sitemap_page(request):
     """Human-readable site map (the machine-readable one lives at /sitemap.xml)."""
     from apps.documents.models import DocumentCategory
-    from apps.news.models import NewsCategory
 
     context = {
-        "news_categories": NewsCategory.objects.all(),
         "document_categories": DocumentCategory.objects.all(),
     }
     return render(request, "core/sitemap.html", context)

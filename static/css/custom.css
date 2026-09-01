@@ -355,6 +355,23 @@ strong, b { font-weight: 600; }
   color: var(--green-900);
   font-weight: 600;
 }
+
+/* Nested "Directions" flyout inside the Le Ministère dropdown. Bootstrap 5
+   has no built-in multi-level dropdown, so this is a small CSS/JS addition
+   (hover on desktop via .dropdown-submenu:hover, click-to-toggle on
+   mobile/collapsed nav via the .show class set in static/js/main.js). */
+.dropdown-submenu { position: relative; }
+.dropdown-submenu > .dropdown-toggle::after { transform: rotate(-90deg); }
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: 0;
+  display: none;
+}
+.dropdown-submenu > .dropdown-menu.show { display: block; }
+@media (min-width: 992px) {
+  .dropdown-submenu:hover > .dropdown-menu { display: block; }
+}
 .main-navbar .navbar-toggler {
   border-color: rgba(255, 255, 255, 0.4);
   color: #fff;
@@ -383,6 +400,11 @@ strong, b { font-weight: 600; }
   .main-navbar .dropdown-item:focus {
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
+  }
+  .dropdown-submenu > .dropdown-menu {
+    position: static;
+    left: 0;
+    padding-left: 1rem;
   }
 }
 

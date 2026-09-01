@@ -222,42 +222,43 @@
   </div>
 </section>
 
-<!-- =========================== NEWS =========================== -->
+<!-- =========================== PRESS =========================== -->
 <section class="section">
   <div class="container">
     <div class="section-head">
       <div>
         <span class="eyebrow">{% trans "Communication du Ministère" %}</span>
-        <h2 class="section-title mt-2">{% trans "Actualités" %}</h2>
+        <h2 class="section-title mt-2">{% trans "Communiqués de presse" %}</h2>
       </div>
-      <a href="{% url 'news:list' %}" class="btn btn-outline-minefop">{% trans "Toutes les actualités" %}<i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a>
+      <a href="{% url 'press:list' %}" class="btn btn-outline-minefop">{% trans "Tous les communiqués" %}<i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a>
     </div>
     <div class="row g-4">
-      {% for article in latest_articles %}
+      {% for item in latest_press %}
       <div class="col-md-4">
         <article class="card-minefop position-relative h-100">
-          {% if article.cover_image %}
-          <img src="{{ article.cover_image.url }}" class="card-img-top" alt="" loading="lazy">
+          {% if item.cover_image %}
+          <img src="{{ item.cover_image.url }}" class="card-img-top" alt="" loading="lazy">
           {% else %}
           <div class="card-img-top d-flex align-items-center justify-content-center">
             <i class="bi bi-newspaper" style="font-size:2.25rem;color:var(--green-600)" aria-hidden="true"></i>
           </div>
           {% endif %}
           <div class="p-3 p-lg-4">
-            {% if article.category %}<span class="badge-category">{{ article.category.name }}</span>{% endif %}
+            {% if item.press_kind == 'news' and item.category %}<span class="badge-category">{{ item.category.name }}</span>{% endif %}
+            {% if item.press_kind == 'blog' %}<span class="badge-category">{% trans "Blog" %}</span>{% endif %}
             <h3 class="h6 fw-bold mt-2 card-title">
-              <a href="{{ article.get_absolute_url }}" class="stretched-link">{{ article.title }}</a>
+              <a href="{{ item.get_absolute_url }}" class="stretched-link">{{ item.title }}</a>
             </h3>
-            <p class="text-muted small">{{ article.excerpt|truncatechars:120 }}</p>
-            <time class="badge-date" datetime="{{ article.published_at|date:'Y-m-d' }}">
-              <i class="bi bi-calendar3 me-1" aria-hidden="true"></i>{{ article.published_at|date:"d/m/Y" }}
+            <p class="text-muted small">{{ item.excerpt|truncatechars:120 }}</p>
+            <time class="badge-date" datetime="{{ item.published_at|date:'Y-m-d' }}">
+              <i class="bi bi-calendar3 me-1" aria-hidden="true"></i>{{ item.published_at|date:"d/m/Y" }}
             </time>
           </div>
         </article>
       </div>
       {% empty %}
       <div class="col-12">
-        <p class="text-muted text-center py-4">{% trans "Aucune actualité publiée pour le moment." %}</p>
+        <p class="text-muted text-center py-4">{% trans "Aucun communiqué publié pour le moment." %}</p>
       </div>
       {% endfor %}
     </div>

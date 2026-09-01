@@ -1,0 +1,38 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Galerie photo" %} — {% trans "Tableau de bord" %}{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+  <h1 class="h4 fw-bold mb-0">{% trans "Galerie photo" %}</h1>
+  <a href="{% url 'dashboard:photo_create' %}" class="btn btn-outline-minefop">
+    <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>{% trans "Ajouter une photo" %}
+  </a>
+</div>
+
+<div class="row g-3">
+  {% for photo in page_obj %}
+  <div class="col-6 col-md-4 col-lg-3">
+    <div class="dashboard-form-card p-2">
+      <img src="{{ photo.image.url }}" class="img-fluid rounded mb-2" style="aspect-ratio:4/3;object-fit:cover;width:100%;" alt="{{ photo.title }}">
+      <p class="small fw-semibold mb-1">{{ photo.title|default:"—" }}</p>
+      {% if photo.event %}<p class="small text-muted mb-2">{{ photo.event.title|truncatechars:30 }}</p>{% endif %}
+      {% if not photo.is_published %}<span class="badge text-bg-secondary mb-2">{% trans "Brouillon" %}</span>{% endif %}
+      <div class="d-flex gap-1">
+        <a href="{% url 'dashboard:photo_edit' photo.pk %}" class="btn btn-sm btn-outline-minefop flex-grow-1">
+          <i class="bi bi-pencil" aria-hidden="true"></i>
+        </a>
+        <a href="{% url 'dashboard:photo_delete' photo.pk %}" class="btn btn-sm btn-outline-danger flex-grow-1">
+          <i class="bi bi-trash" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12">
+    <p class="text-muted p-4">{% trans "Aucune photo pour le moment." %}</p>
+  </div>
+  {% endfor %}
+</div>
+
+{% include "partials/pagination.html" %}
+{% endblock %}

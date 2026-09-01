@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Événements" %} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{% trans "Cérémonies, lancements et événements organisés par le Ministère de l'Emploi et de la Formation Professionnelle." %}{% endblock %}
+{% block content %}
+{% trans "Événements" as page_title %}
+{% trans "Cérémonies, lancements et événements organisés par le Ministère." as page_subtitle %}
+{% include "partials/page_header.html" %}
+
+<section class="section">
+  <div class="container">
+    <div class="row g-4">
+      {% for event in page_obj %}
+      <div class="col-md-6 col-lg-4">
+        <article class="card-minefop position-relative h-100">
+          {% if event.cover_image %}
+          <img src="{{ event.cover_image.url }}" class="card-img-top" alt="" loading="lazy">
+          {% else %}
+          <div class="card-img-top d-flex align-items-center justify-content-center">
+            <i class="bi bi-calendar-event" style="font-size:2.25rem;color:var(--green-600)" aria-hidden="true"></i>
+          </div>
+          {% endif %}
+          <div class="p-3 p-lg-4">
+            {% if event.is_upcoming %}<span class="badge text-bg-success">{% trans "À venir" %}</span>{% endif %}
+            <h2 class="h6 fw-bold mt-2 card-title">
+              <a href="{{ event.get_absolute_url }}" class="stretched-link">{{ event.title }}</a>
+            </h2>
+            {% if event.location %}<p class="text-muted small mb-1"><i class="bi bi-geo-alt me-1" aria-hidden="true"></i>{{ event.location }}</p>{% endif %}
+            <time class="badge-date" datetime="{{ event.start_at|date:'Y-m-d' }}">
+              <i class="bi bi-calendar3 me-1" aria-hidden="true"></i>{{ event.start_at|date:"d/m/Y H:i" }}
+            </time>
+          </div>
+        </article>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-minefop">
+          <i class="bi bi-info-circle me-2" aria-hidden="true"></i>{% trans "Aucun événement n'est publié pour le moment." %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% include "partials/pagination.html" %}
+  </div>
+</section>
+{% endblock %}

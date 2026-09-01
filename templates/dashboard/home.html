@@ -19,6 +19,30 @@
   </div>
   <div class="col-sm-4">
     <div class="stat-card">
+      <div class="stat-value">{{ opportunity_published }}<span class="text-muted fs-6">/{{ opportunity_total }}</span></div>
+      <div class="text-muted small">{% trans "Opportunités publiées" %}</div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="stat-card">
+      <div class="stat-value">{{ event_published }}<span class="text-muted fs-6">/{{ event_total }}</span></div>
+      <div class="text-muted small">{% trans "Événements publiés" %}</div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="stat-card">
+      <div class="stat-value">{{ document_total }}</div>
+      <div class="text-muted small">{% trans "Documents" %}</div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="stat-card">
+      <div class="stat-value">{{ photo_total }}</div>
+      <div class="text-muted small">{% trans "Photos en galerie" %}</div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="stat-card">
       <div class="stat-value">{{ unread_messages }}</div>
       <div class="text-muted small">{% trans "Messages non lus" %}</div>
     </div>
@@ -37,6 +61,30 @@
     <a class="quick-action-card" href="{% url 'dashboard:news_create' %}">
       <span class="icon"><i class="bi bi-newspaper" aria-hidden="true"></i></span>
       <span class="fw-semibold">{% trans "Nouvelle actualité" %}</span>
+    </a>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <a class="quick-action-card" href="{% url 'dashboard:opportunity_create' %}">
+      <span class="icon"><i class="bi bi-briefcase" aria-hidden="true"></i></span>
+      <span class="fw-semibold">{% trans "Nouvelle opportunité" %}</span>
+    </a>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <a class="quick-action-card" href="{% url 'dashboard:event_create' %}">
+      <span class="icon"><i class="bi bi-calendar-event" aria-hidden="true"></i></span>
+      <span class="fw-semibold">{% trans "Nouvel événement" %}</span>
+    </a>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <a class="quick-action-card" href="{% url 'dashboard:document_create' %}">
+      <span class="icon"><i class="bi bi-journal-text" aria-hidden="true"></i></span>
+      <span class="fw-semibold">{% trans "Nouveau document" %}</span>
+    </a>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <a class="quick-action-card" href="{% url 'dashboard:photo_create' %}">
+      <span class="icon"><i class="bi bi-images" aria-hidden="true"></i></span>
+      <span class="fw-semibold">{% trans "Ajouter une photo" %}</span>
     </a>
   </div>
   <div class="col-sm-6 col-lg-3">

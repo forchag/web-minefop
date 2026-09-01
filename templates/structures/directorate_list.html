@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Directions" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+{% trans "Directions" as page_title %}
+{% trans "Les directions de l'administration centrale du Ministère, leurs attributions et leurs responsables." as page_subtitle %}
+{% include "partials/page_header.html" %}
+
+<section class="section">
+  <div class="container">
+    <div class="row g-4">
+      {% for directorate in directorates %}
+      <div class="col-md-6">
+        <div class="mission-card h-100">
+          <div class="icon-wrap"><i class="bi bi-building"></i></div>
+          <h2 class="h6 fw-bold">{{ directorate.name }}</h2>
+          {% if directorate.director_name %}
+          <p class="text-muted small mb-1">{{ directorate.head_title|default:_("Directeur") }} : {{ directorate.director_name }}</p>
+          {% endif %}
+          <p class="text-muted small mb-2">{{ directorate.mission|truncatewords:30 }}</p>
+          <a href="{{ directorate.get_absolute_url }}" class="btn btn-outline-minefop btn-sm">{% trans "Voir la direction" %}</a>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-muted text-center py-5">{% trans "Les directions seront bientôt disponibles." %}</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

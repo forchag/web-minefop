@@ -1,0 +1,15 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Supprimer la photo" %} — {% trans "Tableau de bord" %}{% endblock %}
+{% block content %}
+<div class="dashboard-form-card mx-auto" style="max-width:520px;">
+  <h1 class="h5 fw-bold mb-3">{% trans "Supprimer cette photo ?" %}</h1>
+  <img src="{{ photo.image.url }}" class="img-fluid rounded mb-3" style="max-height:200px;object-fit:cover;" alt="">
+  <p>{% trans "Cette action est irréversible." %}</p>
+  <form method="post" class="d-flex gap-2">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">{% trans "Supprimer définitivement" %}</button>
+    <a href="{% url 'dashboard:photo_list' %}" class="btn btn-link text-decoration-none">{% trans "Annuler" %}</a>
+  </form>
+</div>
+{% endblock %}
