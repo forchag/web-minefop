@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-31 23:31+0100\n"
+"POT-Creation-Date: 2026-08-31 23:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,8 +21,11 @@ msgstr ""
 msgid "aperçu"
 msgstr "preview"
 
-msgid "Contenu"
-msgstr "Content"
+msgid "Français"
+msgstr "French"
+
+msgid "English"
+msgstr "English"
 
 msgid "Publication"
 msgstr "Publication"
@@ -36,8 +39,11 @@ msgstr "cover"
 msgid "documents"
 msgstr "documents"
 
-msgid "titre"
-msgstr "title"
+msgid "titre (français)"
+msgstr "title (French)"
+
+msgid "titre (anglais)"
+msgstr "title (English)"
 
 msgid "slug"
 msgstr "slug"
@@ -48,14 +54,20 @@ msgstr "author"
 msgid "Nom affiché publiquement comme auteur de l'article (personne, service ou cellule de communication)."
 msgstr "Name shown publicly as the author of the article (a person, department or communication unit)."
 
-msgid "chapô"
-msgstr "summary"
+msgid "chapô (français)"
+msgstr "summary (French)"
 
 msgid "Court résumé affiché dans la liste des articles."
 msgstr "Short summary shown in the article list."
 
-msgid "contenu"
-msgstr "content"
+msgid "chapô (anglais)"
+msgstr "summary (English)"
+
+msgid "contenu (français)"
+msgstr "content (French)"
+
+msgid "contenu (anglais)"
+msgstr "content (English)"
 
 msgid "image de couverture"
 msgstr "cover image"
@@ -193,6 +205,9 @@ msgstr "contact messages"
 msgid "Votre message a bien été envoyé. Nous vous répondrons dans les meilleurs délais."
 msgstr "Your message has been sent. We will get back to you as soon as possible."
 
+msgid "titre"
+msgstr "title"
+
 msgid "sous-titre"
 msgstr "subtitle"
 
@@ -325,6 +340,25 @@ msgstr "partner website"
 msgid "sites partenaires"
 msgstr "partner websites"
 
+msgid "Identifiant ou mot de passe incorrect, ou compte non autorisé à accéder au tableau de bord."
+msgstr "Incorrect username or password, or account not authorised to access the dashboard."
+
+#, python-format
+msgid "Article « %(title)s » enregistré."
+msgstr "Article “%(title)s” saved."
+
+#, python-format
+msgid "Article « %(title)s » supprimé."
+msgstr "Article “%(title)s” deleted."
+
+#, python-format
+msgid "Actualité « %(title)s » enregistrée."
+msgstr "News item “%(title)s” saved."
+
+#, python-format
+msgid "Actualité « %(title)s » supprimée."
+msgstr "News item “%(title)s” deleted."
+
 msgid "catégorie de document"
 msgstr "document category"
 
@@ -357,6 +391,12 @@ msgstr "news category"
 
 msgid "catégories d'actualités"
 msgstr "news categories"
+
+msgid "chapô"
+msgstr "summary"
+
+msgid "contenu"
+msgstr "content"
 
 msgid "actualités"
 msgstr "news"
@@ -1250,6 +1290,185 @@ msgstr "Validation of Prior Experience (VAE)"
 msgid "La VAE est un droit reconnu à toute personne disposant d'aptitudes professionnelles acquises dans la vie active, lui permettant d'obtenir une certification correspondant à son expérience."
 msgstr "VAE is a right recognised for anyone with professional skills acquired through work experience, allowing them to obtain a certification matching their experience."
 
+msgid "Tableau de bord"
+msgstr "Dashboard"
+
+msgid "Tableau de bord MINEFOP"
+msgstr "MINEFOP Dashboard"
+
+msgid "Navigation du tableau de bord"
+msgstr "Dashboard navigation"
+
+msgid "Messages"
+msgstr "Messages"
+
+msgid "Voir le site"
+msgstr "View site"
+
+msgid "Déconnexion"
+msgstr "Log out"
+
+msgid "Supprimer l'article"
+msgstr "Delete the article"
+
+msgid "Supprimer cet article ?"
+msgstr "Delete this article?"
+
+#, python-format
+msgid "Vous êtes sur le point de supprimer définitivement l'article « %(title)s » et ses documents joints. Cette action est irréversible."
+msgstr "You are about to permanently delete the article “%(title)s” and its attached documents. This action cannot be undone."
+
+msgid "Supprimer définitivement"
+msgstr "Delete permanently"
+
+msgid "Annuler"
+msgstr "Cancel"
+
+msgid "Nouvel article"
+msgstr "New article"
+
+msgid "Modifier l'article"
+msgstr "Edit the article"
+
+msgid "Nouvel article de blog"
+msgstr "New blog article"
+
+msgid "Image actuelle conservée si aucun nouveau fichier n'est choisi."
+msgstr "Current image kept if no new file is chosen."
+
+msgid "10 maximum"
+msgstr "10 maximum"
+
+msgid "Suppr."
+msgstr "Del."
+
+msgid "Ajouter un document"
+msgstr "Add a document"
+
+msgid "Enregistrer"
+msgstr "Save"
+
+msgid "Articles de blog"
+msgstr "Blog articles"
+
+msgid "Titre"
+msgstr "Title"
+
+msgid "Auteur"
+msgstr "Author"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Statut"
+msgstr "Status"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "document(s) joint(s)"
+msgstr "attachment(s)"
+
+msgid "Publié"
+msgstr "Published"
+
+msgid "Brouillon"
+msgstr "Draft"
+
+msgid "Modifier"
+msgstr "Edit"
+
+msgid "Supprimer"
+msgstr "Delete"
+
+msgid "Aucun article de blog pour le moment."
+msgstr "No blog article yet."
+
+msgid "Bienvenue"
+msgstr "Welcome"
+
+msgid "Articles de blog publiés"
+msgstr "Published blog articles"
+
+msgid "Actualités publiées"
+msgstr "Published news"
+
+msgid "Messages non lus"
+msgstr "Unread messages"
+
+msgid "Actions rapides"
+msgstr "Quick actions"
+
+msgid "Nouvelle actualité"
+msgstr "New news item"
+
+msgid "Gérer le blog"
+msgstr "Manage the blog"
+
+msgid "Messages des usagers"
+msgstr "Messages from citizens"
+
+msgid "Derniers articles de blog"
+msgstr "Latest blog articles"
+
+msgid "Aucun article pour le moment."
+msgstr "No article yet."
+
+msgid "Derniers messages"
+msgstr "Latest messages"
+
+msgid "Non lu"
+msgstr "Unread"
+
+msgid "Aucun message pour le moment."
+msgstr "No message yet."
+
+msgid "Connexion"
+msgstr "Log in"
+
+msgid "Espace réservé aux agents autorisés"
+msgstr "Reserved area for authorised staff"
+
+msgid "Identifiant"
+msgstr "Username"
+
+msgid "Mot de passe"
+msgstr "Password"
+
+msgid "Se connecter"
+msgstr "Log in"
+
+msgid "Retour aux messages"
+msgstr "Back to messages"
+
+msgid "Répondre par courriel"
+msgstr "Reply by email"
+
+msgid "Expéditeur"
+msgstr "Sender"
+
+msgid "Lu"
+msgstr "Read"
+
+msgid "Supprimer l'actualité"
+msgstr "Delete the news item"
+
+msgid "Supprimer cette actualité ?"
+msgstr "Delete this news item?"
+
+#, python-format
+msgid "Vous êtes sur le point de supprimer définitivement l'actualité « %(title)s ». Cette action est irréversible."
+msgstr "You are about to permanently delete the news item “%(title)s”. This action cannot be undone."
+
+msgid "Modifier l'actualité"
+msgstr "Edit the news item"
+
+msgid "Catégorie"
+msgstr "Category"
+
+msgid "Aucune actualité pour le moment."
+msgstr "No news at the moment."
+
 msgid "Textes légaux & documents"
 msgstr "Legal texts & documents"
 
@@ -1514,6 +1733,9 @@ msgstr[1] "%(counter)s centres listed."
 msgid "Aucun centre ne correspond à vos critères de recherche."
 msgstr "No centre matches your search criteria."
 
+#~ msgid "Contenu"
+#~ msgstr "Content"
+
 #~ msgid "organisme rattaché"
 #~ msgstr "affiliated body"
 
@@ -1543,9 +1765,6 @@ msgstr "No centre matches your search criteria."
 
 #~ msgid "Veuillez réessayer ultérieurement."
 #~ msgstr "Please try again later."
-
-#~ msgid "Aucune actualité pour le moment."
-#~ msgstr "No news at the moment."
 
 #~ msgid "Tous droits réservés"
 #~ msgstr "All rights reserved"

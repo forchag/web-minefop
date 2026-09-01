@@ -1,0 +1,21 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% block title %}{{ message_obj.subject }} — {% trans "Tableau de bord" %}{% endblock %}
+{% block content %}
+<a href="{% url 'dashboard:message_list' %}" class="d-inline-block mb-3 text-decoration-none">
+  <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>{% trans "Retour aux messages" %}
+</a>
+
+<div class="dashboard-form-card mx-auto" style="max-width:720px;">
+  <h1 class="h5 fw-bold mb-1">{{ message_obj.subject }}</h1>
+  <p class="text-muted small mb-4">
+    {{ message_obj.name }} &lt;<a href="mailto:{{ message_obj.email }}">{{ message_obj.email }}</a>&gt;
+    {% if message_obj.phone %}&middot; {{ message_obj.phone }}{% endif %}
+    &middot; {{ message_obj.created_at|date:"d/m/Y H:i" }}
+  </p>
+  <div class="article-body">{{ message_obj.message|linebreaks }}</div>
+  <a href="mailto:{{ message_obj.email }}?subject=Re: {{ message_obj.subject|urlencode }}" class="btn btn-outline-minefop mt-4">
+    <i class="bi bi-reply me-1" aria-hidden="true"></i>{% trans "Répondre par courriel" %}
+  </a>
+</div>
+{% endblock %}

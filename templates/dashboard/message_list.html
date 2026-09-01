@@ -1,0 +1,39 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Messages" %} — {% trans "Tableau de bord" %}{% endblock %}
+{% block content %}
+<h1 class="h4 fw-bold mb-4">{% trans "Messages des usagers" %}</h1>
+
+<div class="dashboard-table">
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>{% trans "Objet" %}</th>
+        <th>{% trans "Expéditeur" %}</th>
+        <th>{% trans "Date" %}</th>
+        <th>{% trans "Statut" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for message_obj in page_obj %}
+      <tr class="{% if not message_obj.is_read %}fw-semibold{% endif %}">
+        <td><a href="{% url 'dashboard:message_detail' message_obj.pk %}" class="text-decoration-none">{{ message_obj.subject }}</a></td>
+        <td>{{ message_obj.name }} &lt;{{ message_obj.email }}&gt;</td>
+        <td>{{ message_obj.created_at|date:"d/m/Y H:i" }}</td>
+        <td>
+          {% if message_obj.is_read %}
+            <span class="badge text-bg-light border">{% trans "Lu" %}</span>
+          {% else %}
+            <span class="badge text-bg-warning">{% trans "Non lu" %}</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4" class="text-muted p-4">{% trans "Aucun message pour le moment." %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% include "partials/pagination.html" %}
+{% endblock %}

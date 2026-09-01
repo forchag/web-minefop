@@ -1,0 +1,154 @@
+{% extends "dashboard/base.html" %}
+{% load i18n static %}
+{% block title %}{% if is_new %}{% trans "Nouvel article" %}{% else %}{% trans "Modifier l'article" %}{% endif %} — {% trans "Tableau de bord" %}{% endblock %}
+{% block content %}
+<h1 class="h4 fw-bold mb-4">
+  {% if is_new %}{% trans "Nouvel article de blog" %}{% else %}{% trans "Modifier l'article" %}{% endif %}
+</h1>
+
+<form method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+
+  <div class="dashboard-form-card mb-4">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.author_name.id_for_label }}">{{ form.author_name.label }}</label>
+        {{ form.author_name }}
+        {% if form.author_name.errors %}<div class="text-danger small mt-1">{{ form.author_name.errors.0 }}</div>{% endif %}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.cover_image.id_for_label }}">{{ form.cover_image.label }}</label>
+        {{ form.cover_image }}
+        {% if post.cover_image %}<div class="form-text">{% trans "Image actuelle conservée si aucun nouveau fichier n'est choisi." %}</div>{% endif %}
+        {% if form.cover_image.errors %}<div class="text-danger small mt-1">{{ form.cover_image.errors.0 }}</div>{% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-form-card mb-4">
+    <div class="lang-tabs" data-lang-tabs>
+      <button type="button" class="lang-tab-btn active" data-lang="fr">{% trans "Français" %}</button>
+      <button type="button" class="lang-tab-btn" data-lang="en">English</button>
+    </div>
+
+    <div data-lang-panel="fr">
+      <div class="mb-3">
+        <label class="form-label" for="{{ form.title_fr.id_for_label }}">{{ form.title_fr.label }}</label>
+        {{ form.title_fr }}
+        {% if form.title_fr.errors %}<div class="text-danger small mt-1">{{ form.title_fr.errors.0 }}</div>{% endif %}
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="{{ form.excerpt_fr.id_for_label }}">{{ form.excerpt_fr.label }}</label>
+        {{ form.excerpt_fr }}
+        {% if form.excerpt_fr.errors %}<div class="text-danger small mt-1">{{ form.excerpt_fr.errors.0 }}</div>{% endif %}
+      </div>
+      <div class="mb-0">
+        <label class="form-label" for="{{ form.body_fr.id_for_label }}">{{ form.body_fr.label }}</label>
+        {{ form.body_fr }}
+        {% if form.body_fr.errors %}<div class="text-danger small mt-1">{{ form.body_fr.errors.0 }}</div>{% endif %}
+      </div>
+    </div>
+
+    <div data-lang-panel="en" hidden>
+      <div class="mb-3">
+        <label class="form-label" for="{{ form.title_en.id_for_label }}">{{ form.title_en.label }}</label>
+        {{ form.title_en }}
+        {% if form.title_en.errors %}<div class="text-danger small mt-1">{{ form.title_en.errors.0 }}</div>{% endif %}
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="{{ form.excerpt_en.id_for_label }}">{{ form.excerpt_en.label }}</label>
+        {{ form.excerpt_en }}
+        {% if form.excerpt_en.errors %}<div class="text-danger small mt-1">{{ form.excerpt_en.errors.0 }}</div>{% endif %}
+      </div>
+      <div class="mb-0">
+        <label class="form-label" for="{{ form.body_en.id_for_label }}">{{ form.body_en.label }}</label>
+        {{ form.body_en }}
+        {% if form.body_en.errors %}<div class="text-danger small mt-1">{{ form.body_en.errors.0 }}</div>{% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-form-card mb-4">
+    <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Publication" %}</h2>
+    <div class="row g-3 align-items-center">
+      <div class="col-auto form-check">
+        {{ form.is_published }}
+        <label class="form-check-label" for="{{ form.is_published.id_for_label }}">{{ form.is_published.label }}</label>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="{{ form.published_at.id_for_label }}">{{ form.published_at.label }}</label>
+        {{ form.published_at }}
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-form-card mb-4">
+    <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Documents joints" %} <span class="text-muted normal-case fw-normal">({% trans "10 maximum" %})</span></h2>
+
+    {{ formset.management_form }}
+    {% if formset.non_form_errors %}<div class="alert alert-danger py-2">{{ formset.non_form_errors.0 }}</div>{% endif %}
+
+    <div id="attachment-forms">
+      {% for attachment_form in formset %}
+      <div class="attachment-row">
+        {{ attachment_form.id }}
+        <div class="row g-2 align-items-end">
+          <div class="col-md-5">
+            <label class="form-label small">{{ attachment_form.file.label }}</label>
+            {{ attachment_form.file }}
+          </div>
+          <div class="col-md-4">
+            <label class="form-label small">{{ attachment_form.title.label }}</label>
+            {{ attachment_form.title }}
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small">{{ attachment_form.order.label }}</label>
+            {{ attachment_form.order }}
+          </div>
+          <div class="col-md-1 form-check">
+            {% if attachment_form.instance.pk %}
+              {{ attachment_form.DELETE }}
+              <label class="form-check-label small" for="{{ attachment_form.DELETE.id_for_label }}">{% trans "Suppr." %}</label>
+            {% endif %}
+          </div>
+        </div>
+        {% if attachment_form.errors %}<div class="text-danger small mt-1">{{ attachment_form.errors }}</div>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+
+    <button type="button" id="add-attachment" class="btn btn-sm btn-outline-minefop" data-max-forms="{{ formset.max_num }}">
+      <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>{% trans "Ajouter un document" %}
+    </button>
+
+    <template id="empty-form-template">
+      <div class="attachment-row">
+        <div class="row g-2 align-items-end">
+          <div class="col-md-5">
+            <label class="form-label small">{{ formset.empty_form.file.label }}</label>
+            {{ formset.empty_form.file }}
+          </div>
+          <div class="col-md-4">
+            <label class="form-label small">{{ formset.empty_form.title.label }}</label>
+            {{ formset.empty_form.title }}
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small">{{ formset.empty_form.order.label }}</label>
+            {{ formset.empty_form.order }}
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-outline-minefop">
+      <i class="bi bi-check-lg me-1" aria-hidden="true"></i>{% trans "Enregistrer" %}
+    </button>
+    <a href="{% url 'dashboard:blog_list' %}" class="btn btn-link text-decoration-none">{% trans "Annuler" %}</a>
+  </div>
+</form>
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}

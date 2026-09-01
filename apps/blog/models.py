@@ -36,7 +36,8 @@ class BlogPost(models.Model):
     """An editorial post: the Ministry's own voice, distinct from the
     Actualités communiqués (apps.news) and shown with a named author."""
 
-    title = models.CharField(_("titre"), max_length=250)
+    title_fr = models.CharField(_("titre (français)"), max_length=250)
+    title_en = models.CharField(_("titre (anglais)"), max_length=250)
     slug = models.SlugField(_("slug"), max_length=270, unique=True)
     author_name = models.CharField(
         _("auteur"),
@@ -46,12 +47,18 @@ class BlogPost(models.Model):
             "(personne, service ou cellule de communication)."
         ),
     )
-    excerpt = models.CharField(
-        _("chapô"),
+    excerpt_fr = models.CharField(
+        _("chapô (français)"),
         max_length=300,
         help_text=_("Court résumé affiché dans la liste des articles."),
     )
-    body = models.TextField(_("contenu"))
+    excerpt_en = models.CharField(
+        _("chapô (anglais)"),
+        max_length=300,
+        help_text=_("Court résumé affiché dans la liste des articles."),
+    )
+    body_fr = models.TextField(_("contenu (français)"))
+    body_en = models.TextField(_("contenu (anglais)"))
     cover_image = models.ImageField(
         _("image de couverture"),
         upload_to="blog/covers/",
@@ -82,10 +89,33 @@ class BlogPost(models.Model):
         ordering = ["-published_at"]
 
     def __str__(self):
-        return self.title
+        return self.title_fr
 
     def get_absolute_url(self):
         return reverse("blog:detail", kwargs={"slug": self.slug})
+
+    def _localized(self, field_fr, field_en):
+        from django.utils.translation import get_language
+
+        language = get_language() or ""
+        if language.startswith("en"):
+            return getattr(self, field_en)
+        return getattr(self, field_fr)
+
+    @property
+    def title(self):
+        """The title in the currently active site language (fr/en)."""
+        return self._localized("title_fr", "title_en")
+
+    @property
+    def excerpt(self):
+        """The excerpt in the currently active site language (fr/en)."""
+        return self._localized("excerpt_fr", "excerpt_en")
+
+    @property
+    def body(self):
+        """The body in the currently active site language (fr/en)."""
+        return self._localized("body_fr", "body_en")
 
 
 class BlogAttachment(models.Model):

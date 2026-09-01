@@ -1,0 +1,102 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Tableau de bord" %} — MINEFOP{% endblock %}
+{% block content %}
+<h1 class="h4 fw-bold mb-4">{% trans "Bienvenue" %}, {{ request.user.get_full_name|default:request.user.get_username }}</h1>
+
+<div class="row g-3 mb-4">
+  <div class="col-sm-4">
+    <div class="stat-card">
+      <div class="stat-value">{{ blog_published }}<span class="text-muted fs-6">/{{ blog_total }}</span></div>
+      <div class="text-muted small">{% trans "Articles de blog publiés" %}</div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="stat-card">
+      <div class="stat-value">{{ article_published }}<span class="text-muted fs-6">/{{ article_total }}</span></div>
+      <div class="text-muted small">{% trans "Actualités publiées" %}</div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="stat-card">
+      <div class="stat-value">{{ unread_messages }}</div>
+      <div class="text-muted small">{% trans "Messages non lus" %}</div>
+    </div>
+  </div>
+</div>
+
+<h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Actions rapides" %}</h2>
+<div class="row g-3 mb-5">
+  <div class="col-sm-6 col-lg-3">
+    <a class="quick-action-card" href="{% url 'dashboard:blog_create' %}">
+      <span class="icon"><i class="bi bi-pencil-square" aria-hidden="true"></i></span>
+      <span class="fw-semibold">{% trans "Nouvel article de blog" %}</span>
+    </a>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <a class="quick-action-card" href="{% url 'dashboard:news_create' %}">
+      <span class="icon"><i class="bi bi-newspaper" aria-hidden="true"></i></span>
+      <span class="fw-semibold">{% trans "Nouvelle actualité" %}</span>
+    </a>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <a class="quick-action-card" href="{% url 'dashboard:blog_list' %}">
+      <span class="icon"><i class="bi bi-list-ul" aria-hidden="true"></i></span>
+      <span class="fw-semibold">{% trans "Gérer le blog" %}</span>
+    </a>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <a class="quick-action-card" href="{% url 'dashboard:message_list' %}">
+      <span class="icon"><i class="bi bi-envelope" aria-hidden="true"></i></span>
+      <span class="fw-semibold">{% trans "Messages des usagers" %}</span>
+    </a>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-6">
+    <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Derniers articles de blog" %}</h2>
+    <div class="dashboard-table">
+      <table class="table mb-0">
+        <tbody>
+          {% for post in recent_posts %}
+          <tr>
+            <td>
+              <a href="{% url 'dashboard:blog_edit' post.pk %}" class="fw-semibold text-decoration-none">{{ post.title_fr }}</a>
+              <span class="d-block text-muted small">{{ post.published_at|date:"d/m/Y" }}</span>
+            </td>
+            <td class="text-end">
+              {% if post.is_published %}<span class="badge text-bg-success">{% trans "Publié" %}</span>{% else %}<span class="badge text-bg-secondary">{% trans "Brouillon" %}</span>{% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td class="text-muted p-3">{% trans "Aucun article pour le moment." %}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing:.06em;">{% trans "Derniers messages" %}</h2>
+    <div class="dashboard-table">
+      <table class="table mb-0">
+        <tbody>
+          {% for message_obj in recent_messages %}
+          <tr>
+            <td>
+              <a href="{% url 'dashboard:message_detail' message_obj.pk %}" class="fw-semibold text-decoration-none">{{ message_obj.subject }}</a>
+              <span class="d-block text-muted small">{{ message_obj.name }} — {{ message_obj.created_at|date:"d/m/Y" }}</span>
+            </td>
+            <td class="text-end">
+              {% if not message_obj.is_read %}<span class="badge text-bg-warning">{% trans "Non lu" %}</span>{% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td class="text-muted p-3">{% trans "Aucun message pour le moment." %}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
