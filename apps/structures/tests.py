@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from .models import Delegation, OrgUnit, Region
+from .models import Delegation, OrgUnit, Region, TrainingCenter
 
 
 class SecretariatGeneralIsNotADirectorateTests(TestCase):
@@ -93,3 +93,97 @@ class SeedDivisionsMigrationTests(TestCase):
     def test_all_58_cameroonian_divisions_are_accounted_for(self):
         total = sum(len(divisions) for divisions in self.migration_module.DIVISIONS_BY_REGION.values())
         self.assertEqual(total, 58)
+
+
+class TrainingCenterDirectoryTests(TestCase):
+    """The directory is split public/private: public centres are filtered
+    by category (national/regional/reference/divisional/SAR-SM), private
+    ones by division instead."""
+
+    def setUp(self):
+        self.region = Region.objects.create(name="Centre", capital="Yaoundé")
+        self.national_center = TrainingCenter.objects.create(
+            name="Centre Pilote National de Test",
+            center_type=TrainingCenter.CenterType.CNFFDP,
+            category=TrainingCenter.Category.NATIONAL,
+            is_public=True,
+            region=self.region,
+            town="Yaoundé",
+        )
+        self.divisional_center = TrainingCenter.objects.create(
+            name="CPFPR de Yaoundé",
+            center_type=TrainingCenter.CenterType.CPFPR,
+            category=TrainingCenter.Category.DIVISIONAL,
+            is_public=True,
+            region=self.region,
+            town="Yaoundé",
+        )
+        self.private_center = TrainingCenter.objects.create(
+            name="Institut Privé de Formation de Mfoundi",
+            center_type=TrainingCenter.CenterType.PRIVATE,
+            is_public=False,
+            division="Mfoundi",
+            region=self.region,
+            town="Yaoundé",
+        )
+
+    def test_default_view_shows_only_public_centres(self):
+        response = self.client.get(reverse("structures:training_center_list"))
+        self.assertContains(response, "Centre Pilote National de Test")
+        self.assertContains(response, "CPFPR de Yaoundé")
+        self.assertNotContains(response, "Institut Privé de Formation de Mfoundi")
+
+    def test_private_ownership_shows_only_private_centres(self):
+        response = self.client.get(reverse("structures:training_center_list"), {"ownership": "private"})
+        self.assertContains(response, "Institut Privé de Formation de Mfoundi")
+        self.assertNotContains(response, "Centre Pilote National de Test")
+        self.assertNotContains(response, "CPFPR de Yaoundé")
+
+    def test_public_centres_are_filterable_by_category(self):
+        response = self.client.get(
+            reverse("structures:training_center_list"),
+            {"ownership": "public", "category": TrainingCenter.Category.NATIONAL},
+        )
+        self.assertContains(response, "Centre Pilote National de Test")
+        self.assertNotContains(response, "CPFPR de Yaoundé")
+
+    def test_private_centres_are_filterable_by_division(self):
+        response = self.client.get(
+            reverse("structures:training_center_list"),
+            {"ownership": "private", "division": "Mfoundi"},
+        )
+        self.assertContains(response, "Institut Privé de Formation de Mfoundi")
+
+        other_division_response = self.client.get(
+            reverse("structures:training_center_list"),
+            {"ownership": "private", "division": "Wouri"},
+        )
+        self.assertNotContains(other_division_response, "Institut Privé de Formation de Mfoundi")
+
+
+class BackfillTrainingCenterCategoryMigrationTests(TestCase):
+    """Existing public centres were seeded with only a center_type — this
+    migration is what backfills the new category filter field for them on
+    an already-seeded database."""
+
+    def test_backfill_maps_every_center_type_to_the_right_category(self):
+        import importlib
+
+        migration_module = importlib.import_module(
+            "apps.structures.migrations.0007_training_center_category_and_division"
+        )
+        region = Region.objects.create(name="Centre", capital="Yaoundé")
+        centers = {
+            center_type: TrainingCenter.objects.create(
+                name=center_type, center_type=center_type, region=region, town="Yaoundé"
+            )
+            for center_type in migration_module.CATEGORY_BY_CENTER_TYPE
+        }
+
+        from django.apps import apps
+
+        migration_module.backfill_category(apps, None)
+
+        for center_type, center in centers.items():
+            center.refresh_from_db()
+            self.assertEqual(center.category, migration_module.CATEGORY_BY_CENTER_TYPE[center_type])

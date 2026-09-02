@@ -11,7 +11,7 @@
     <nav aria-label="{% trans 'Fil d’Ariane' %}">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'core:home' %}">{% trans "Accueil" %}</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'press:list' %}">{% trans "Communiqués de presse" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'press:list' %}">{% trans "Actualités" %}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ item.title|truncatechars:60 }}</li>
       </ol>
     </nav>
@@ -65,7 +65,7 @@
 
         <div class="d-flex flex-wrap gap-2 mt-5 pt-4" style="border-top:1px solid var(--rule);">
           <a href="{% url 'press:list' %}" class="btn btn-outline-minefop">
-            <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>{% trans "Retour aux communiqués" %}
+            <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>{% trans "Retour aux actualités" %}
           </a>
           <button type="button" class="btn btn-outline-minefop" onclick="window.print()">
             <i class="bi bi-printer me-1" aria-hidden="true"></i>{% trans "Imprimer" %}
@@ -91,7 +91,7 @@
 
         <div class="card-minefop p-4 mt-4">
           <h2 class="h6 fw-bold mb-2">{% trans "Rester informé" %}</h2>
-          <p class="text-muted small">{% trans "Retrouvez l'ensemble des communiqués et des textes publiés par le Ministère." %}</p>
+          <p class="text-muted small">{% trans "Retrouvez l'ensemble des actualités et des textes publiés par le Ministère." %}</p>
           <a href="{% url 'documents:list' %}" class="btn btn-outline-minefop btn-sm">{% trans "Textes & documents" %}</a>
         </div>
       </div>

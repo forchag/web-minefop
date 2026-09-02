@@ -395,6 +395,18 @@ class NavbarLinksTests(TestCase):
         response = self.client.get(reverse("core:home"))
         self.assertContains(response, "Services déconcentrés")
 
+    def test_press_releases_are_now_labelled_actualites(self):
+        response = self.client.get(reverse("core:home"))
+        self.assertContains(response, "Actualités")
+        self.assertNotContains(response, "Communiqués de presse")
+
+    def test_formation_and_emploi_is_folded_into_documents_and_media(self):
+        response = self.client.get(reverse("core:home"))
+        self.assertNotContains(response, "Formation &amp; Emploi")
+        self.assertContains(response, reverse("core:vocational_training"))
+        self.assertContains(response, "Le dispositif national de formation")
+        self.assertContains(response, "Documents et médias")
+
 
 class MinisterMessageTranslationTests(TestCase):
     def setUp(self):

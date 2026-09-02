@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-01 22:36+0100\n"
+"POT-Creation-Date: 2026-09-02 08:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -663,11 +663,35 @@ msgstr "National Centre for Trainer Training and Curriculum Development"
 msgid "Centre privé agréé"
 msgstr "Approved private centre"
 
+msgid "Centre national"
+msgstr "National centre"
+
+msgid "Centre régional"
+msgstr "Regional centre"
+
+msgid "Centre de référence"
+msgstr "Reference centre"
+
+msgid "Centre divisionnaire"
+msgstr "Divisional centre"
+
+msgid "SAR/SM"
+msgstr "SAR/SM"
+
 msgid "type de centre"
 msgstr "centre type"
 
 msgid "structure publique"
 msgstr "public institution"
+
+msgid "Structures publiques uniquement — sert au filtrage de l'annuaire."
+msgstr "Public structures only — used to filter the directory."
+
+msgid "division"
+msgstr "division"
+
+msgid "Structures privées uniquement — sert au filtrage de l'annuaire par division."
+msgstr "Private structures only — used to filter the directory by division."
 
 msgid "filières de formation"
 msgstr "training programmes"
@@ -1000,11 +1024,11 @@ msgstr "Read the full message"
 msgid "Communication du Ministère"
 msgstr "Ministry communications"
 
-msgid "Communiqués de presse"
-msgstr "Press releases"
+msgid "Actualités"
+msgstr "News"
 
-msgid "Tous les communiqués"
-msgstr "All press releases"
+msgid "Toutes les actualités"
+msgstr "All news"
 
 msgid "Blog"
 msgstr "Blog"
@@ -1434,9 +1458,6 @@ msgstr "Dashboard navigation"
 
 msgid "Accueil"
 msgstr "Home"
-
-msgid "Actualités"
-msgstr "News"
 
 msgid "Opportunités"
 msgstr "Opportunities"
@@ -1924,14 +1945,14 @@ msgstr "All directorates"
 msgid "Services déconcentrés"
 msgstr "Decentralised services"
 
-msgid "Textes régissant la formation"
-msgstr "Texts governing training"
-
 msgid "Fonds National de l'Emploi"
 msgstr "Fonds National de l'Emploi (National Employment Fund)"
 
 msgid "Observatoire National de l'Emploi et de la Formation Professionnelle"
 msgstr "Observatoire National de l'Emploi et de la Formation Professionnelle (National Employment and Vocational Training Observatory)"
+
+msgid "Textes régissant la formation"
+msgstr "Texts governing training"
 
 msgid "Pagination"
 msgstr "Pagination"
@@ -1939,8 +1960,8 @@ msgstr "Pagination"
 msgid "Espace agent"
 msgstr "Staff area"
 
-msgid "Retour aux communiqués"
-msgstr "Back to press releases"
+msgid "Retour aux actualités"
+msgstr "Back to news"
 
 msgid "À lire aussi"
 msgstr "Also read"
@@ -1948,17 +1969,17 @@ msgstr "Also read"
 msgid "Rester informé"
 msgstr "Stay informed"
 
-msgid "Retrouvez l'ensemble des communiqués et des textes publiés par le Ministère."
-msgstr "Browse all the press releases and texts published by the Ministry."
+msgid "Retrouvez l'ensemble des actualités et des textes publiés par le Ministère."
+msgstr "Browse all the news and texts published by the Ministry."
 
 msgid "Textes & documents"
 msgstr "Texts & documents"
 
-msgid "Communiqués, actualités et prises de parole du Ministère de l'Emploi et de la Formation Professionnelle, au niveau national et régional."
-msgstr "Press releases, news and statements from the Ministry of Employment and Vocational Training, at national and regional level."
+msgid "Actualités, communiqués et prises de parole du Ministère de l'Emploi et de la Formation Professionnelle, au niveau national et régional."
+msgstr "News, press releases and statements from the Ministry of Employment and Vocational Training, at national and regional level."
 
-msgid "Communiqués, actualités et prises de parole du Ministère, au niveau national et régional."
-msgstr "Press releases, news and statements from the Ministry, at national and regional level."
+msgid "Actualités, communiqués et prises de parole du Ministère, au niveau national et régional."
+msgstr "News, press releases and statements from the Ministry, at national and regional level."
 
 msgid "Filtrer par portée"
 msgstr "Filter by scope"
@@ -1966,8 +1987,8 @@ msgstr "Filter by scope"
 msgid "Tous"
 msgstr "All"
 
-msgid "Aucun communiqué n'est publié dans cette rubrique pour le moment."
-msgstr "No press release is published in this section yet."
+msgid "Aucune actualité n'est publiée dans cette rubrique pour le moment."
+msgstr "No news has been published in this section yet."
 
 msgid "Organismes, fonds, programmes et projets placés sous la tutelle du Ministère de l'Emploi et de la Formation Professionnelle ou concourant à ses missions."
 msgstr "Bodies, funds, programmes and projects placed under the supervision of the Ministry of Employment and Vocational Training or contributing to its missions."
@@ -2104,14 +2125,23 @@ msgstr "Vocational training centres"
 msgid "Annuaire des structures publiques et privées agréées réparties sur le territoire national."
 msgstr "Directory of public and approved private institutions across the national territory."
 
-msgid "Type de centre"
-msgstr "Centre type"
+msgid "Filtrer par statut"
+msgstr "Filter by ownership"
 
-msgid "Tous les types"
-msgstr "All types"
+msgid "Centres publics"
+msgstr "Public centres"
+
+msgid "Centres privés agréés"
+msgstr "Approved private centres"
+
+msgid "Toutes les catégories"
+msgstr "All categories"
 
 msgid "Région"
 msgstr "Region"
+
+msgid "Toutes les divisions"
+msgstr "All divisions"
 
 msgid "Filtrer"
 msgstr "Filter"
@@ -2127,6 +2157,24 @@ msgstr[1] "%(counter)s centres listed."
 
 msgid "Aucun centre ne correspond à vos critères de recherche."
 msgstr "No centre matches your search criteria."
+
+#~ msgid "Communiqués de presse"
+#~ msgstr "Press releases"
+
+#~ msgid "Tous les communiqués"
+#~ msgstr "All press releases"
+
+#~ msgid "Retour aux communiqués"
+#~ msgstr "Back to press releases"
+
+#~ msgid "Aucun communiqué n'est publié dans cette rubrique pour le moment."
+#~ msgstr "No press release is published in this section yet."
+
+#~ msgid "Type de centre"
+#~ msgstr "Centre type"
+
+#~ msgid "Tous les types"
+#~ msgstr "All types"
 
 #~ msgid "Retour au blog"
 #~ msgstr "Back to blog"

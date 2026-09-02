@@ -587,10 +587,20 @@ class Command(BaseCommand):
             ("Centre de Formation aux Métiers de Bandjoun", TrainingCenter.CenterType.CFM, "Ouest", "Bandjoun", "Métiers techniques et artisanaux", default_description),
             ("Centre National de Formation des Formateurs et de Développement des Programmes", TrainingCenter.CenterType.CNFFDP, "Centre", "Yaoundé", "Ingénierie de la formation, Formation de formateurs, Numérique (D-CLIC)", default_description),
         ]
+        category_by_center_type = {
+            TrainingCenter.CenterType.CNFFDP: TrainingCenter.Category.NATIONAL,
+            TrainingCenter.CenterType.CFPE: TrainingCenter.Category.REGIONAL,
+            TrainingCenter.CenterType.CSFP: TrainingCenter.Category.REFERENCE,
+            TrainingCenter.CenterType.CPFPR: TrainingCenter.Category.DIVISIONAL,
+            TrainingCenter.CenterType.CFM: TrainingCenter.Category.DIVISIONAL,
+            TrainingCenter.CenterType.CAP: TrainingCenter.Category.DIVISIONAL,
+            TrainingCenter.CenterType.SARSM: TrainingCenter.Category.SARSM,
+        }
         for name, ctype, region_name, town, specialties, description in data:
             TrainingCenter.objects.create(
                 name=name,
                 center_type=ctype,
+                category=category_by_center_type.get(ctype, ""),
                 region=regions.get(region_name),
                 town=town,
                 is_public=True,

@@ -26,9 +26,9 @@ class DelegationAdmin(admin.ModelAdmin):
 
 @admin.register(TrainingCenter)
 class TrainingCenterAdmin(admin.ModelAdmin):
-    list_display = ("name", "center_type", "region", "town", "is_public")
-    list_filter = ("center_type", "region", "is_public")
-    search_fields = ("name", "town")
+    list_display = ("name", "center_type", "category", "division", "region", "town", "is_public")
+    list_filter = ("is_public", "category", "center_type", "region")
+    search_fields = ("name", "town", "division")
 
 
 @admin.register(AttachedBody)
