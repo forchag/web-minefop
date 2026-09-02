@@ -49,10 +49,13 @@
           </ul>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link {% if 'training_center' in view_name %}active{% endif %}"
-             {% if 'training_center' in view_name %}aria-current="page"{% endif %}
-             href="{% url 'structures:training_center_list' %}">{% trans "Centres de formation" %}</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if 'training_center' in view_name %}active{% endif %}" href="#" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">{% trans "Centres de formation" %}</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item {% if 'training_center' in view_name and request.GET.ownership != 'private' %}active{% endif %}" href="{% url 'structures:training_center_list' %}?ownership=public">{% trans "Centres publics" %}</a></li>
+            <li><a class="dropdown-item {% if 'training_center' in view_name and request.GET.ownership == 'private' %}active{% endif %}" href="{% url 'structures:training_center_list' %}?ownership=private">{% trans "Centres privés agréés" %}</a></li>
+          </ul>
         </li>
 
         <li class="nav-item dropdown">

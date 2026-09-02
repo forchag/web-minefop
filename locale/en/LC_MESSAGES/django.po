@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 08:50+0100\n"
+"POT-Creation-Date: 2026-09-02 09:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -934,11 +934,11 @@ msgstr "Previous"
 msgid "Suivant"
 msgstr "Next"
 
-msgid "Se former, se qualifier, travailler — à tout âge"
-msgstr "Train, qualify, work — at any age"
+msgid "Orientation, formation, insertion, emploi, entrepreneuriat — à tout âge"
+msgstr "Orientation, training, integration, employment, entrepreneurship — at any age"
 
-msgid "Le Ministère de l'Emploi et de la Formation Professionnelle conduit la politique du Gouvernement en matière d'emploi, de formation et d'insertion professionnelles. Ses dispositifs sont ouverts à toute personne en recherche d'emploi, en reconversion ou en quête d'une qualification, sur l'ensemble du territoire national."
-msgstr "The Ministry of Employment and Vocational Training implements the Government's policy on employment, training and labour-market integration. Its services are open to everyone looking for work, changing career or seeking a qualification, anywhere in the country."
+msgid "Le Ministère de l'Emploi et de la Formation Professionnelle accompagne chaque Camerounais à chaque étape de son parcours professionnel : orientation vers un métier, formation qualifiante, insertion dans la vie active, accès à l'emploi et appui à l'entrepreneuriat. Ses dispositifs sont ouverts à toute personne en recherche d'emploi, en reconversion ou en quête d'une qualification, sur l'ensemble du territoire national."
+msgstr "The Ministry of Employment and Vocational Training supports every Cameroonian at each stage of their working life: orientation towards a trade, qualifying training, integration into working life, access to employment and support for entrepreneurship. Its services are open to everyone looking for work, changing career or seeking a qualification, anywhere in the country."
 
 msgid "Trouver un centre de formation"
 msgstr "Find a training centre"
@@ -948,6 +948,39 @@ msgstr "Our missions"
 
 msgid "Logo du MINEFOP"
 msgstr "MINEFOP logo"
+
+msgid "Un accompagnement à chaque étape"
+msgstr "Support at every stage"
+
+msgid "Orientation"
+msgstr "Orientation"
+
+msgid "S'informer et être orienté vers un métier porteur, à l'école comme en reconversion."
+msgstr "Get informed and guided towards a promising trade, whether at school or retraining."
+
+msgid "Formation"
+msgstr "Training"
+
+msgid "Trouver un centre de formation agréé, public ou privé, partout au Cameroun."
+msgstr "Find an approved training centre, public or private, anywhere in Cameroon."
+
+msgid "Insertion"
+msgstr "Integration"
+
+msgid "Concours, stages et opportunités pour réussir son entrée dans la vie active."
+msgstr "Competitive exams, internships and opportunities for a successful start in working life."
+
+msgid "Emploi"
+msgstr "Employment"
+
+msgid "Consulter les offres d'emploi publiées par le Ministère et ses partenaires."
+msgstr "Browse job openings published by the Ministry and its partners."
+
+msgid "Entrepreneuriat"
+msgstr "Entrepreneurship"
+
+msgid "Un appui à la création et au développement de sa propre activité."
+msgstr "Support for starting and growing one's own business."
 
 msgid "Accès directs"
 msgstr "Direct access"
@@ -1945,6 +1978,12 @@ msgstr "All directorates"
 msgid "Services déconcentrés"
 msgstr "Decentralised services"
 
+msgid "Centres publics"
+msgstr "Public centres"
+
+msgid "Centres privés agréés"
+msgstr "Approved private centres"
+
 msgid "Fonds National de l'Emploi"
 msgstr "Fonds National de l'Emploi (National Employment Fund)"
 
@@ -2128,12 +2167,6 @@ msgstr "Directory of public and approved private institutions across the nationa
 msgid "Filtrer par statut"
 msgstr "Filter by ownership"
 
-msgid "Centres publics"
-msgstr "Public centres"
-
-msgid "Centres privés agréés"
-msgstr "Approved private centres"
-
 msgid "Toutes les catégories"
 msgstr "All categories"
 
@@ -2157,6 +2190,9 @@ msgstr[1] "%(counter)s centres listed."
 
 msgid "Aucun centre ne correspond à vos critères de recherche."
 msgstr "No centre matches your search criteria."
+
+#~ msgid "Se former, se qualifier, travailler — à tout âge"
+#~ msgstr "Train, qualify, work — at any age"
 
 #~ msgid "Communiqués de presse"
 #~ msgstr "Press releases"

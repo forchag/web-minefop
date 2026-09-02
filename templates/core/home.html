@@ -47,8 +47,8 @@
     <div class="row align-items-center g-4 g-lg-5 py-4">
       <div class="col-lg-7">
         <span class="hero-kicker">{% trans "République du Cameroun" %}</span>
-        <h1 class="mt-3 mb-3">{% trans "Se former, se qualifier, travailler — à tout âge" %}</h1>
-        <p class="lead mb-4">{% trans "Le Ministère de l'Emploi et de la Formation Professionnelle conduit la politique du Gouvernement en matière d'emploi, de formation et d'insertion professionnelles. Ses dispositifs sont ouverts à toute personne en recherche d'emploi, en reconversion ou en quête d'une qualification, sur l'ensemble du territoire national." %}</p>
+        <h1 class="mt-3 mb-3">{% trans "Orientation, formation, insertion, emploi, entrepreneuriat — à tout âge" %}</h1>
+        <p class="lead mb-4">{% trans "Le Ministère de l'Emploi et de la Formation Professionnelle accompagne chaque Camerounais à chaque étape de son parcours professionnel : orientation vers un métier, formation qualifiante, insertion dans la vie active, accès à l'emploi et appui à l'entrepreneuriat. Ses dispositifs sont ouverts à toute personne en recherche d'emploi, en reconversion ou en quête d'une qualification, sur l'ensemble du territoire national." %}</p>
         <div class="d-flex gap-2 flex-wrap">
           <a href="{% url 'structures:training_center_list' %}" class="btn btn-gold btn-lg">
             <i class="bi bi-geo-alt-fill me-2" aria-hidden="true"></i>{% trans "Trouver un centre de formation" %}
@@ -65,6 +65,50 @@
   </div>
 </section>
 {% endif %}
+
+<!-- ========================= FIVE PILLARS ========================= -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title text-center mx-auto mb-4" style="width:fit-content;">{% trans "Un accompagnement à chaque étape" %}</h2>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4 col-xl">
+        <div class="mission-card h-100 position-relative">
+          <div class="icon-wrap"><i class="bi bi-compass-fill" aria-hidden="true"></i></div>
+          <h3 class="h6 fw-bold"><a href="{% url 'core:vocational_training' %}" class="stretched-link text-decoration-none" style="color:inherit;">{% trans "Orientation" %}</a></h3>
+          <p class="text-muted small mb-0">{% trans "S'informer et être orienté vers un métier porteur, à l'école comme en reconversion." %}</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 col-xl">
+        <div class="mission-card h-100 position-relative">
+          <div class="icon-wrap"><i class="bi bi-mortarboard-fill" aria-hidden="true"></i></div>
+          <h3 class="h6 fw-bold"><a href="{% url 'structures:training_center_list' %}" class="stretched-link text-decoration-none" style="color:inherit;">{% trans "Formation" %}</a></h3>
+          <p class="text-muted small mb-0">{% trans "Trouver un centre de formation agréé, public ou privé, partout au Cameroun." %}</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 col-xl">
+        <div class="mission-card h-100 position-relative">
+          <div class="icon-wrap"><i class="bi bi-signpost-2-fill" aria-hidden="true"></i></div>
+          <h3 class="h6 fw-bold"><a href="{% url 'opportunities:list' %}" class="stretched-link text-decoration-none" style="color:inherit;">{% trans "Insertion" %}</a></h3>
+          <p class="text-muted small mb-0">{% trans "Concours, stages et opportunités pour réussir son entrée dans la vie active." %}</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 col-xl">
+        <div class="mission-card h-100 position-relative">
+          <div class="icon-wrap"><i class="bi bi-briefcase-fill" aria-hidden="true"></i></div>
+          <h3 class="h6 fw-bold"><a href="{% url 'opportunities:list' %}?type=emploi" class="stretched-link text-decoration-none" style="color:inherit;">{% trans "Emploi" %}</a></h3>
+          <p class="text-muted small mb-0">{% trans "Consulter les offres d'emploi publiées par le Ministère et ses partenaires." %}</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 col-xl">
+        <div class="mission-card h-100 position-relative">
+          <div class="icon-wrap"><i class="bi bi-rocket-takeoff-fill" aria-hidden="true"></i></div>
+          <h3 class="h6 fw-bold"><a href="{% url 'structures:attached_bodies' %}" class="stretched-link text-decoration-none" style="color:inherit;">{% trans "Entrepreneuriat" %}</a></h3>
+          <p class="text-muted small mb-0">{% trans "Un appui à la création et au développement de sa propre activité." %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ===================== SERVICE SHORTCUTS ===================== -->
 <section class="hero-services">
