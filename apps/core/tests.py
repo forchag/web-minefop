@@ -461,15 +461,36 @@ class MinisterMessageTranslationTests(TestCase):
 
 
 class HumanizedMinisterMessageMigrationTests(TestCase):
-    """The message was rewritten to drop the minister's personal biography
-    and dated history, mention the five pillars, and note that this is one
-    of the President's priorities."""
+    """0011 dropped the minister's personal biography and dated history in
+    favour of a generic, mission-focused message."""
 
     def setUp(self):
         import importlib
 
         self.migration_module = importlib.import_module(
             "apps.core.migrations.0011_humanize_minister_message"
+        )
+
+    def test_the_new_message_has_no_em_dashes(self):
+        self.assertNotIn("—", self.migration_module.NEW_FRENCH_MESSAGE)
+        self.assertNotIn("—", self.migration_module.NEW_ENGLISH_MESSAGE)
+
+    def test_the_new_message_drops_the_personal_biography(self):
+        for phrase in ["Ingénieur de formation", "Secrétaire d'État", "juin 2025", "novembre 2025"]:
+            self.assertNotIn(phrase, self.migration_module.NEW_FRENCH_MESSAGE)
+
+
+class MinisterMessageStyleRewriteMigrationTests(TestCase):
+    """0012 restyled the message on the register of real Cameroonian
+    ministerial addresses (a presidential-priority framing and a quotable
+    programme phrase), while keeping it generic, free of personal history,
+    and covering the five pillars."""
+
+    def setUp(self):
+        import importlib
+
+        self.migration_module = importlib.import_module(
+            "apps.core.migrations.0012_minister_message_style_rewrite"
         )
 
     def test_the_new_message_has_no_em_dashes(self):
@@ -494,7 +515,7 @@ class HumanizedMinisterMessageMigrationTests(TestCase):
         minister.message_en = "Some old message, whatever it was."
         minister.save()
 
-        self.migration_module.humanize_message(apps, None)
+        self.migration_module.rewrite_message(apps, None)
 
         minister.refresh_from_db()
         self.assertEqual(minister.message_fr, self.migration_module.NEW_FRENCH_MESSAGE)
