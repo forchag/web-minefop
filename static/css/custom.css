@@ -493,9 +493,18 @@ strong, b { font-weight: 600; }
   min-height: 460px;
   background-size: cover;
   background-position: center;
+  background-color: var(--green-900);
+}
+/* Bootstrap only shows .active (plus the two slide-transition classes) at a
+   time — everything else stays display:none. Scope our own flex layout to
+   those same classes; a bare ".carousel-item { display:flex }" would beat
+   Bootstrap's display:none on specificity and show every slide at once,
+   stacked/overlapping. */
+.hero-carousel .carousel-item.active,
+.hero-carousel .carousel-item.carousel-item-next,
+.hero-carousel .carousel-item.carousel-item-prev {
   display: flex;
   align-items: center;
-  background-color: var(--green-900);
 }
 .hero-slide-gradient {
   position: absolute;
@@ -509,6 +518,14 @@ strong, b { font-weight: 600; }
   text-align: left;
   padding: 3rem 0;
 }
+.hero-carousel .carousel-caption-custom h1 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.85rem, 3.4vw, 2.75rem);
+  line-height: 1.16;
+  color: #fff;
+}
+.hero-carousel .carousel-caption-custom p { color: #d7e7de; }
 .hero-carousel .carousel-indicators {
   margin-bottom: 1rem;
   justify-content: flex-start;

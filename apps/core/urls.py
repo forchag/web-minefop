@@ -9,6 +9,7 @@ urlpatterns = [
     path("missions/", views.mission, name="mission"),
     path("historique/", views.history, name="history"),
     path("mot-du-ministre/", views.minister_message, name="minister"),
+    path("mot-du-ministre/biographie/", views.minister_biography, name="minister_biography"),
     path("formation-professionnelle/", views.vocational_training, name="vocational_training"),
     path("recherche/", views.search, name="search"),
     path("mentions-legales/", views.legal_notice, name="legal_notice"),

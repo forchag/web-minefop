@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 10:16+0100\n"
+"POT-Creation-Date: 2026-09-02 10:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -266,6 +266,12 @@ msgstr "Minister's message (French)"
 
 msgid "mot du ministre (anglais)"
 msgstr "Minister's message (English)"
+
+msgid "biographie (français)"
+msgstr "biography (French)"
+
+msgid "biographie (anglais)"
+msgstr "biography (English)"
 
 msgid "dernière mise à jour"
 msgstr "last updated"
@@ -1168,6 +1174,9 @@ msgstr "Message from the Minister of Employment and Vocational Training of the R
 msgid "Le message du membre du Gouvernement en charge de l'emploi et de la formation professionnelle."
 msgstr "The message of the member of Government responsible for employment and vocational training."
 
+msgid "Voir la biographie"
+msgstr "View the biography"
+
 msgid "Le cabinet"
 msgstr "The Minister's Office"
 
@@ -1212,6 +1221,27 @@ msgstr "The Minister at MINEFOP headquarters, Yaoundé."
 
 msgid "Message mis à jour le"
 msgstr "Message updated on"
+
+msgid "Biographie du Ministre"
+msgstr "Minister's Biography"
+
+msgid "Biographie du Ministre de l'Emploi et de la Formation Professionnelle de la République du Cameroun."
+msgstr "Biography of the Minister of Employment and Vocational Training of the Republic of Cameroon."
+
+msgid "Parcours et fonctions du membre du Gouvernement en charge de l'emploi et de la formation professionnelle."
+msgstr "Career and positions of the member of Government responsible for employment and vocational training."
+
+msgid "Retour au Mot du Ministre"
+msgstr "Back to the Minister's Message"
+
+msgid "Biographie"
+msgstr "Biography"
+
+msgid "La biographie du Ministre sera prochainement publiée."
+msgstr "The Minister's biography will be published shortly."
+
+msgid "Page mise à jour le"
+msgstr "Page updated on"
 
 msgid "Conformément au décret n° 2012/644 du 28 décembre 2012 portant organisation du Ministère de l'Emploi et de la Formation Professionnelle, le Ministre est responsable de l'élaboration et de la mise en œuvre de la politique du Gouvernement en matière d'emploi, de formation et d'insertion professionnelles."
 msgstr "Pursuant to Decree n° 2012/644 of 28 December 2012 on the organisation of the Ministry of Employment and Vocational Training, the Minister is responsible for developing and implementing Government policy on employment, training and professional integration."
