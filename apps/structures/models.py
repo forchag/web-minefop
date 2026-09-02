@@ -135,9 +135,34 @@ class TrainingCenter(models.Model):
         CNFFDP = "cnffdp", _("Centre National de Formation des Formateurs et de Développement des Programmes")
         PRIVATE = "private", _("Centre privé agréé")
 
+    class Category(models.TextChoices):
+        """How a *public* centre is browsed/filtered on the directory —
+        orthogonal to CenterType, which keeps the centre's precise official
+        designation (CFPE, CSFP…). Left blank for private centres, which are
+        filtered by division instead."""
+
+        NATIONAL = "national", _("Centre national")
+        REGIONAL = "regional", _("Centre régional")
+        REFERENCE = "reference", _("Centre de référence")
+        DIVISIONAL = "divisional", _("Centre divisionnaire")
+        SARSM = "sarsm", _("SAR/SM")
+
     name = models.CharField(_("nom"), max_length=250)
     center_type = models.CharField(_("type de centre"), max_length=20, choices=CenterType.choices)
     is_public = models.BooleanField(_("structure publique"), default=True)
+    category = models.CharField(
+        _("catégorie"),
+        max_length=20,
+        choices=Category.choices,
+        blank=True,
+        help_text=_("Structures publiques uniquement — sert au filtrage de l'annuaire."),
+    )
+    division = models.CharField(
+        _("division"),
+        max_length=100,
+        blank=True,
+        help_text=_("Structures privées uniquement — sert au filtrage de l'annuaire par division."),
+    )
     region = models.ForeignKey(
         Region, verbose_name=_("région"), on_delete=models.SET_NULL, null=True, related_name="training_centers"
     )

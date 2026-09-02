@@ -228,9 +228,9 @@
     <div class="section-head">
       <div>
         <span class="eyebrow">{% trans "Communication du Ministère" %}</span>
-        <h2 class="section-title mt-2">{% trans "Communiqués de presse" %}</h2>
+        <h2 class="section-title mt-2">{% trans "Actualités" %}</h2>
       </div>
-      <a href="{% url 'press:list' %}" class="btn btn-outline-minefop">{% trans "Tous les communiqués" %}<i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a>
+      <a href="{% url 'press:list' %}" class="btn btn-outline-minefop">{% trans "Toutes les actualités" %}<i class="bi bi-arrow-right ms-2" aria-hidden="true"></i></a>
     </div>
     <div class="row g-4">
       {% for item in latest_press %}

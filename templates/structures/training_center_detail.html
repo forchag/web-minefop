@@ -51,6 +51,8 @@
             {% if center.phone %}<li><i class="bi bi-telephone-fill me-2 text-success" aria-hidden="true"></i>{{ center.phone }}</li>{% endif %}
             {% if center.email %}<li><i class="bi bi-envelope-fill me-2 text-success" aria-hidden="true"></i><a href="mailto:{{ center.email }}" class="text-decoration-none">{{ center.email }}</a></li>{% endif %}
             <li><i class="bi bi-patch-check-fill me-2 text-success" aria-hidden="true"></i>{% if center.is_public %}{% trans "Structure publique" %}{% else %}{% trans "Structure privée agréée par l'État" %}{% endif %}</li>
+            {% if center.get_category_display %}<li><i class="bi bi-bookmark-fill me-2 text-success" aria-hidden="true"></i>{{ center.get_category_display }}</li>{% endif %}
+            {% if center.division %}<li><i class="bi bi-signpost-split-fill me-2 text-success" aria-hidden="true"></i>{{ center.division }}</li>{% endif %}
           </ul>
         </div>
 

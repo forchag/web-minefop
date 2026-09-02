@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% trans "Communiqués de presse" %} — {{ SITE_NAME }}{% endblock %}
-{% block meta_description %}{% trans "Communiqués, actualités et prises de parole du Ministère de l'Emploi et de la Formation Professionnelle, au niveau national et régional." %}{% endblock %}
+{% block title %}{% trans "Actualités" %} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{% trans "Actualités, communiqués et prises de parole du Ministère de l'Emploi et de la Formation Professionnelle, au niveau national et régional." %}{% endblock %}
 {% block content %}
-{% trans "Communiqués de presse" as page_title %}
-{% trans "Communiqués, actualités et prises de parole du Ministère, au niveau national et régional." as page_subtitle %}
+{% trans "Actualités" as page_title %}
+{% trans "Actualités, communiqués et prises de parole du Ministère, au niveau national et régional." as page_subtitle %}
 {% include "partials/page_header.html" %}
 
 <section class="section">
@@ -55,7 +55,7 @@
       {% empty %}
       <div class="col-12">
         <div class="alert alert-minefop">
-          <i class="bi bi-info-circle me-2" aria-hidden="true"></i>{% trans "Aucun communiqué n'est publié dans cette rubrique pour le moment." %}
+          <i class="bi bi-info-circle me-2" aria-hidden="true"></i>{% trans "Aucune actualité n'est publiée dans cette rubrique pour le moment." %}
         </div>
       </div>
       {% endfor %}

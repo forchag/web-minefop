@@ -46,25 +46,41 @@ def delegations(request):
 
 
 def training_center_list(request):
-    centers = TrainingCenter.objects.select_related("region")
+    ownership = request.GET.get("ownership")
+    is_public = ownership != "private"
+    centers = TrainingCenter.objects.filter(is_public=is_public).select_related("region")
 
-    center_type = request.GET.get("type")
-    if center_type:
-        centers = centers.filter(center_type=center_type)
+    category = request.GET.get("category")
+    if is_public and category:
+        centers = centers.filter(category=category)
 
     region_id = request.GET.get("region")
-    if region_id:
+    if is_public and region_id:
         centers = centers.filter(region_id=region_id)
+
+    division = request.GET.get("division")
+    if not is_public and division:
+        centers = centers.filter(division=division)
 
     paginator = Paginator(centers, 12)
     page_obj = paginator.get_page(request.GET.get("page"))
 
+    divisions = (
+        Delegation.objects.filter(level=Delegation.Level.DEPARTMENTAL)
+        .order_by("department_name")
+        .values_list("department_name", flat=True)
+        .distinct()
+    )
+
     context = {
         "page_obj": page_obj,
         "regions": Region.objects.all(),
-        "center_types": TrainingCenter.CenterType.choices,
-        "active_type": center_type,
+        "divisions": divisions,
+        "categories": TrainingCenter.Category.choices,
+        "ownership": "private" if not is_public else "public",
+        "active_category": category,
         "active_region_id": int(region_id) if region_id else None,
+        "active_division": division,
     }
     return render(request, "structures/training_centers.html", context)
 
