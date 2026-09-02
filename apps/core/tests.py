@@ -407,6 +407,34 @@ class NavbarLinksTests(TestCase):
         self.assertContains(response, "Le dispositif national de formation")
         self.assertContains(response, "Documents et médias")
 
+    def test_training_centers_navbar_dropdown_links_public_and_private(self):
+        response = self.client.get(reverse("core:home"))
+        training_center_url = reverse("structures:training_center_list")
+        self.assertContains(response, f"{training_center_url}?ownership=public")
+        self.assertContains(response, f"{training_center_url}?ownership=private")
+        self.assertContains(response, "Centres publics")
+        self.assertContains(response, "Centres privés agréés")
+
+
+class HomePageFivePillarsTests(TestCase):
+    """The hero and the section right under it were rewritten around the
+    ministry's five pillars: orientation, formation, insertion, emploi and
+    entrepreneuriat."""
+
+    def test_hero_reflects_the_five_pillars(self):
+        response = self.client.get(reverse("core:home"))
+        self.assertContains(response, "Orientation, formation, insertion, emploi, entrepreneuriat")
+
+    def test_each_pillar_links_to_its_page(self):
+        response = self.client.get(reverse("core:home"))
+        content = response.content.decode()
+        for label in ["Orientation", "Formation", "Insertion", "Emploi", "Entrepreneuriat"]:
+            self.assertIn(label, content)
+        self.assertContains(response, reverse("core:vocational_training"))
+        self.assertContains(response, reverse("structures:training_center_list"))
+        self.assertContains(response, reverse("opportunities:list"))
+        self.assertContains(response, reverse("structures:attached_bodies"))
+
 
 class MinisterMessageTranslationTests(TestCase):
     def setUp(self):
