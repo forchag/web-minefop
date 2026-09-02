@@ -460,6 +460,47 @@ class MinisterMessageTranslationTests(TestCase):
         self.assertContains(response, self.minister.message_en)
 
 
+class HumanizedMinisterMessageMigrationTests(TestCase):
+    """The message was rewritten to drop the minister's personal biography
+    and dated history, mention the five pillars, and note that this is one
+    of the President's priorities."""
+
+    def setUp(self):
+        import importlib
+
+        self.migration_module = importlib.import_module(
+            "apps.core.migrations.0011_humanize_minister_message"
+        )
+
+    def test_the_new_message_has_no_em_dashes(self):
+        self.assertNotIn("—", self.migration_module.NEW_FRENCH_MESSAGE)
+        self.assertNotIn("—", self.migration_module.NEW_ENGLISH_MESSAGE)
+
+    def test_the_new_message_drops_the_personal_biography(self):
+        for phrase in ["Ingénieur de formation", "Secrétaire d'État", "juin 2025", "novembre 2025"]:
+            self.assertNotIn(phrase, self.migration_module.NEW_FRENCH_MESSAGE)
+
+    def test_the_new_message_covers_the_five_pillars_and_the_president(self):
+        for phrase in ["orientation", "formation", "insertion", "emploi", "entrepreneuriat"]:
+            self.assertIn(phrase, self.migration_module.NEW_FRENCH_MESSAGE)
+        self.assertIn("Paul Biya", self.migration_module.NEW_FRENCH_MESSAGE)
+        self.assertIn("Président de la République", self.migration_module.NEW_FRENCH_MESSAGE)
+
+    def test_migration_overwrites_whatever_message_was_previously_stored(self):
+        from django.apps import apps
+
+        minister = MinisterMessage.load()
+        minister.message_fr = "Un ancien message, quel qu'il soit."
+        minister.message_en = "Some old message, whatever it was."
+        minister.save()
+
+        self.migration_module.humanize_message(apps, None)
+
+        minister.refresh_from_db()
+        self.assertEqual(minister.message_fr, self.migration_module.NEW_FRENCH_MESSAGE)
+        self.assertEqual(minister.message_en, self.migration_module.NEW_ENGLISH_MESSAGE)
+
+
 class RetranslateStaleMinisterMessageMigrationTests(TestCase):
     """0009 only translated message_en for one exact known French string, so
     a database seeded with older wording (still mentioning the budget figures
