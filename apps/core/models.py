@@ -61,6 +61,8 @@ class MinisterMessage(models.Model):
     photo = models.ImageField(_("photo"), upload_to="cabinet/", blank=True, null=True)
     message_fr = models.TextField(_("mot du ministre (français)"))
     message_en = models.TextField(_("mot du ministre (anglais)"), blank=True)
+    biography_fr = models.TextField(_("biographie (français)"), blank=True)
+    biography_en = models.TextField(_("biographie (anglais)"), blank=True)
     updated_at = models.DateTimeField(_("dernière mise à jour"), auto_now=True)
 
     class Meta:
@@ -81,6 +83,16 @@ class MinisterMessage(models.Model):
         if language.startswith("en") and self.message_en:
             return self.message_en
         return self.message_fr
+
+    @property
+    def biography(self):
+        """Same fr/en fallback rule as `message`."""
+        from django.utils.translation import get_language
+
+        language = get_language() or ""
+        if language.startswith("en") and self.biography_en:
+            return self.biography_en
+        return self.biography_fr
 
     def save(self, *args, **kwargs):
         self.pk = 1

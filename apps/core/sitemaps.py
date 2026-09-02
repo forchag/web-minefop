@@ -19,6 +19,7 @@ class StaticViewSitemap(Sitemap):
             ("core:home", 0.9),
             ("core:mission", 0.8),
             ("core:minister", 0.8),
+            ("core:minister_biography", 0.6),
             ("core:history", 0.6),
             ("structures:directorate_list", 0.6),
             ("core:vocational_training", 0.8),

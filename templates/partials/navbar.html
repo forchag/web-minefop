@@ -20,6 +20,7 @@
              data-bs-toggle="dropdown" aria-expanded="false">{% trans "Le Ministère" %}</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item {% if view_name == 'core:minister' %}active{% endif %}" href="{% url 'core:minister' %}">{% trans "Mot du Ministre" %}</a></li>
+            <li><a class="dropdown-item {% if view_name == 'core:minister_biography' %}active{% endif %}" href="{% url 'core:minister_biography' %}">{% trans "Biographie du Ministre" %}</a></li>
             <li><a class="dropdown-item {% if view_name == 'core:mission' %}active{% endif %}" href="{% url 'core:mission' %}">{% trans "Missions & attributions" %}</a></li>
             <li><a class="dropdown-item {% if view_name == 'core:history' %}active{% endif %}" href="{% url 'core:history' %}">{% trans "Historique" %}</a></li>
             <li><hr class="dropdown-divider"></li>

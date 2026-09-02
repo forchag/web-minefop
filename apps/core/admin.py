@@ -23,8 +23,8 @@ class MinisterMessageAdmin(admin.ModelAdmin):
     list_display = ("title", "full_name", "updated_at")
     fieldsets = (
         (None, {"fields": ("full_name", "title", "photo")}),
-        (_("Français"), {"fields": ("message_fr",)}),
-        (_("English"), {"fields": ("message_en",)}),
+        (_("Français"), {"fields": ("message_fr", "biography_fr")}),
+        (_("English"), {"fields": ("message_en", "biography_en")}),
         (None, {"fields": ("updated_at",)}),
     )
     readonly_fields = ("updated_at",)

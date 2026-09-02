@@ -71,6 +71,11 @@ def minister_message(request):
     return render(request, "core/minister.html", context)
 
 
+def minister_biography(request):
+    context = {"minister": MinisterMessage.objects.first()}
+    return render(request, "core/minister_biography.html", context)
+
+
 def vocational_training(request):
     """Presentation page: the national vocational-training framework (Loi 2018/010)."""
     return render(request, "core/vocational_training.html")

@@ -20,6 +20,7 @@ class PublicPagesTests(TestCase):
         "core:mission",
         "core:history",
         "core:minister",
+        "core:minister_biography",
         "core:vocational_training",
         "core:search",
         "core:legal_notice",
@@ -563,6 +564,81 @@ class MinisterMessageStyleRewriteMigrationTests(TestCase):
         minister.refresh_from_db()
         self.assertEqual(minister.message_fr, self.migration_module.NEW_FRENCH_MESSAGE)
         self.assertEqual(minister.message_en, self.migration_module.NEW_ENGLISH_MESSAGE)
+
+
+class MinisterBiographyPageTests(TestCase):
+    def setUp(self):
+        self.minister = MinisterMessage.load()
+        self.minister.full_name = "Mounouna Foutsou"
+        self.minister.biography_fr = "Biographie de test.\n\n• Né en 1967."
+        self.minister.biography_en = "Test biography.\n\n• Born in 1967."
+        self.minister.save()
+
+    def test_biography_page_renders_the_french_text_by_default(self):
+        response = self.client.get(reverse("core:minister_biography"))
+        self.assertContains(response, "Biographie de test.")
+
+    def test_biography_page_renders_the_english_text_under_english_prefix(self):
+        with translation.override("en"):
+            response = self.client.get(reverse("core:minister_biography"))
+        self.assertContains(response, "Test biography.")
+
+    def test_biography_page_is_linked_from_the_minister_message_page(self):
+        response = self.client.get(reverse("core:minister"))
+        self.assertContains(response, reverse("core:minister_biography"))
+
+    def test_minister_message_page_links_back_from_the_biography_page(self):
+        response = self.client.get(reverse("core:minister_biography"))
+        self.assertContains(response, reverse("core:minister"))
+
+
+class SeedMinisterBiographyMigrationTests(TestCase):
+    """The biography field is new — this migration backfills it (only when
+    still blank, so it never overwrites an editor's own text) on an
+    already-seeded database that predates the field."""
+
+    def setUp(self):
+        import importlib
+
+        self.migration_module = importlib.import_module(
+            "apps.core.migrations.0014_seed_minister_biography"
+        )
+
+    def test_the_biography_has_no_em_dashes(self):
+        self.assertNotIn("—", self.migration_module.MINISTER_BIOGRAPHY_FR)
+        self.assertNotIn("—", self.migration_module.MINISTER_BIOGRAPHY_EN)
+
+    def test_the_biography_reflects_his_current_and_prior_roles(self):
+        for phrase in [
+            "27 juillet 2026",
+            "Ministre de l'Emploi et de la Formation Professionnelle (par intérim)",
+            "Ministre de la Jeunesse et de l'Éducation Civique",
+        ]:
+            self.assertIn(phrase, self.migration_module.MINISTER_BIOGRAPHY_FR)
+
+    def test_migration_fills_in_a_blank_biography(self):
+        from django.apps import apps
+
+        minister = MinisterMessage.load()
+        self.assertEqual(minister.biography_fr, "")
+
+        self.migration_module.seed_biography(apps, None)
+
+        minister.refresh_from_db()
+        self.assertEqual(minister.biography_fr, self.migration_module.MINISTER_BIOGRAPHY_FR)
+        self.assertEqual(minister.biography_en, self.migration_module.MINISTER_BIOGRAPHY_EN)
+
+    def test_migration_does_not_overwrite_an_existing_biography(self):
+        from django.apps import apps
+
+        minister = MinisterMessage.load()
+        minister.biography_fr = "Une biographie déjà rédigée par un éditeur."
+        minister.save()
+
+        self.migration_module.seed_biography(apps, None)
+
+        minister.refresh_from_db()
+        self.assertEqual(minister.biography_fr, "Une biographie déjà rédigée par un éditeur.")
 
 
 class RetranslateStaleMinisterMessageMigrationTests(TestCase):

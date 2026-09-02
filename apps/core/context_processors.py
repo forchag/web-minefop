@@ -4,6 +4,7 @@ from django.conf import settings
 # menu should be marked as the active section.
 MINISTRY_VIEWS = (
     "core:minister",
+    "core:minister_biography",
     "core:mission",
     "core:history",
     "structures:org_chart",

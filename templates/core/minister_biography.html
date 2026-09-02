@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block title %}{% trans "Biographie du Ministre" %} — {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{% trans "Biographie du Ministre de l'Emploi et de la Formation Professionnelle de la République du Cameroun." %}{% endblock %}
+{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/minister-square.jpg' %}{% endblock %}
+
+{% block content %}
+{% trans "Biographie du Ministre" as page_title %}
+{% trans "Parcours et fonctions du membre du Gouvernement en charge de l'emploi et de la formation professionnelle." as page_subtitle %}
+{% include "partials/page_header.html" %}
+
+<section class="section">
+  <div class="container">
+    <div class="row g-4 g-lg-5">
+      <div class="col-lg-4">
+        <div class="portrait-card">
+          {% if minister.photo %}
+            <img src="{{ minister.photo.url }}" alt="{{ minister.full_name }}">
+          {% else %}
+            <img src="{% static 'img/minister-square.jpg' %}"
+                 alt="{% trans "Portrait officiel du Ministre de l'Emploi et de la Formation Professionnelle" %}">
+          {% endif %}
+          <div class="portrait-body">
+            <h2 class="h5 fw-bold mb-1">{{ minister.full_name|default:_("Le Ministre") }}</h2>
+            <p class="text-muted small mb-0">{{ minister.title|default:_("Ministre de l'Emploi et de la Formation Professionnelle") }}</p>
+          </div>
+        </div>
+
+        <div class="card-minefop p-4 mt-4">
+          <a href="{% url 'core:minister' %}" class="btn btn-outline-minefop btn-sm w-100">
+            <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>{% trans "Retour au Mot du Ministre" %}
+          </a>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <span class="eyebrow">{% trans "Biographie" %}</span>
+        <h2 class="section-title mt-2">{{ minister.full_name|default:_("Le Ministre") }}</h2>
+
+        <div class="article-body">
+          {% if minister.biography %}
+            {{ minister.biography|linebreaks }}
+          {% else %}
+            <p>{% trans "La biographie du Ministre sera prochainement publiée." %}</p>
+          {% endif %}
+        </div>
+
+        {% if minister.updated_at %}
+        <p class="text-muted small mt-4 mb-0">
+          <i class="bi bi-clock-history me-1" aria-hidden="true"></i>{% trans "Page mise à jour le" %} {{ minister.updated_at|date:"d F Y" }}
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
