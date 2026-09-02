@@ -436,6 +436,49 @@ class HomePageFivePillarsTests(TestCase):
         self.assertContains(response, reverse("structures:attached_bodies"))
 
 
+class HeroSidebarTests(TestCase):
+    """The hero's side column dropped the big static MINEFOP logo in favour
+    of a minister teaser and a short upcoming-events agenda, matching the
+    layout used on other ministries' home pages."""
+
+    def test_the_big_logo_is_gone(self):
+        response = self.client.get(reverse("core:home"))
+        self.assertNotContains(response, "Logo du MINEFOP")
+        self.assertNotContains(response, 'width="230" height="297"')
+
+    def test_the_minister_teaser_links_to_the_full_message(self):
+        response = self.client.get(reverse("core:home"))
+        self.assertContains(response, reverse("core:minister"))
+        self.assertContains(response, "Mot du Ministre")
+
+    def test_an_upcoming_event_appears_in_the_agenda(self):
+        from datetime import timedelta
+
+        from django.utils import timezone
+
+        from apps.media.models import Event
+
+        upcoming = Event.objects.create(
+            title="Journée portes ouvertes des centres de formation",
+            slug="journee-portes-ouvertes",
+            description="Description.",
+            start_at=timezone.now() + timedelta(days=5),
+        )
+        past = Event.objects.create(
+            title="Événement déjà passé",
+            slug="evenement-passe",
+            description="Description.",
+            start_at=timezone.now() - timedelta(days=5),
+        )
+        response = self.client.get(reverse("core:home"))
+        self.assertContains(response, upcoming.title)
+        self.assertNotContains(response, past.title)
+
+    def test_agenda_shows_a_message_when_no_events_are_upcoming(self):
+        response = self.client.get(reverse("core:home"))
+        self.assertContains(response, "Aucun événement à venir pour le moment.")
+
+
 class MinisterMessageTranslationTests(TestCase):
     def setUp(self):
         self.minister = MinisterMessage.load()

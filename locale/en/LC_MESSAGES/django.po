@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 09:31+0100\n"
+"POT-Creation-Date: 2026-09-02 10:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -946,8 +946,26 @@ msgstr "Find a training centre"
 msgid "Nos missions"
 msgstr "Our missions"
 
-msgid "Logo du MINEFOP"
-msgstr "MINEFOP logo"
+msgid "Portrait officiel du Ministre"
+msgstr "Official portrait of the Minister"
+
+msgid "Mot du Ministre"
+msgstr "Minister's Message"
+
+msgid "Le Ministre"
+msgstr "The Minister"
+
+msgid "Lire le message"
+msgstr "Read the message"
+
+msgid "Agenda"
+msgstr "Agenda"
+
+msgid "Aucun événement à venir pour le moment."
+msgstr "No upcoming events for now."
+
+msgid "Tous les événements"
+msgstr "All events"
 
 msgid "Un accompagnement à chaque étape"
 msgstr "Support at every stage"
@@ -1042,14 +1060,8 @@ msgstr "Job placement, endorsement of employment contracts, approval of employme
 msgid "Portrait officiel du Ministre de l'Emploi et de la Formation Professionnelle"
 msgstr "Official portrait of the Minister of Employment and Vocational Training"
 
-msgid "Mot du Ministre"
-msgstr "Minister's Message"
-
 msgid "Le Ministère de l'Emploi et de la Formation Professionnelle œuvre chaque jour pour offrir à toutes les Camerounaises et à tous les Camerounais les compétences et les opportunités nécessaires à une insertion professionnelle réussie, au service de l'émergence économique du Cameroun."
 msgstr "The Ministry of Employment and Vocational Training works every day to give every Cameroonian the skills and opportunities needed to succeed in the labour market, in the service of Cameroon's economic emergence."
-
-msgid "Le Ministre"
-msgstr "The Minister"
 
 msgid "Lire le message intégral"
 msgstr "Read the full message"
@@ -2190,6 +2202,9 @@ msgstr[1] "%(counter)s centres listed."
 
 msgid "Aucun centre ne correspond à vos critères de recherche."
 msgstr "No centre matches your search criteria."
+
+#~ msgid "Logo du MINEFOP"
+#~ msgstr "MINEFOP logo"
 
 #~ msgid "Se former, se qualifier, travailler — à tout âge"
 #~ msgstr "Train, qualify, work — at any age"
