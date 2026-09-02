@@ -25,8 +25,11 @@ def portal(request):
 def home(request):
     from itertools import chain
 
+    from django.utils import timezone
+
     from apps.blog.models import BlogPost
     from apps.documents.models import Document
+    from apps.media.models import Event
     from apps.news.models import Article
 
     articles = Article.objects.filter(is_published=True).select_related("category")
@@ -47,6 +50,9 @@ def home(request):
         "latest_documents": Document.objects.order_by(
             F("published_date").desc(nulls_last=True), "title"
         )[:4],
+        "upcoming_events": Event.objects.filter(
+            is_published=True, start_at__gte=timezone.now()
+        ).order_by("start_at")[:3],
     }
     return render(request, "core/home.html", context)
 

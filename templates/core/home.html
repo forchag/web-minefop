@@ -56,10 +56,35 @@
           <a href="{% url 'core:mission' %}" class="btn btn-outline-light btn-lg">{% trans "Nos missions" %}</a>
         </div>
       </div>
-      <div class="col-lg-5 text-center d-none d-lg-block">
-        <img src="{% static 'img/minefop-logo.png' %}" width="230" height="297" class="img-fluid"
-             style="background:#fff;border-radius:6px;padding:1.25rem;"
-             alt="{% trans "Logo du MINEFOP" %}">
+      <div class="col-lg-5 d-none d-lg-flex flex-column gap-3">
+        <a href="{% url 'core:minister' %}" class="hero-sidebar-card hero-minister-teaser text-decoration-none">
+          {% if minister.photo %}
+            <img src="{{ minister.photo.url }}" alt="{{ minister.full_name }}">
+          {% else %}
+            <img src="{% static 'img/minister-portrait.jpg' %}" alt="{% trans "Portrait officiel du Ministre" %}">
+          {% endif %}
+          <span>
+            <span class="hero-sidebar-eyebrow">{% trans "Mot du Ministre" %}</span>
+            <span class="hero-minister-name">{{ minister.full_name|default:_("Le Ministre") }}</span>
+            <span class="hero-minister-link">{% trans "Lire le message" %}<i class="bi bi-arrow-right ms-1" aria-hidden="true"></i></span>
+          </span>
+        </a>
+
+        <div class="hero-sidebar-card hero-agenda">
+          <span class="hero-sidebar-eyebrow">{% trans "Agenda" %}</span>
+          {% for event in upcoming_events %}
+          <a href="{{ event.get_absolute_url }}" class="hero-agenda-row">
+            <span class="date-tile">
+              <span class="date-tile-day">{{ event.start_at|date:"d" }}</span>
+              <span class="date-tile-month">{{ event.start_at|date:"M" }}</span>
+            </span>
+            <span class="hero-agenda-title">{{ event.title|truncatechars:48 }}</span>
+          </a>
+          {% empty %}
+          <p class="hero-agenda-empty">{% trans "Aucun événement à venir pour le moment." %}</p>
+          {% endfor %}
+          <a href="{% url 'media:event_list' %}" class="hero-sidebar-more">{% trans "Tous les événements" %}<i class="bi bi-arrow-right ms-1" aria-hidden="true"></i></a>
+        </div>
       </div>
     </div>
   </div>
